@@ -2,26 +2,29 @@ package model_class;
 
 public class Account {
 
-	private final int id;
+	private int id;
 	private String email;
 	private String password;
 	private int accountType;
-	private int customer_id;
+	private int customerId;
+	
+	public Account(){
+	}
 	
 	public Account(int id, int customer_id, String email, String password, int accountType){
 	   this.id = id;
 	   this.email = email;
 	   this.password = password;
 	   this.accountType = accountType;
-	   this.customer_id = customer_id;
+	   this.customerId = customerId;
     }
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId ) {
+		this.customerId = customerId ;
 	}
 
 	public int getId(){

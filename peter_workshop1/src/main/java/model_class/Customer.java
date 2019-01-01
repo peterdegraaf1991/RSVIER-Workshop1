@@ -2,45 +2,45 @@ package model_class;
 
 public class Customer {
 
-	private final int 	id;
-	private final int 	accountId;
-	private String	firstName; 
-	private String	middleName; 
-    private String surName;
+	// made public (builder normally should be private)
+	public int id;
+	public String firstname; 
+	public String middlename; 
+	public String surname;
     
+	// added public constructor
+	public Customer (int id,String firstname, String middlename, String surname){
+		this.id = id;
+		this.firstname = firstname;
+		this.middlename = middlename;
+		this.surname = surname;
+	}
 	// might remove builder.
     private Customer(Builder builder){
-		   this.firstName = builder.firstName;  
-		   this.middleName = builder.middleName;
-		   this.surName = builder.surName;
-		   this.accountId = builder.accountId;
+		   this.firstname = builder.firstname;  
+		   this.middlename = builder.middlename;
+		   this.surname = builder.surname;
 		   this.id = builder.id;
 	    }
     
 	public static class Builder{
-		private String	firstName;
-		private String 	middleName;
-		private String 	surName;
-		private int		accountId;
+		private String	firstname;
+		private String 	middlename;
+		private String 	surname;
 		private int		id;
 
-        public Builder firstName(String firstName) {
-          this.firstName = firstName;
+        public Builder firstname(String firstname) {
+          this.firstname = firstname;
           return this;
         }
 
-        public Builder middleName(String middleName) {
-            this.middleName = middleName;
+        public Builder middlename(String middlename) {
+            this.middlename = middlename;
             return this;
           }
 
-        public Builder surName(String surName) {
-            this.surName = surName;
-            return this;
-          }
-
-        public Builder accountId(int accountId) {
-            this.accountId = accountId;
+        public Builder surname(String surname) {
+            this.surname = surname;
             return this;
           }
 
@@ -54,36 +54,32 @@ public class Customer {
 	    }
 	}
 	
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getMiddlename() {
+		return middlename;
 	}
 
-	public void setMiddlename(String middleName) {
-		this.middleName = middleName;
+	public void setMiddlename(String middlename) {
+		this.middlename = middlename;
 	}
 
-	public String getSurName() {
-		return surName;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setSurname(String surName) {
-		this.surName = surName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public int getAccountId() {
-		return accountId;
 	}
 	
 }

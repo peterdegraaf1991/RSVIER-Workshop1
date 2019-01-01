@@ -1,8 +1,5 @@
 package dao;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -11,59 +8,61 @@ import model_class.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import utility.Connect;
+import utility.DatabaseConnection;
 
 
 public class AccountDaoImpl implements AccountDao{
-	
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	
 @Override
 	public void createAccount(Account account) {
-		String query = "INSERT INTO account (id, email, password, account_type_id) VALUES( ?, ?, ?, ?)";
-	    try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		String query = "INSERT INTO account (id, email, password, account_type_id, customer_id) VALUES( ?, ?, ?, ?, ?)";
+	    try
+	    // Wordt nu ook "connection" gesloten of alleen "preparedStatement"?
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 		         preparedStatement.setInt(1, account.getId()); 
 		         preparedStatement.setString(2, account.getEmail());
 		         preparedStatement.setString(3, account.getPassword()); 
-		         preparedStatement.setInt(4, account.getAccountType()); 
+		         preparedStatement.setInt(4, account.getAccountType());
+		         preparedStatement.setInt(5, account.getCustomerId());
 		         preparedStatement.executeUpdate(); 
-		         preparedStatement.close();
 		         LOG.info("Account for: " + account.getEmail() + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 
-	}
+}
+
 @Override
 	public void readAccount(int id) {
 
 }
+
 @Override
 	public void updateAccount(Account account) {
 		String query = "UPDATE account SET email = ? , password = ? , account_type_id = ? WHERE id = ?"; 
-		try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		try 
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 			  preparedStatement.setString(1, account.getEmail()); 
 			  preparedStatement.setString(2, account.getPassword());
 			  preparedStatement.setInt(3, account.getAccountType());
 			  preparedStatement.setInt(4, account.getId());
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
-			  LOG.info("Account with: " + account.getId() + " has been updated");
+			  LOG.info("AccountID: " + account.getId() + " has been updated");
+			  LOG.info("Rows Affected: " + preparedStatement.getUpdateCount());
 		}
 		catch (SQLException e) { 
 			e.printStackTrace(); 
 		} 
 	}
+
 @Override
 	public void deleteAccount(int id) {
 		String query = "DELETE FROM account WHERE id = ?"; 
-		try {
-			PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		try 
+		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
 			  LOG.info("Account with id: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 

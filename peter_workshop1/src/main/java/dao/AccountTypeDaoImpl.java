@@ -1,17 +1,15 @@
 package dao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 import model_class.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import utility.Connect;
+import utility.DatabaseConnection;
 
 
 public class AccountTypeDaoImpl implements AccountTypeDao {
@@ -20,13 +18,12 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	
 	@Override
 	public void createAccountType(AccountType accountType) {
-		String query = "INSERT INTO accountType (id, description) VALUES(?, ?)";
-	    try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		String query = "INSERT INTO account_type (id, description) VALUES(?, ?)";
+	    try 
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 		         preparedStatement.setInt(1, accountType.getAccountType());  
 		         preparedStatement.setString(2, accountType.getDescription());
 		         preparedStatement.executeUpdate(); 
-		         preparedStatement.close();
 		         LOG.info("Accounttype: " + accountType.getDescription() + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
@@ -39,29 +36,29 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void updateAccountType(AccountType accountType) {
-		String query = "UPDATE accounttype SET description = ? WHERE id = ?"; 
-		try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);; 
+		String query = "UPDATE account_type SET description = ? WHERE id = ?"; 
+		try 
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){ 
 			  preparedStatement.setString(1, accountType.getDescription()); 
 			  preparedStatement.setInt(2, accountType.getAccountType()); 
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
 			  LOG.info("AccountTypeId: " + accountType.getAccountType() + "now has description: " + accountType.getDescription());
 		}
 		catch (SQLException e) { 
 			e.printStackTrace(); 
 		} 
 	}
+	
 	@Override
 	public void deleteAccountType(int id) {
-		String query = "DELETE FROM accounttype WHERE id = ?"; 
-		try {
-			PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		String query = "DELETE FROM account_type WHERE id = ?"; 
+		try 
+		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
 			  LOG.info("AccountId: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 

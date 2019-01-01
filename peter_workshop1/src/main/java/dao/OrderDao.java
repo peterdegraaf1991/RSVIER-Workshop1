@@ -13,7 +13,7 @@ public interface OrderDao {
 	
 	public void updateOrder(Order order);
 	
-	public void deleteOrder(Order order); 	
+	public void deleteOrder(int id); 	
 	
 //	public void getOrder(int customerId); 	
 //	public void printOrder(int id);

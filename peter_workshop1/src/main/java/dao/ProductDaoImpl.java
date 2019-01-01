@@ -7,13 +7,11 @@ import model_class.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import utility.Connect;
+import utility.DatabaseConnection;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class ProductDaoImpl implements ProductDao {
 
@@ -21,35 +19,35 @@ private static final Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	
 	public void createProduct(Product product) {
 		String query = "INSERT INTO product (name, id, price, stock) VALUES( ?, ?, ?, ?)"; 
-	    try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+	    try 
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 		         preparedStatement.setString(1, product.getName()); 
 		         preparedStatement.setInt(2, product.getId());
 		         preparedStatement.setBigDecimal(3, product.getPrice()); 
 		         preparedStatement.setInt(4, product.getStock()); 
 		         preparedStatement.executeUpdate(); 
-		         preparedStatement.close();
 		         LOG.info("Product: " + product.getName() + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 
 	}
+	
 	@Override
 	public void readProduct(int id) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	public void updateProduct(Product product) {
 		String query = "UPDATE product SET name = ?, price = ? , stock = ?  WHERE id = ?"; 
-		try {
-	    	PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		try 
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 			  preparedStatement.setString(1, product.getName()); 
 			  preparedStatement.setBigDecimal(2, product.getPrice()); 
 			  preparedStatement.setInt(3, product.getStock());
 			  preparedStatement.setInt(4, product.getId());
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
 			  LOG.info("productid: " + product.getId()+ " has been updated as: " + product.getName());
 		}
 		catch (SQLException e) { 
@@ -59,11 +57,10 @@ private static final Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	
 	public void deleteProduct(int id) {
 		String query = "DELETE FROM product WHERE id = ?"; 
-		try {
-			PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(query);
+		try 
+		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
-			  preparedStatement.close();
 			  LOG.info("Product with id: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 

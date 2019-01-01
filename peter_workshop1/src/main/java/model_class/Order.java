@@ -10,9 +10,9 @@ public class Order {
   private BigDecimal totalCost;
   private LocalDateTime date;
   private int customerId;
-  private String orderStatusId;
+  private int orderStatusId;
   
-  public Order(int id, BigDecimal totalCost, LocalDateTime date, int customerId, String orderStatusId) {
+  public Order(int id, BigDecimal totalCost, LocalDateTime date, int customerId, int orderStatusId) {
 	  this.id = id;
 	  this.totalCost = totalCost;
 	  this.date = date;
@@ -36,7 +36,7 @@ public class Order {
 	  return customerId;
 	  }
 
-  public String getorderStatusId() {
+  public int getOrderStatusId() {
 	  return orderStatusId;
   }
 
@@ -48,7 +48,7 @@ public class Order {
 	  return totalCost;
 	  }
 
-  public void setorderStatusId(String orderStatusId) {
+  public void setorderStatusId(int orderStatusId) {
 	this.orderStatusId = orderStatusId;  
   }
   public void setTotalCost(BigDecimal totalCost) {

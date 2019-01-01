@@ -1,19 +1,19 @@
 Overleg 20-12-2018:
-- Hoofdlettersgebruik in sql
++ Hoofdlettersgebruik in sql
 
-- Login factorybuilder werkend maken met exceptions, zonder if
++ Login factorybuilder werkend maken met exceptions, zonder if
 
-- Log4j in src/main --> resources mapje
++ Log4j in src/main --> resources mapje
 
-- Try with resources (close connection, autoclosable)
++ Try with resources (close connection, autoclosable)
 
-- Login hernoemen (bijv dbconnection)
++ Login hernoemen (bijv dbconnection)
 
-- Dbconnection class singleton maken, (try with resources)
++ Dbconnection class singleton maken, (try with resources)
 
-- Login xml alleen 1x, alleen deze loggen
++ Login xml alleen 1x, alleen deze loggen
 
-- DAO is voor CRUD, niet print. Print in viewer
++ DAO is voor CRUD, niet print. Print in viewer
 
 - Getter nog maken voor DAO's (get all accounts)
 
@@ -24,6 +24,6 @@ Overleg 20-12-2018:
 	
 - Get return generated keys --> zetten met setter
 
-- Equal methode --> dan ook hash code
++ Equal methode --> dan ook hash code
 
 - JUnit, equals (true/false) --> bij equals. id wel/niet meenemen. Henk zegt wel, bijv niet adress.

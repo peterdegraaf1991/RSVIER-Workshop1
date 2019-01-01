@@ -6,7 +6,7 @@ public class AddressType {
 	private int id;
 
 	
-	protected AddressType(int id, String description) {
+	public AddressType(int id, String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -19,11 +19,11 @@ public class AddressType {
 		this.id = id;
 	}
 
-	private int getId() {
+	public int getId() {
     	return id;
     }
 
-    private String getDescription() {
+    public String getDescription() {
     	return description;
     }
 }

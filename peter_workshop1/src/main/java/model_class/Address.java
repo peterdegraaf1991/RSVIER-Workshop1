@@ -1,51 +1,95 @@
 package model_class;
 
 	public class Address {
-		private  int 		id;
-		private  int 		customerId;
-		private  int 		houseNumber;
-		private  int    	addressTypeId;
-		private  String 	street;
-		private  String 	houseExtension;
+		private  int id;
+		private  int customerId;
+		private  int houseNumber;
+		private  int addressTypeId;
+		private  String street;
+		private  String houseExtension;
 		private  String	zipCode;
 		private  String	city;
-		
-//		Start of Address-Getters
-		public int getId() {
-			return id;
-		}
-		
-		public int getCustomerId() {
-			return customerId;
-		}
 
-		public int getAddressTypeId() {
-			return addressTypeId;
-		}
+	public Address(){
+	}
+	
+	public Address(int id, int customerId, int houseNumber, int addressTypeId, String street, String HouseExtension, String zipCode, String city){
+		this.id = id;
+		this. customerId = customerId;
+		this. houseNumber = houseNumber;
+		this. addressTypeId = addressTypeId;
+		this. street = street;
+		this. houseExtension = houseExtension;
+		this. zipCode = zipCode;
+		this.city = city;
+	}
 		
-		public String getStreet() {
-			return street;
-		}
+public int getId() {
+		return id;
+	}
 
-		public int getHouseNumber() {
-			return houseNumber;
-		}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public String getHouseExtension() {
-			return houseExtension;
-		}
-		
-		public String getZipCode() {
-			return zipCode;
-		}
-		
-		public String getCity() {
-			return city;
-		}
-		
-//		End of Address-Getters
-//		Start of AddressBuilder
-		private Address(Builder builder) {
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public int getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(int houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+
+	public int getAddressTypeId() {
+		return addressTypeId;
+	}
+
+	public void setAddressTypeId(int addressTypeId) {
+		this.addressTypeId = addressTypeId;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getHouseExtension() {
+		return houseExtension;
+	}
+
+	public void setHouseExtension(String houseExtension) {
+		this.houseExtension = houseExtension;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+		//		Start of AddressBuilder
+/*		private Address(Builder builder) {
 		this.customerId = builder.customerId;
 		this.addressTypeId = builder.addressTypeId;
 		this.id = builder.id;
@@ -125,6 +169,7 @@ package model_class;
 		return new Address(this);
 		}
 		}
+*/	
 	}
 // 		End of AddressBuilder
 // 		Start of AddressBuilder Implementation	

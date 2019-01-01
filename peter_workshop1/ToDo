@@ -1,0 +1,2 @@
+return int -> Generated Keys
+return int -> Rows Affected (preparedStatement.getUpdateCount() returns 0 of 1)

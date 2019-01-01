@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `peter_workshop1`.`account` (
   INDEX `fk_account_type` (`account_type_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
-  INDEX `fk_customer_id_3` (`customer_id` ASC) VISIBLE,
+  INDEX `fk_customer_id_1` (`customer_id` ASC) VISIBLE,
   CONSTRAINT `fk_account_type`
     FOREIGN KEY (`account_type_id`)
     REFERENCES `peter_workshop1`.`account_type` (`id`)

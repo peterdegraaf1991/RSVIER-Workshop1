@@ -5,9 +5,13 @@ public class AccountType {
 	private int accountType;
 	private String description;
 	
-		public AccountType(int accountType, String description){
-			   this.accountType = accountType;
-			   this.description = description;	   
+	
+	public AccountType(){
+	}
+	
+	public AccountType(int accountType, String description){
+		this.accountType = accountType;
+		this.description = description;	   
 	}
 	public String getDescription() {
 		return description;

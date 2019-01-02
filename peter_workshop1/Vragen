@@ -1,4 +1,21 @@
-31-12-2018
+02-01-2018
+1) 
+Bij aanmaken van account, idem voor customerId. Heb ik nog een fout staan in de database of probeer ik iets wat niet kan?
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`peter_workshop1`.`account`, CONSTRAINT `fk_account_type` FOREIGN KEY (`account_type_id`) REFERENCES `account_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+2)
+How do i use createAccount methode without constructing AccoutnDaoImpl? bijv. in AccountDaoImplJUnit
+
+3)
+Ik loop vast bij het maken van de read-DAO's. Wat zou voor mij een startpunt zijn?
+
+4) 
+Controleren singleton van DatabaseConnection en toepassing in DAO's
+
+5)
+Controleren try with resources (bijv in DAO's)
+
+6)...
 
 
 

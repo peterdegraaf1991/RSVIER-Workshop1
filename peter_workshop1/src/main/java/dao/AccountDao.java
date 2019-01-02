@@ -4,7 +4,7 @@ import model_class.Account;
 	
 	public interface AccountDao {
 
-		public void createAccount(Account account);
+		public int createAccount(Account account);
 
 		public void readAccount(int id);
 		

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model_class.Account;
@@ -15,22 +16,29 @@ public class AccountDaoImpl implements AccountDao{
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	
 @Override
-	public void createAccount(Account account) {
-		String query = "INSERT INTO account (id, email, password, account_type_id, customer_id) VALUES( ?, ?, ?, ?, ?)";
+	public int createAccount(Account account) {
+	int affectedRows = 0;
+		String query = "INSERT INTO account (email, password, account_type_id, customer_id) VALUES(?, ?, ?, ?)";
 	    try
 	    // Wordt nu ook "connection" gesloten of alleen "preparedStatement"?
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
-		         preparedStatement.setInt(1, account.getId()); 
-		         preparedStatement.setString(2, account.getEmail());
-		         preparedStatement.setString(3, account.getPassword()); 
-		         preparedStatement.setInt(4, account.getAccountType());
-		         preparedStatement.setInt(5, account.getCustomerId());
+	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS)){ 
+		         preparedStatement.setString(1, account.getEmail());
+		         preparedStatement.setString(2, account.getPassword()); 
+		         preparedStatement.setInt(3, account.getAccountType());
+		         preparedStatement.setInt(4, account.getCustomerId());
 		         preparedStatement.executeUpdate(); 
+		         
+		 	     ResultSet rs = preparedStatement.getGeneratedKeys();
+		 	     if (rs != null && rs.next()) {
+		 	    	affectedRows = rs.getInt(1);
+		 	     }
 		         LOG.info("Account for: " + account.getEmail() + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
-		} 
+
+		}
+		return affectedRows; 
 }
 
 @Override

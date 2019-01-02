@@ -31,11 +31,11 @@ public static void main(String[] args) throws SQLException {
 //		productDaoImpl.printProduct(2);
 //		productDaoImpl.printProduct();
 
-//		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
-//		AccountType admin = new AccountType (1, "admin");
-//		AccountType admin2 = new AccountType (2, "admin2");
-//		accountTypeDaoImpl.createAccountType(admin);
-//		accountTypeDaoImpl.createAccountType(admin2);
+		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
+		AccountType admin = new AccountType (1, "admin");
+		AccountType admin2 = new AccountType (2, "admin2");
+		accountTypeDaoImpl.createAccountType(admin);
+		accountTypeDaoImpl.createAccountType(admin2);
 		
 	
 //		CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();

@@ -6,26 +6,19 @@ public class Account {
 	private String email;
 	private String password;
 	private int accountType;
-	private int customerId;
+	public Customer customer;
+	
 	
 	public Account(){
 	}
 	
-	public Account(int id, int customer_id, String email, String password, int accountType){
+	public Account(int id, Customer customer, String email, String password, int accountType){
 	   this.id = id;
 	   this.email = email;
 	   this.password = password;
 	   this.accountType = accountType;
-	   this.customerId = customerId;
+	   this.customer = customer;
     }
-
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId ) {
-		this.customerId = customerId ;
-	}
 
 	public int getId(){
 		return id;
@@ -59,13 +52,20 @@ public class Account {
 	public String toString() {
 	  return id + " " + email + " " + accountType;
     }
+	public Customer getCustomer() {
+		return customer;
+	}
 
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + accountType;
-		result = prime * result + customerId;
+		result = prime * result
+				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result
@@ -84,7 +84,10 @@ public class Account {
 		Account other = (Account) obj;
 		if (accountType != other.accountType)
 			return false;
-		if (customerId != other.customerId)
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -100,6 +103,5 @@ public class Account {
 			return false;
 		return true;
 	}
-
 
 }

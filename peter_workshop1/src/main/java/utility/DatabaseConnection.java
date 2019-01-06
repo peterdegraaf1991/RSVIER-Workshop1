@@ -26,19 +26,18 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseConnection.cla
 		private String url;
 		private Connection connection;
 		
-		DatabaseConnection() {
-// is onderstaande if-block wel nodig nu ik gebruik maak van een enum? 
-// Als ik het goed begrijp wordt de constructor maximaal 1x uitgevoerd bij de init van de enum (welke static is).
-// --> singleton
+		public Connection getConnection() {
 			if (username == null || password == null || url == null)
 				getLoginDetails();
-			
+			// will any problems occur by placing 'connection == null' in the try block as done below?
 			try {
-				connection = DriverManager.getConnection(url,username,password);
-				} 
-			catch (SQLException e) {
+				if (connection == null || connection.isClosed()) {
+					connection = DriverManager.getConnection(url,username,password);
+				}
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			return connection;
 		}
 
 		private void getLoginDetails() {
@@ -56,11 +55,6 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseConnection.cla
 	   			e.printStackTrace();
 				}
 		}
-
-		public Connection getConnection() {
-			return connection;
-		}
-
 }
 
 

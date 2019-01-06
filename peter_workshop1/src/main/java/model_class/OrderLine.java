@@ -2,9 +2,9 @@ package model_class;
 
 public class OrderLine {
 
-	private final int id;
-	private final int orderId;
-	private final int productId;
+	private int id;
+	private int orderId;
+	private int productId;
 	private int amount;
 
 	public OrderLine(int id, int orderId, int productId, int amount) {

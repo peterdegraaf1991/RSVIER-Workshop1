@@ -9,8 +9,13 @@ import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProductDaoImpl implements ProductDao {
@@ -20,7 +25,8 @@ private static final Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	public void createProduct(Product product) {
 		String query = "INSERT INTO product (name, id, price, stock) VALUES( ?, ?, ?, ?)"; 
 	    try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setString(1, product.getName()); 
 		         preparedStatement.setInt(2, product.getId());
 		         preparedStatement.setBigDecimal(3, product.getPrice()); 
@@ -34,15 +40,77 @@ private static final Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	}
 	
 	@Override
-	public void readProduct(int id) {
-		// TODO Auto-generated method stub
-		
+	public Product readProductById(int id) {
+		Product product = new Product();
+		String query = "SELECT * FROM product WHERE id = ?"; 
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			preparedStatement.setInt(1, id); 
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			product.setName(resultSet.getString("name"));
+			product.setId (resultSet.getInt("id"));
+			product.setStock( resultSet.getInt("stock"));
+			product.setPrice (resultSet.getBigDecimal("price"));
+			LOG.info("ProudctInfo from product with id '" + id + "' read");
+			}
+
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return product;
+	}
+	
+	public Product readProductByName(String name) {
+		Product product = new Product();
+		String query = "SELECT * FROM product WHERE name = ?"; 
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			preparedStatement.setString(1, name); 
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			product.setName(resultSet.getString("name"));
+			product.setId (resultSet.getInt("id"));
+			product.setStock( resultSet.getInt("stock"));
+			product.setPrice (resultSet.getBigDecimal("price"));
+			LOG.info("ProudctInfo from product with name '" + name + "' read");
+			}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return product;
+	}
+	
+	public List<Product> readAllProducts() {
+		List<Product> productList = new ArrayList<>();
+		String query = "SELECT * FROM product"; 
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+			Product product = new Product();
+			product.setName(resultSet.getString("name"));
+			product.setId (resultSet.getInt("id"));
+			product.setStock( resultSet.getInt("stock"));
+			product.setPrice (resultSet.getBigDecimal("price"));
+			productList.add(product);
+			}
+			LOG.info("ProudctInfo of '" + productList.size() + "' products read");
+		}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return productList;
 	}
 	
 	public void updateProduct(Product product) {
 		String query = "UPDATE product SET name = ?, price = ? , stock = ?  WHERE id = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setString(1, product.getName()); 
 			  preparedStatement.setBigDecimal(2, product.getPrice()); 
 			  preparedStatement.setInt(3, product.getStock());
@@ -58,7 +126,8 @@ private static final Logger LOG = LoggerFactory.getLogger(ProductDaoImpl.class);
 	public void deleteProduct(int id) {
 		String query = "DELETE FROM product WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("Product with id: " + id + " successfully removed");

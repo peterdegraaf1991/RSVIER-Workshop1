@@ -1,7 +1,9 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 
 
 import model_class.*;
@@ -20,7 +22,8 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void createAccountType(AccountType accountType) {
 		String query = "INSERT INTO account_type (id, description) VALUES(?, ?)";
 	    try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setInt(1, accountType.getAccountType());  
 		         preparedStatement.setString(2, accountType.getDescription());
 		         preparedStatement.executeUpdate(); 
@@ -41,7 +44,8 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void updateAccountType(AccountType accountType) {
 		String query = "UPDATE account_type SET description = ? WHERE id = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){ 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){ 
 			  preparedStatement.setString(1, accountType.getDescription()); 
 			  preparedStatement.setInt(2, accountType.getAccountType()); 
 			  preparedStatement.executeUpdate(); 
@@ -56,7 +60,8 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void deleteAccountType(int id) {
 		String query = "DELETE FROM account_type WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("AccountId: " + id + " successfully removed");

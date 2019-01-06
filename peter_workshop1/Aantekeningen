@@ -1,3 +1,17 @@
+overleg 02-01-2019
+
+connect als aparte resource
+
+			connection = 0;
+			--> maak opnieuw
+			--> zodra gemaakt
+				connection closed? (isclosed())
+						-> make new connection
+					
+					
+					lazy fetch customer -> toevoegen aan account
+
+
 Overleg 20-12-2018:
 + Hoofdlettersgebruik in sql
 

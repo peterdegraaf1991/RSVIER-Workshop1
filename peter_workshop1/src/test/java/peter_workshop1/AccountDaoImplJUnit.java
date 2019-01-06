@@ -22,16 +22,15 @@ public class AccountDaoImplJUnit {
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.class);
 
 	@Test
-	public void testCreateAccount() {
+	public void testCreateAccount() {;
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
-		account.setCustomerId(1);
 		account.setAccountType(1);
-		// how do i use createAccount methode without constructing AccoutnDaoImpl?
-		AccountDaoImpl accountDaoImpl = new AccountDaoImpl();
+		account.getCustomer().setId(1);
+		AccountDao accountDaoImpl = new AccountDaoImpl();
 		int affectedRows = accountDaoImpl.createAccount(account);
-		assertEquals("Equals?: ",4, affectedRows);
+		assertEquals("Equals?: ",3, affectedRows);
 	}
 		
 	@Test

@@ -1,12 +1,16 @@
 package dao;
 
+import java.util.List;
+
 import model_class.Product;
 
 public interface ProductDao {
 
 public void createProduct(Product product);
  
-public void readProduct (int id);
+public Product readProductById (int id);
+public Product readProductByName (String name);
+public List<Product> readAllProducts ();
 
 public void updateProduct(Product product);
 

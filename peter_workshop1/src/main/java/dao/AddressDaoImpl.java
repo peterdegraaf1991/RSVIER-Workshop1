@@ -1,7 +1,9 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 
 
 import org.slf4j.Logger;
@@ -18,7 +20,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressDaoImpl.class);
 	public void createAddress(Address address) {
 			String query = "INSERT INTO address (id, customer_id, house_number, address_type_id, street, house_extension, zip_code, city) VALUES( ?, ?, ?, ?, ?)"; 
 		    try 
-		    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+					PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			         preparedStatement.setInt(1, address.getId()); 
 			         preparedStatement.setInt(2, address.getCustomerId());
 			         preparedStatement.setInt(3, address.getHouseNumber()); 
@@ -45,7 +48,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressDaoImpl.class);
 	public void updateAddress(Address address) {
 		String query = "UPDATE address SET customer_id = ?, house_number = ?, address_type_id = ?, street = ?, house_extension = ?, zip_code = ?, city = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 	         preparedStatement.setInt(1, address.getCustomerId());
 	         preparedStatement.setInt(2, address.getHouseNumber()); 
 	         preparedStatement.setInt(3, address.getAddressTypeId()); 
@@ -65,7 +69,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressDaoImpl.class);
 	public void deleteAddress(int id) {
 		String query = "DELETE FROM address WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("Address with id: " + id + " successfully removed");

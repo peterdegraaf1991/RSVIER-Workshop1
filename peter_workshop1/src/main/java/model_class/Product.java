@@ -16,6 +16,10 @@ public class Product {
       this.stock = stock;
     }
 
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 		}
@@ -43,5 +47,12 @@ public class Product {
 	public void setStock(int stock) {
 		this.stock = stock;
 		}
-}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
+	}
+
 

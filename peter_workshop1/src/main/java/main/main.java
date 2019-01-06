@@ -14,10 +14,10 @@ public class main {
 public static void main(String[] args) throws SQLException {
 
 // Hoe vindt ik welke resources nog open staan. Ik lees over de 'SpotBugs' maven-plugin?
-//		ProductDaoImpl productDaoImpl = new ProductDaoImpl();
+		ProductDao productDaoImpl = new ProductDaoImpl();
 		
-//		Product PetersPion5 = new Product("PetersPion5", 9, new BigDecimal("6"), 10);
-//		Product PetersKoning5 = new Product("PetersKoning5", 10, new BigDecimal("15"), 20);
+//		Product PetersPion5 = new Product("PetersPion7", 11, new BigDecimal("6"), 10);
+//		Product PetersKoning5 = new Product("PetersKoning7", 12, new BigDecimal("15"), 20);
 //		
 //		Product PetersPionUpdated = new Product("PetersPionUpdated", 3, new BigDecimal("7"), 10);
 //		
@@ -26,17 +26,19 @@ public static void main(String[] args) throws SQLException {
 //		
 //		productDaoImpl.updateProduct(PetersPionUpdated);
 
+		System.out.println(productDaoImpl.readProductById(11).getName());
+		productDaoImpl.readAllProducts();
 //		productDaoImpl.printProduct("PetersPion");
 //		productDaoImpl.printProduct("PetersPionUpdated");
 //		productDaoImpl.printProduct(2);
 //		productDaoImpl.printProduct();
 
-		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
+/*		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
 		AccountType admin = new AccountType (1, "admin");
 		AccountType admin2 = new AccountType (2, "admin2");
 		accountTypeDaoImpl.createAccountType(admin);
 		accountTypeDaoImpl.createAccountType(admin2);
-		
+*/		
 	
 //		CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
 //		Customer customer = new Customer (5,"P","d","G");

@@ -9,8 +9,8 @@ public class Order {
   private int id;
   private BigDecimal totalCost;
   private LocalDateTime date;
-  private int customerId;
-  private int orderStatusId;
+  private Customer customer;
+  private OrderLine orderLine;
   
   public Order(int id, BigDecimal totalCost, LocalDateTime date, int customerId, int orderStatusId) {
 	  this.id = id;

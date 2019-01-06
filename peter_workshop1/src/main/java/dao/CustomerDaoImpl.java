@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -16,7 +17,8 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 	public void createCustomer(Customer customer) {
 		String query = "INSERT INTO customer (id, firstname, middlename, surname) VALUES( ?, ?, ?, ?)"; 
 	    try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setInt(1, customer.getId()); 
 		         preparedStatement.setString(2, customer.getFirstname());
 		         preparedStatement.setString(3, customer.getMiddlename());
@@ -33,7 +35,8 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 	public void updateCustomer(Customer customer) {
 		String query = "UPDATE customer SET firstname = ?, middlename = ?, surname = ? WHERE id = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			 preparedStatement.setString(1, customer.getFirstname());
 	         preparedStatement.setString(2, customer.getMiddlename());
 	         preparedStatement.setString(3, customer.getSurname());
@@ -49,7 +52,8 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 	public void deleteCustomer(int id) {
 		String query = "DELETE FROM customer WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("Customer with id: " + id + " successfully removed");

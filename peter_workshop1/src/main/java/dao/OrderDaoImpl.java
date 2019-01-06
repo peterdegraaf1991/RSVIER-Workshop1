@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,7 +19,8 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	public void createOrder(Order order) {
 		String query = "INSERT INTO order (id, total_cost, date, customer_id, order_status_id) VALUES( ?, ?, ?, ?, ?)"; 
 	    try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setInt(1, order.getId()); 
 		         preparedStatement.setBigDecimal(2, order.getTotalCost());
 		         preparedStatement.setTimestamp(3, Timestamp.valueOf(order.getDate())); 
@@ -42,7 +44,8 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	public void updateOrder(Order order) {
 		String query = "UPDATE order SET total_cost = ? , date = ?, customer_id = ?, order_status_id = ?  WHERE id = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			preparedStatement.setBigDecimal(1, order.getTotalCost());
 	        preparedStatement.setTimestamp(2, Timestamp.valueOf(order.getDate())); 
 	        preparedStatement.setInt(3, order.getCustomerId()); 
@@ -59,7 +62,8 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	public void deleteOrder(int id) {
 		String query = "DELETE FROM order WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("Order with id: " + id + " successfully removed");

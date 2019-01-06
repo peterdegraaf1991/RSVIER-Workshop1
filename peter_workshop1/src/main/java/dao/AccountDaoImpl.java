@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,12 +21,14 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	int affectedRows = 0;
 		String query = "INSERT INTO account (email, password, account_type_id, customer_id) VALUES(?, ?, ?, ?)";
 	    try
-	    // Wordt nu ook "connection" gesloten of alleen "preparedStatement"?
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS)){ 
-		         preparedStatement.setString(1, account.getEmail());
+	    (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+	     PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
+ 
+		 
+	    		 preparedStatement.setString(1, account.getEmail());
 		         preparedStatement.setString(2, account.getPassword()); 
 		         preparedStatement.setInt(3, account.getAccountType());
-		         preparedStatement.setInt(4, account.getCustomerId());
+		         preparedStatement.setInt(4, account.getCustomer().getId());
 		         preparedStatement.executeUpdate(); 
 		         
 		 	     ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -50,7 +53,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	public void updateAccount(Account account) {
 		String query = "UPDATE account SET email = ? , password = ? , account_type_id = ? WHERE id = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setString(1, account.getEmail()); 
 			  preparedStatement.setString(2, account.getPassword());
 			  preparedStatement.setInt(3, account.getAccountType());
@@ -68,7 +72,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	public void deleteAccount(int id) {
 		String query = "DELETE FROM account WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("Account with id: " + id + " successfully removed");

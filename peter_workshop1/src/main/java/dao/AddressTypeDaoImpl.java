@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -16,7 +17,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressTypeDaoImpl.cla
 	public void createAddressType(AddressType addressType) {
 		String query = "INSERT INTO address_type (id, description) VALUES( ?, ?)"; 
 	    try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setInt(1, addressType.getId()); 
 		         preparedStatement.setString(2, addressType.getDescription());
 		         preparedStatement.executeUpdate(); 
@@ -31,7 +33,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressTypeDaoImpl.cla
 	public void updateAddressType(AddressType addressType) {
 		String query = "UPDATE address_type SET description = ?"; 
 		try 
-	    (PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 				preparedStatement.setString(1, addressType.getDescription());
 				preparedStatement.executeUpdate(); 
 	         	LOG.info("AddressTypeId: " + addressType.getId() + " successfully updated");
@@ -46,7 +49,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressTypeDaoImpl.cla
 	public void deleteAddressType(int id) {
 		String query = "DELETE FROM address_type WHERE id = ?"; 
 		try 
-		(PreparedStatement preparedStatement = DatabaseConnection.INSTANCE.getConnection().prepareStatement(query)){
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("AddressType with id: " + id + " successfully removed");

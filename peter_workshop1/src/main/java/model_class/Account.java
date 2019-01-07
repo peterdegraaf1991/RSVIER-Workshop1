@@ -3,20 +3,19 @@ package model_class;
 public class Account {
 
 	private int id;
+	private Customer customer;
 	private String email;
 	private String password;
-	private int accountType;
-	private Customer customer;
+	private int accountTypeId;
 	
 	
 	public Account(){
 	}
 	
-	public Account(int id, Customer customer, String email, String password, int accountType){
-	   this.id = id;
+	public Account(String email, String password, int accountTypeId){
 	   this.email = email;
 	   this.password = password;
-	   this.accountType = accountType;
+	   this.accountTypeId = accountTypeId;
 	   this.customer = customer;
     }
 
@@ -28,8 +27,8 @@ public class Account {
 		return email;
 		}
 
-	public int getAccountType() {
-		return accountType;
+	public int getAccountTypeId() {
+		return accountTypeId;
 		}
 	
 	public void setEmail(String email) {
@@ -40,13 +39,13 @@ public class Account {
 		this.password = password;
 	}
 
-	public void setAccountType(int accountType) {
-		this.accountType = accountType;
+	public void setAccountTypeId(int accountTypeId) {
+		this.accountTypeId = accountTypeId;
 	}
 
 	@Override	
 	public String toString() {
-	  return id + " " + email + " " + accountType;
+	  return id + " " + email + " " + accountTypeId;
     }
 	public Customer getCustomer() {
 		return customer;

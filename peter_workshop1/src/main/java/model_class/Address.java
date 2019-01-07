@@ -13,8 +13,7 @@ package model_class;
 	public Address(){
 	}
 	
-	public Address(int id, int customerId, int houseNumber, int addressTypeId, String street, String HouseExtension, String zipCode, String city){
-		this.id = id;
+	public Address(int customerId, int houseNumber, int addressTypeId, String street, String houseExtension, String zipCode, String city){
 		this. customerId = customerId;
 		this. houseNumber = houseNumber;
 		this. addressTypeId = addressTypeId;

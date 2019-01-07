@@ -27,8 +27,7 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.cl
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
-		account.setAccountType(1);
-		account.getCustomer().setId(1);
+		account.setAccountTypeId(1);
 		AccountDao accountDaoImpl = new AccountDaoImpl();
 		int affectedRows = accountDaoImpl.createAccount(account);
 		assertEquals("Equals?: ",3, affectedRows);
@@ -49,8 +48,8 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.cl
 		@BeforeEach
 		public void before() {
 			try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
-				String query1 = "INSERT INTO account (email, password,VALUES (account2@hotmail.com,rsvier1,1,1)";
-				String query2 = "INSERT INTO account email = account2@hotmail.com, password = rsvier1,account_type = 2, customer_id = 2";
+				String query1 = "INSERT INTO customer (id = 5, firstname = Peter, middlename = de, surname = Graaf";
+				String query2 = "INSERT INTO account email = peterdegraaf1991@hotmail.com, password = rsvier, account_type = 1, customer_id = 5";
 				statement.execute(query1);
 				statement.execute(query2);
 				} 
@@ -59,7 +58,7 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.cl
 		}
 		}
 		
-		@AfterEach
+/*		@AfterEach
 		public void after() {
 			try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
 				String query1 = "DELETE FROM account";
@@ -69,4 +68,5 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.cl
 				e.printStackTrace();
 			}
 		}
+*/
 }

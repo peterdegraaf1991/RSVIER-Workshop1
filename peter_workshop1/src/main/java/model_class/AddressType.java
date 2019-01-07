@@ -6,8 +6,7 @@ public class AddressType {
 	private int id;
 
 	
-	public AddressType(int id, String description) {
-		this.id = id;
+	public AddressType(String description) {
 		this.description = description;
 	}
 

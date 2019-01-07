@@ -25,10 +25,9 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	    (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 	     PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
  
-		 
 	    		 preparedStatement.setString(1, account.getEmail());
 		         preparedStatement.setString(2, account.getPassword()); 
-		         preparedStatement.setInt(3, account.getAccountType());
+		         preparedStatement.setInt(3, account.getAccountTypeId());
 		         preparedStatement.setInt(4, account.getCustomer().getId());
 		         preparedStatement.executeUpdate(); 
 		         
@@ -54,7 +53,7 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 			  preparedStatement.setString(1, account.getEmail()); 
 			//getter for password allowed?
 			  preparedStatement.setString(2, account.getPassword());
-			  preparedStatement.setInt(3, account.getAccountType());
+			  preparedStatement.setInt(3, account.getAccountTypeId());
 			  preparedStatement.setInt(4, account.getId());
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("AccountID: " + account.getId() + " has been updated");
@@ -93,7 +92,7 @@ public Account readAccountById(int id) {
 		//?password remains null?
 		account.setId (resultSet.getInt("id"));
 		account.setEmail (resultSet.getString("email"));
-		account.setAccountType (resultSet.getInt("account_type_id"));
+		account.setAccountTypeId (resultSet.getInt("account_type_id"));
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
 		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
 		account.setCustomer (customer);
@@ -117,7 +116,7 @@ public Account readAccountByEmail(String email) {
 		//?password remains null?
 		account.setId (resultSet.getInt("id"));
 		account.setEmail (resultSet.getString("email"));
-		account.setAccountType (resultSet.getInt("account_type_id"));
+		account.setAccountTypeId (resultSet.getInt("account_type_id"));
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
 		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
 		account.setCustomer (customer);

@@ -13,8 +13,7 @@ public class Order {
   private Customer customer;
   private List<OrderLine> orderLineList;
   
-  public Order(int id, BigDecimal totalCost, LocalDateTime date, Customer customer, List<OrderLine> orderLineList) {
-	  this.id = id;
+  public Order(BigDecimal totalCost, LocalDateTime date, Customer customer, List<OrderLine> orderLineList) {
 	  this.totalCost = totalCost;
 	  this.date = date;
 	  this.customer = customer;

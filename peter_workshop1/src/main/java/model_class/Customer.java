@@ -8,14 +8,9 @@ public class Customer {
 	private String surname;
     
 	public Customer(){
-		id = 0;
-		firstname = null; 
-		middlename = null; 
-		surname = null;
 	}
 	
-	public Customer (int id,String firstname, String middlename, String surname){
-		this.id = id;
+	public Customer (String firstname, String middlename, String surname){
 		this.firstname = firstname;
 		this.middlename = middlename;
 		this.surname = surname;

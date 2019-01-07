@@ -14,8 +14,8 @@ public class main {
 public static void main(String[] args) throws SQLException {
 
 // Hoe vindt ik welke resources nog open staan. Ik lees over de 'SpotBugs' maven-plugin?
-		ProductDao productDaoImpl = new ProductDaoImpl();
-		productDaoImpl.readAllProducts();
+//		ProductDao productDaoImpl = new ProductDaoImpl();
+//		productDaoImpl.readAllProducts();
 //		Product PetersPion5 = new Product("PetersPion7", 11, new BigDecimal("6"), 10);
 //		Product PetersKoning5 = new Product("PetersKoning7", 12, new BigDecimal("15"), 20);
 //		
@@ -33,22 +33,23 @@ public static void main(String[] args) throws SQLException {
 //		productDaoImpl.printProduct(2);
 //		productDaoImpl.printProduct();
 
-/*		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
-		AccountType admin = new AccountType (1, "admin");
-		AccountType admin2 = new AccountType (2, "admin2");
+		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
+		AccountType admin = new AccountType ("admin");
 		accountTypeDaoImpl.createAccountType(admin);
-		accountTypeDaoImpl.createAccountType(admin2);
-*/		
 	
-//		CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
-//		Customer customer = new Customer (5,"P","d","G");
-//		customerDaoImpl.createCustomer (customer);
+		CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
+		Customer customer = new Customer ("Peter","de","Graaf");
+		customerDaoImpl.createCustomer (customer);
 		
-//		AccountDaoImpl accountDaoImpl = new AccountDaoImpl();
-//		Account accountPeter = new Account (5,0,"peterdegraaf1991@hotmail.com","rsvier",1);
-//		Account accountPeterUpdated = new Account (5,5,"peter2@hotmail.com",null,2);
-//		accountDaoImpl.createAccount(accountPeter);
-//		accountDaoImpl.updateAccount(accountPeterUpdated);
-	}
+		AccountDaoImpl accountDaoImpl = new AccountDaoImpl();
+		Account accountPeter = new Account (customer,"peterdegraaf1991@hotmail.com","rsvier",1);
+//		System.out.println(accountPeter.getCustomer().getId());
+//	    System.out.println(accountPeter.getAccountTypeId());
 
+		accountDaoImpl.createAccount(accountPeter);
+//		Account accountPeterUpdated = new Account (5,5,"peter2@hotmail.com",null,2);
+//		accountDaoImpl.updateAccount(accountPeterUpdated);
+//	}	public Account(int id, Customer customer, String email, String password, int accountTypeId)
+
+}
 }

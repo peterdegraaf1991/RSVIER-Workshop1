@@ -9,8 +9,7 @@ public class OrderLine {
 	public OrderLine(){
 	}
 	
-	public OrderLine(int id, Order order, Product product, int amount) {
-		this.id = id;
+	public OrderLine(Order order, Product product, int amount) {
 		this.product = product;
 		this.amount = amount;
 	}

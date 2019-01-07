@@ -9,9 +9,8 @@ public class Product {
 	private int stock;
 	private BigDecimal price;
 
-    public Product(String name, int id, BigDecimal price, int stock) {
+    public Product(String name, BigDecimal price, int stock) {
       this.name = name;
-      this.id = id;
       this.price = price;
       this.stock = stock;
     }

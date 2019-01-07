@@ -3,27 +3,32 @@ package model_class;
 public class OrderLine {
 
 	private int id;
-	private int orderId;
-	private int productId;
+	private Product product;
 	private int amount;
 
-	public OrderLine(int id, int orderId, int productId, int amount) {
+	public OrderLine(){
+	}
+	
+	public OrderLine(int id, Order order, Product product, int amount) {
 		this.id = id;
-		this.orderId = orderId;
-		this.productId = productId;
+		this.product = product;
 		this.amount = amount;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
 
-	public int getOrderId() {
-		return orderId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getProductId() {
-		return productId;
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getAmount() {
@@ -33,4 +38,5 @@ public class OrderLine {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
 }

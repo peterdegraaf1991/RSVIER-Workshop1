@@ -2,6 +2,7 @@ package model_class;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 
@@ -10,48 +11,61 @@ public class Order {
   private BigDecimal totalCost;
   private LocalDateTime date;
   private Customer customer;
-  private OrderLine orderLine;
+  private List<OrderLine> orderLines;
   
-  public Order(int id, BigDecimal totalCost, LocalDateTime date, int customerId, int orderStatusId) {
+  public Order(int id, BigDecimal totalCost, LocalDateTime date, Customer customer, List<OrderLine> orderLines) {
 	  this.id = id;
 	  this.totalCost = totalCost;
 	  this.date = date;
-	  this.customerId = customerId;
-	  this.orderStatusId = orderStatusId;
+	  this.customer = customer;
+	  this.orderLines = orderLines;
   }
 
-  public int getId() {
-	  return id;
-	  }
+public Order() {
+	// TODO Auto-generated constructor stub
+}
 
-  public BigDecimal	getTotalCost() {
-	  return totalCost;
-	  }
+public int getId() {
+	return id;
+}
 
-  public LocalDateTime getDate() {
-	  return date;
-	  }
+public void setId(int id) {
+	this.id = id;
+}
 
-  public int getCustomerId(){
-	  return customerId;
-	  }
+public BigDecimal getTotalCost() {
+	return totalCost;
+}
 
-  public int getOrderStatusId() {
-	  return orderStatusId;
-  }
-
-  public void setDate(LocalDateTime date) {
-	  this.date = date;
-	  }
-
-  public BigDecimal	calculateTotalCost() {
-	  return totalCost;
-	  }
-
-  public void setorderStatusId(int orderStatusId) {
-	this.orderStatusId = orderStatusId;  
-  }
-  public void setTotalCost(BigDecimal totalCost) {
+public void setTotalCost(BigDecimal totalCost) {
 	this.totalCost = totalCost;
 }
+
+public LocalDateTime getDate() {
+	return date;
+}
+
+public void setDate(LocalDateTime date) {
+	this.date = date;
+}
+
+public Customer getCustomer() {
+	return customer;
+}
+
+public void setCustomer(Customer customer) {
+	this.customer = customer;
+}
+
+public List<OrderLine> getOrderLines() {
+	return orderLines;
+}
+
+public void setOrderLines(List<OrderLine> orderLines) {
+	this.orderLines = orderLines;
+}
+
+
+
+
 }

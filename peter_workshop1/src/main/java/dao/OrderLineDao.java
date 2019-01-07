@@ -1,12 +1,16 @@
 package dao;
 
+import java.util.List;
+
 import model_class.OrderLine;
 
 public interface OrderLineDao {
 
 	public void createOrderLine(OrderLine orderLine);
 	
-	public void readOrderLine (int id);
+	// only by id? maybe by product etc.?
+	public OrderLine readOrderLineById (int id);
+	public List <OrderLine> readAllOrderLines ();
 	
 	public void updateOrderLine(OrderLine orderLine);
 	

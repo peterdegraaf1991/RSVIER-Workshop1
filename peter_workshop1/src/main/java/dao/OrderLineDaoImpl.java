@@ -33,7 +33,6 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 	    	e.printStackTrace(); 
 		} 
 	}
-	
 	@Override
 	public OrderLine readOrderLineById(int id) {
 		OrderLine orderLine = new OrderLine();
@@ -48,7 +47,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			orderLine.setAmount (resultSet.getInt("amount"));
 			ProductDao productDaoImpl = new ProductDaoImpl();
 			//uses resultSet from readOrderLine or readProduct?
-			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
+			Product product = productDaoImpl.readProductById(resultSet.getInt("product_id"));
 			orderLine.setProduct(product); 
 			LOG.info("ProductLine with id '" + id + "' read");
 			}
@@ -57,6 +56,32 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			e.printStackTrace(); 
 		} 
 		return orderLine;
+	}
+	
+	@Override
+	public List<OrderLine> readOrderLinesOfOrderId(int id) {
+		List<OrderLine> orderLineList = new ArrayList<>();
+		String query = "SELECT * FROM order_line WHERE order_id = ?";
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+			OrderLine orderLine = new OrderLine();
+			orderLine.setId (resultSet.getInt("id"));
+			orderLine.setAmount (resultSet.getInt("amount"));
+			ProductDao productDaoImpl = new ProductDaoImpl();
+			//uses resultSet from readOrderLine or readProduct?
+			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
+			orderLine.setProduct(product); 
+			orderLineList.add(orderLine);
+			}
+			LOG.info("'" + orderLineList.size() + "' OrderLines read");
+		}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return orderLineList;
 	}
 	
 	public List<OrderLine> readAllOrderLines() {

@@ -12,8 +12,8 @@ public interface OrderDao {
 
 	public void createOrder(Order order);
 	
-	public void readOrderById (int id);
-	public void readOrderFromCustomer(Customer customer);
+	public Order readOrderById (int id);
+	public List<Order> readOrdersOfCustomerId(int customer_id);
 	
 	public void updateOrder(Order order);
 	

@@ -1,7 +1,5 @@
 package dao;
 
-
-
 import model_class.Product;
 
 import org.slf4j.Logger;
@@ -9,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

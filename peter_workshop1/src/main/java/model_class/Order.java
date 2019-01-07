@@ -11,14 +11,14 @@ public class Order {
   private BigDecimal totalCost;
   private LocalDateTime date;
   private Customer customer;
-  private List<OrderLine> orderLines;
+  private List<OrderLine> orderLineList;
   
-  public Order(int id, BigDecimal totalCost, LocalDateTime date, Customer customer, List<OrderLine> orderLines) {
+  public Order(int id, BigDecimal totalCost, LocalDateTime date, Customer customer, List<OrderLine> orderLineList) {
 	  this.id = id;
 	  this.totalCost = totalCost;
 	  this.date = date;
 	  this.customer = customer;
-	  this.orderLines = orderLines;
+	  this.orderLineList = orderLineList;
   }
 
 public Order() {
@@ -58,11 +58,11 @@ public void setCustomer(Customer customer) {
 }
 
 public List<OrderLine> getOrderLines() {
-	return orderLines;
+	return orderLineList;
 }
 
 public void setOrderLines(List<OrderLine> orderLines) {
-	this.orderLines = orderLines;
+	this.orderLineList = orderLines;
 }
 
 

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model_class.Account;
+import model_class.Customer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,17 +46,13 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 }
 
 @Override
-	public void readAccount(int id) {
-
-}
-
-@Override
 	public void updateAccount(Account account) {
 		String query = "UPDATE account SET email = ? , password = ? , account_type_id = ? WHERE id = ?"; 
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setString(1, account.getEmail()); 
+			//getter for password allowed?
 			  preparedStatement.setString(2, account.getPassword());
 			  preparedStatement.setInt(3, account.getAccountType());
 			  preparedStatement.setInt(4, account.getId());
@@ -82,7 +79,58 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 			e.printStackTrace(); 
 		} 
 	}
+
+@Override
+public Account readAccountById(int id) {
+	Account account = new Account();
+	String query = "SELECT * FROM account WHERE id = ?";
+	try 
+	   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(query)){
+		preparedStatement.setInt(1, id); 
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.first();
+		//?password remains null?
+		account.setId (resultSet.getInt("id"));
+		account.setEmail (resultSet.getString("email"));
+		account.setAccountType (resultSet.getInt("account_type_id"));
+		CustomerDao customerDaoImpl = new CustomerDaoImpl();
+		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
+		account.setCustomer (customer);
+	}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return account;
+	}
+
+@Override
+public Account readAccountByEmail(String email) {
+	Account account = new Account();
+	String query = "SELECT * FROM account WHERE email = ?";
+	try 
+	   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(query)){
+		preparedStatement.setString(1, email); 
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.first();
+		//?password remains null?
+		account.setId (resultSet.getInt("id"));
+		account.setEmail (resultSet.getString("email"));
+		account.setAccountType (resultSet.getInt("account_type_id"));
+		CustomerDao customerDaoImpl = new CustomerDaoImpl();
+		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
+		account.setCustomer (customer);
+	}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return account;
+	}
 }
+	
+	
+
 
 //	public void printAccount(){
 //		  try {

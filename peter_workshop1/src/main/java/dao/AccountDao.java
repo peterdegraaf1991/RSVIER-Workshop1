@@ -6,7 +6,8 @@ import model_class.Account;
 
 		public int createAccount(Account account);
 
-		public void readAccount(int id);
+		public Account readAccountById(int id);
+		public Account readAccountByEmail(String email);
 		
 		public void updateAccount(Account account);
 	

@@ -2,9 +2,8 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
 
 import model_class.*;
 
@@ -24,7 +23,7 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	    try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
-		         preparedStatement.setInt(1, accountType.getAccountType());  
+		         preparedStatement.setInt(1, accountType.getId());  
 		         preparedStatement.setString(2, accountType.getDescription());
 		         preparedStatement.executeUpdate(); 
 		         LOG.info("Accounttype: " + accountType.getDescription() + " successfully created"); 
@@ -32,12 +31,6 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 
-	}
-
-	@Override
-	public void readAccountType(int id) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -47,9 +40,9 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){ 
 			  preparedStatement.setString(1, accountType.getDescription()); 
-			  preparedStatement.setInt(2, accountType.getAccountType()); 
+			  preparedStatement.setInt(2, accountType.getId()); 
 			  preparedStatement.executeUpdate(); 
-			  LOG.info("AccountTypeId: " + accountType.getAccountType() + "now has description: " + accountType.getDescription());
+			  LOG.info("AccountTypeId: " + accountType.getId() + "now has description: " + accountType.getDescription());
 		}
 		catch (SQLException e) { 
 			e.printStackTrace(); 
@@ -70,6 +63,24 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 			e.printStackTrace(); 
 		} 
 	}
+
+	@Override
+	public AccountType readAccountType(int id) {
+			AccountType accountType = new AccountType();
+			String query = "SELECT * FROM account_type WHERE id = ?"; 
+			try 
+			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setInt(1, id); 
+				ResultSet resultSet = preparedStatement.executeQuery();
+				resultSet.first();
+				accountType.setId (resultSet.getInt("id"));
+				accountType.setDescription (resultSet.getString("description"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return accountType;
+	}	
 }
 
 //	public void printAccountType() {

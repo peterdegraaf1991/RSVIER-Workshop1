@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -62,11 +63,44 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 			e.printStackTrace(); 
 		} 
 	}
+
+	@Override
+	public Customer readCustomerById(int id) {
+		Customer customer = new Customer();
+		String query = "SELECT * FROM customer WHERE id = ?"; 
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			preparedStatement.setInt(1, id); 
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			customer.setId (resultSet.getInt("id"));
+			customer.setFirstname (resultSet.getString("firstname"));
+			customer.setMiddlename (resultSet.getString("middlename"));
+			customer.setSurname (resultSet.getString("surname"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return customer;
+	}
 	
 	@Override
-	public void readCustomer(int id) {
-		// TODO Auto-generated method stub
-		
+	public Customer readCustomerByLastname(String lastname) {
+			Customer customer = new Customer();
+			String query = "SELECT * FROM customer WHERE lastname = ?"; 
+			try 
+			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setString(1, lastname); 
+				ResultSet resultSet = preparedStatement.executeQuery();
+				resultSet.first();
+				customer.setId (resultSet.getInt("id"));
+				customer.setFirstname (resultSet.getString("firstname"));
+				customer.setMiddlename (resultSet.getString("middlename"));
+				customer.setSurname (resultSet.getString("surname"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return customer;
 	}
-
 }

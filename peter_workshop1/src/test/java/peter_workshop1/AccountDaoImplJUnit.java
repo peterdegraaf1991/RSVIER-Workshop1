@@ -2,7 +2,8 @@ package peter_workshop1;
 
 import static org.junit.Assert.*;
 
-import java.sql.PreparedStatement;
+
+
 import java.sql.SQLException;
 import java.sql.Statement;
 

@@ -8,7 +8,7 @@ public interface AddressTypeDao {
 	
 	public void deleteAddressType(int id);
 	
-	public void readAddressType(int id);
+	public AddressType readAddressType(int id);
 	
 	public void updateAddressType(AddressType addressType);
 }

@@ -2,15 +2,15 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
 import model_class.Address;
+
 
 
 public class AddressDaoImpl implements AddressDao{
@@ -37,12 +37,6 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressDaoImpl.class);
 		    	e.printStackTrace(); 
 			} 
 		}
-
-	@Override
-	public void readAddress(int id) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void updateAddress(Address address) {
@@ -80,4 +74,53 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressDaoImpl.class);
 		} 
 	}
 
-}
+	@Override
+	public Address readAddress(int id) {
+		Address address = new Address();
+		String query = "Select * FROM address WHERE id = ?";
+		try
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			preparedStatement.setInt(1, id); 
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			address.setId (resultSet.getInt("id"));
+			address.setCustomerId (resultSet.getInt("customer_id"));
+			address.setHouseNumber (resultSet.getInt("house_number"));
+			address.setAddressTypeId (resultSet.getInt("address_type_id"));
+			address.setStreet (resultSet.getString("street"));
+			address.setHouseExtension (resultSet.getString("house_extension"));
+			address.setZipCode(resultSet.getString("zip_code"));
+			address.setCity (resultSet.getString("city"));	
+	}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return address;
+	}
+	
+	@Override
+	public Address readAddressOfCustomer(int customer_id) {
+			Address address = new Address();
+			String query = "Select * FROM address WHERE customer_id = ?";
+			try
+			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setInt(1, customer_id); 
+				ResultSet resultSet = preparedStatement.executeQuery();
+				resultSet.first();
+				address.setId (resultSet.getInt("id"));
+				address.setCustomerId (resultSet.getInt("customer_id"));
+				address.setHouseNumber (resultSet.getInt("house_number"));
+				address.setAddressTypeId (resultSet.getInt("address_type_id"));
+				address.setStreet (resultSet.getString("street"));
+				address.setHouseExtension (resultSet.getString("house_extension"));
+				address.setZipCode(resultSet.getString("zip_code"));
+				address.setCity (resultSet.getString("city"));	
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return address;
+		}
+	}

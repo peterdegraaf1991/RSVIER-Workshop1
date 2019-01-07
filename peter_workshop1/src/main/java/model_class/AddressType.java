@@ -11,7 +11,11 @@ public class AddressType {
 		this.description = description;
 	}
 
-    public void setDescription(String description) {
+    public AddressType() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setDescription(String description) {
 		this.description = description;
 	}
 

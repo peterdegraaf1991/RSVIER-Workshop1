@@ -15,7 +15,7 @@ public static void main(String[] args) throws SQLException {
 
 // Hoe vindt ik welke resources nog open staan. Ik lees over de 'SpotBugs' maven-plugin?
 		ProductDao productDaoImpl = new ProductDaoImpl();
-		
+		productDaoImpl.readAllProducts();
 //		Product PetersPion5 = new Product("PetersPion7", 11, new BigDecimal("6"), 10);
 //		Product PetersKoning5 = new Product("PetersKoning7", 12, new BigDecimal("15"), 20);
 //		
@@ -26,8 +26,8 @@ public static void main(String[] args) throws SQLException {
 //		
 //		productDaoImpl.updateProduct(PetersPionUpdated);
 
-		System.out.println(productDaoImpl.readProductById(11).getName());
-		productDaoImpl.readAllProducts();
+//		System.out.println(productDaoImpl.readProductById(11).getName());
+//		productDaoImpl.readAllProducts();
 //		productDaoImpl.printProduct("PetersPion");
 //		productDaoImpl.printProduct("PetersPionUpdated");
 //		productDaoImpl.printProduct(2);

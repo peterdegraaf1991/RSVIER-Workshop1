@@ -1,18 +1,13 @@
 package dao;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.time.ZonedDateTime
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +16,6 @@ import utility.DatabaseConnection;
 import model_class.Customer;
 import model_class.Order;
 import model_class.OrderLine;
-import model_class.Product;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -44,8 +38,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	    	e.printStackTrace(); 
 		} 
 	}
-
-
+	
 	@Override
 	public void updateOrder(Order order) {
 		String query = "UPDATE order SET total_cost = ? , date = ?, customer_id = ?  WHERE id = ?"; 
@@ -53,7 +46,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			preparedStatement.setBigDecimal(1, order.getTotalCost());
-	        preparedStatement.setTimestamp(2, Timestamp.valueOf(order.getDate())); 
+	        preparedStatement.setTimestamp(2, Timestamp.from(order.getDate().atZone(ZoneId.of("Europe/Amsterdam")).toInstant())); 
 	        preparedStatement.setInt(3, order.getCustomer().getId()); 
 	        preparedStatement.executeUpdate(); 
 			LOG.info("order with id '" + order.getId()+ "' has been updated");
@@ -79,7 +72,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	}
 
 	@Override
-	public void readOrderById(int id) {
+	public Order readOrderById(int id) {
 		Order order = new Order();
 		String query = "SELECT * FROM order WHERE id = ?"; 
 		try 
@@ -97,42 +90,45 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 			order.setCustomer(customer);
 			
 			OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
-			OrderLine orderLine = orderLineDaoImpl.readOrderLineById(resultSet.getInt("id"));
-			order.setOrderLine(orderLine);
-			
-			
-			ProductDao productDaoImpl = new ProductDaoImpl();
-			//uses resultSet from readOrderLine or readProduct?
-			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
-			orderLine.setProduct(product); 
-			
-			
-			  private int id;
-			  private BigDecimal totalCost;
-			  private LocalDateTime date;
-			  private Customer customer;
-			  private List<OrderLine> orderLines;
-			  
-			ProductDao productDaoImpl = new ProductDaoImpl();
-			//uses resultSet from readOrderLine or readProduct?
-			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
-			orderLine.setProduct(product); 
-			LOG.info("ProductLine with id '" + id + "' read");
+			List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
+			order.setOrderLines(orderLineList);
 			}
 		
 		catch (SQLException e) { 
 			e.printStackTrace(); 
 		} 
-		return orderLine;
-		
+		return order;		
 	}
 
 
 	@Override
-	public void readOrderFromCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		
-	}
+	public List<Order> readOrdersOfCustomerId(int customer_id) {
+		List<Order> orderList = new ArrayList<>();
+		String query = "SELECT * FROM order WHERE Customer_id = ?";
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Order order = new Order();
+				order.setId (resultSet.getInt("id"));
+				order.setTotalCost (resultSet.getBigDecimal("total_cost"));
+				order.setDate (resultSet.getTimestamp("date").toLocalDateTime());
+				
+				CustomerDao customerDaoImpl = new CustomerDaoImpl();
+				Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
+				order.setCustomer(customer);
+				
+				OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
+				List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
+				order.setOrderLines(orderLineList);
+				}
+		}
+			catch (SQLException e) { 
+				e.printStackTrace(); 
+			} 
+			return orderList;
+		}
 	}
 
 

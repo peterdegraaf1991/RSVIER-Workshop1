@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -61,11 +62,24 @@ private static final Logger LOG = LoggerFactory.getLogger(AddressTypeDaoImpl.cla
 	}
 
 	@Override
-	public void readAddressType(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
+	public AddressType readAddressType(int id) {
+			AddressType addressType = new AddressType();
+			String query = "SELECT * FROM address_type WHERE id = ?"; 
+			try 
+			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setInt(1, id); 
+				ResultSet resultSet = preparedStatement.executeQuery();
+				resultSet.first();
+				addressType.setId (resultSet.getInt("id"));
+				addressType.setDescription (resultSet.getString("description"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return addressType;
+	}	
 }
+
+
+
+

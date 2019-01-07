@@ -6,7 +6,7 @@ public interface AccountTypeDao {
 
 	public void createAccountType(AccountType accountType);
 
-	public void readAccountType(int id);
+	public AccountType readAccountType(int id);
 	
 	public void updateAccountType(AccountType accounttype);
 	

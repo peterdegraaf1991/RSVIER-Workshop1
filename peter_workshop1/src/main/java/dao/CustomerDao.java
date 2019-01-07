@@ -9,6 +9,7 @@ public interface CustomerDao {
 
 	  public void deleteCustomer(int id);
 	 	
-	  public void readCustomer(int id);	
+	  public Customer readCustomerById(int id);	
+	  public Customer readCustomerByLastname(String lastname);
 	   
 }

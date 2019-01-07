@@ -6,8 +6,8 @@ public interface AddressDao {
 
 	public void createAddress(Address address);
 	  
-	public void readAddress(int id);
-	
+	public Address readAddress(int id);
+	public Address readAddressOfCustomer(int customer_id);
 	public void updateAddress(Address address);
 	
 	public void deleteAddress(int id);

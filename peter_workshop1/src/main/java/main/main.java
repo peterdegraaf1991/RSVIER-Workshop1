@@ -33,8 +33,8 @@ public static void main(String[] args) throws SQLException {
 //		productDaoImpl.printProduct(2);
 //		productDaoImpl.printProduct();
 
-		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
-		AccountType admin = new AccountType ("admin");
+//		AccountTypeDaoImpl accountTypeDaoImpl = new AccountTypeDaoImpl();
+/		AccountType admin = new AccountType ("admin");
 		accountTypeDaoImpl.createAccountType(admin);
 	
 		CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();

@@ -5,15 +5,25 @@ public class OrderLine {
 	private int id;
 	private Product product;
 	private int amount;
+	private int orderId;
 
 	public OrderLine(){
 	}
 	
-	public OrderLine(Order order, Product product, int amount) {
+	public OrderLine(Order order, Product product, int amount, int orderId) {
 		this.product = product;
 		this.amount = amount;
+		this.orderId = orderId;
 	}
 	
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -36,6 +46,40 @@ public class OrderLine {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + amount;
+		result = prime * result + id;
+		result = prime * result + orderId;
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderLine other = (OrderLine) obj;
+		if (amount != other.amount)
+			return false;
+		if (id != other.id)
+			return false;
+		if (orderId != other.orderId)
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
 	}
 
 }

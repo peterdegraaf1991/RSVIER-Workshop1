@@ -18,20 +18,23 @@ public class OrderLineDaoImpl implements OrderLineDao {
 private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class);
 
 	@Override
-	public void createOrderLine(OrderLine orderLine) {
-		String query = "INSERT INTO order_line (id, product_id, amount) VALUES( ?, ?, ?)"; 
+	public int createOrderLine(OrderLine orderLine) {
+		String query = "INSERT INTO order_line (id, product_id, amount, order_id) VALUES( ?, ?, ?,?)"; 
+		int affectedRows = 0;
 	    try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 		         preparedStatement.setInt(1, orderLine.getId()); 
 		         preparedStatement.setInt(2, orderLine.getProduct().getId()); 
 		         preparedStatement.setInt(3, orderLine.getAmount()); 
-		         preparedStatement.executeUpdate(); 
+		         preparedStatement.setInt(4, orderLine.getOrderId());
+		         affectedRows = preparedStatement.executeUpdate(); 
 		         LOG.info("OrderLine: " + orderLine.getId() + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 
+	    return affectedRows;
 	}
 	@Override
 	public OrderLine readOrderLineById(int id) {
@@ -45,6 +48,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			resultSet.first();
 			orderLine.setId (resultSet.getInt("id"));
 			orderLine.setAmount (resultSet.getInt("amount"));
+			orderLine.setOrderId (resultSet.getInt("order_id"));
 			ProductDao productDaoImpl = new ProductDaoImpl();
 			//uses resultSet from readOrderLine or readProduct?
 			Product product = productDaoImpl.readProductById(resultSet.getInt("product_id"));
@@ -70,6 +74,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			OrderLine orderLine = new OrderLine();
 			orderLine.setId (resultSet.getInt("id"));
 			orderLine.setAmount (resultSet.getInt("amount"));
+			orderLine.setOrderId (resultSet.getInt("order_id"));
 			ProductDao productDaoImpl = new ProductDaoImpl();
 			//uses resultSet from readOrderLine or readProduct?
 			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
@@ -95,6 +100,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			OrderLine orderLine = new OrderLine();
 			orderLine.setId (resultSet.getInt("id"));
 			orderLine.setAmount (resultSet.getInt("amount"));
+			orderLine.setOrderId (resultSet.getInt("order_id"));
 			ProductDao productDaoImpl = new ProductDaoImpl();
 			//uses resultSet from readOrderLine or readProduct?
 			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
@@ -111,12 +117,13 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 
 	@Override
 	public void updateOrderLine(OrderLine orderLine) {
-		String query = "UPDATE order_line SET product_id = ?, amount = ?";
+		String query = "UPDATE order_line SET product_id = ?, amount = ?, order_id = ?";
 		try
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 	         preparedStatement.setInt(1, orderLine.getProduct().getId()); 
 	         preparedStatement.setInt(2, orderLine.getAmount()); 
+	         preparedStatement.setInt(3, orderLine.getOrderId());
 	         preparedStatement.executeUpdate();
 	         LOG.info("OrderLineId " + orderLine.getId() + " successfully updated");
 	         }

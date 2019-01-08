@@ -6,7 +6,7 @@ import model_class.OrderLine;
 
 public interface OrderLineDao {
 
-	public void createOrderLine(OrderLine orderLine);
+	public int createOrderLine(OrderLine orderLine);
 	
 	// only by id? maybe by product etc.?
 	public OrderLine readOrderLineById (int id);

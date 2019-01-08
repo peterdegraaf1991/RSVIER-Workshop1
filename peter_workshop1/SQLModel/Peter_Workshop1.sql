@@ -125,34 +125,16 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `peter_workshop1`.`order_status`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `peter_workshop1`.`order_status` (
-  `id` INT(11) NOT NULL,
-  `description` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `peter_workshop1`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `peter_workshop1`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `total_cost` DECIMAL(6,2) NOT NULL,
   `customer_id` INT NOT NULL,
-  `order_status_id` INT NOT NULL,
-  `date` DATE NOT NULL,
+  `date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_order_status_id_idx` (`order_status_id` ASC) VISIBLE,
   INDEX `fk_customer_id_3_idx` (`customer_id` ASC) VISIBLE,
-  CONSTRAINT `fk_order_status_id`
-    FOREIGN KEY (`order_status_id`)
-    REFERENCES `peter_workshop1`.`order_status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_customer_id_3`
     FOREIGN KEY (`customer_id`)
     REFERENCES `peter_workshop1`.`customer` (`id`)

@@ -29,7 +29,7 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 		         preparedStatement.setString(2, account.getPassword()); 
 		         preparedStatement.setInt(3, account.getAccountTypeId());
 		         preparedStatement.setInt(4, account.getCustomer().getId());
-		         LOG.info(account.toString() + "\n CustomerID = '" + account.getCustomer().getId() + "'");
+		         LOG.info("Trying to create account with info:"+ account.toString() + "\n CustomerID = '" + account.getCustomer().getId() + "'");
 		         preparedStatement.executeUpdate(); 
 		         affectedRows = preparedStatement.executeUpdate();
 		         
@@ -115,12 +115,13 @@ public Account readAccountByEmail(String email) {
 		preparedStatement.setString(1, email); 
 		ResultSet resultSet = preparedStatement.executeQuery();
 		resultSet.first();
-		//?password remains null?
 		account.setId (resultSet.getInt("id"));
+		//Should password remain null? Now for testing added
+		account.setPassword(resultSet.getString("password"));
 		account.setEmail (resultSet.getString("email"));
 		account.setAccountTypeId (resultSet.getInt("account_type_id"));
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
-		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
+		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 		account.setCustomer (customer);
 	}
 		catch (SQLException e) { 

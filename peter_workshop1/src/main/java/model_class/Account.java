@@ -45,7 +45,7 @@ public class Account {
 
 	@Override	
 	public String toString() {
-	  return "\n ID = '" + id + "'\n Email= '" + email + "'\n AccountTypeId= '" + accountTypeId + "'";
+	  return "AccountToString Methode: \n AccountId = '" + id + "'\n Email= '" + email + "'\n Password: '" + password + "'\n AccountTypeId= '" + accountTypeId + "' " ;
     }
 	public Customer getCustomer() {
 		return customer;
@@ -97,8 +97,6 @@ public class Account {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
 			return false;
 		if (password == null) {
 			if (other.password != null)

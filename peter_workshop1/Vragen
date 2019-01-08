@@ -1,3 +1,11 @@
+08-01-2018
+
+1) @BeforeEach werkt niet, heb ik juiste instellingen in de pom?
+2) bij testReadAccount() id niet meenemen bij equals? Dit omdat input = 0, sql generates, output = generatedId
+
+
+
+
 02-01-2018
 1) 
 Bij aanmaken van account, idem voor customerId. Heb ik nog een fout staan in de database of probeer ik iets wat niet kan?

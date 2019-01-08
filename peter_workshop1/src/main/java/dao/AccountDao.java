@@ -11,7 +11,7 @@ import model_class.Account;
 		
 		public void updateAccount(Account account);
 	
-		public void deleteAccount(int id);
+		public int deleteAccount(int id);
 
 		
 //		public void printAccount();

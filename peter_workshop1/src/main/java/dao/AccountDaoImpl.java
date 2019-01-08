@@ -67,18 +67,20 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 	}
 
 @Override
-	public void deleteAccount(int id) {
+	public int deleteAccount(int id) {
 		String query = "DELETE FROM account WHERE id = ?"; 
+		int affectedRows = 0;
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
-			  preparedStatement.executeUpdate(); 
+			  affectedRows = preparedStatement.executeUpdate(); 
 			  LOG.info("Account with id: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 
 			e.printStackTrace(); 
 		} 
+		return affectedRows;
 	}
 
 @Override

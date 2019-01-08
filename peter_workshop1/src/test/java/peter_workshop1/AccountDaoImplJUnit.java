@@ -25,6 +25,7 @@ public class AccountDaoImplJUnit {
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.class);
 AccountDao accountDaoImpl = new AccountDaoImpl();
 
+//Should be @BeforeAll, but doesnt run atm
 @Test
 public void before() {
 
@@ -52,7 +53,6 @@ public void before() {
 		String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
 		String queryAccountType = "INSERT INTO account_type (id, description) VALUES (1, 'testing')";
 		String queryAccount = "INSERT INTO account(email,password,customer_id,account_type_id) VALUES ('test3@hotmail.com','rsvier',1,1)";
-		String queryAccount2 = "INSERT INTO account(email,password,customer_id,account_type_id) VALUES ('test2@hotmail.com','rsvier',1,1)";
 		statement.execute(queryCustomer);
 		statement.execute(queryAccountType);
 		statement.execute(queryAccount);
@@ -82,25 +82,47 @@ public void before() {
 		
 	@Test
 	public void testUpdateAccount() {
-		
-		
-		
+		Account account = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
+		account.setPassword("PasswordGewijzigd");
+		accountDaoImpl.updateAccount(account);
+		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
+		String query = "SELECT * FROM account WHERE email = 'test3@hotmail.com'";
+		ResultSet rs = statement.executeQuery(query);
+		rs.next();
+		assertEquals(rs.getString("password"),"PasswordGewijzigd");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	
 	@Test
-	public void testReadAccount(){
-	LOG.info("Entering testReadAccount()...");
+	public void testReadAccountByEmail(){
+	LOG.info("Entering testReadAccountByEmail()...");
 	Account readAccount = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 	LOG.info("ReadingAccount1: " + readAccount.toString());
 	Customer customer = new Customer (1, "Peter","de","Graaf");
-	Account insertedAccount = new Account (customer,"test3@hotmail.com","rsvier",1);
+	Account insertedAccount = new Account (customer,"test3@hotmail.com","PasswordGewijzigd",1);
 	LOG.info("InsertedAccount: " + insertedAccount.toString());
 	assertThat(readAccount,instanceOf(Account.class));
 	assertEquals(readAccount,insertedAccount);
 	Boolean equalStatus = readAccount.equals(insertedAccount);
 	LOG.info("Inserted account equals read Account: " + equalStatus);
 	}
+	
+	@Test
+	public void testReadAccountById(){
+		LOG.info("Entering testReadAccountById()...");
+		Account readAccount = accountDaoImpl.readAccountById(1);
+		LOG.info("ReadingAccount1: " + readAccount.toString());
+		Customer customer = new Customer (1, "Peter","de","Graaf");
+		Account insertedAccount = new Account (customer,"test3@hotmail.com","PasswordGewijzigd",1);
+		LOG.info("InsertedAccount: " + insertedAccount.toString());
+		assertThat(readAccount,instanceOf(Account.class));
+		assertEquals(readAccount,insertedAccount);
+		Boolean equalStatus = readAccount.equals(insertedAccount);
+		LOG.info("Inserted account equals read Account: " + equalStatus);
+		}
 	
 	@Test
 	public void testDeleteAccount(){
@@ -118,30 +140,4 @@ public void before() {
 	}
 	}
 	
-/*	
-	@BeforeAll
-	public void beforeAll() {
-		try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
-			String query1 = "DELETE FROM account";
-			String query2 = "DELETE FROM customer";
-			statement.execute(query1);
-			statement.execute(query2);
-			} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-		@AfterEach
-		public void after() {
-			try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
-				String query1 = "DELETE FROM account";
-				String query2 = "DELETE FROM customer";
-				statement.execute(query1);
-				statement.execute(query2);
-				} 
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		*/
 }

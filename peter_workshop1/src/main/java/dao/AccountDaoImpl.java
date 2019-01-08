@@ -95,10 +95,11 @@ public Account readAccountById(int id) {
 		resultSet.first();
 		//?password remains null?
 		account.setId (resultSet.getInt("id"));
+		account.setPassword(resultSet.getString("password"));
 		account.setEmail (resultSet.getString("email"));
 		account.setAccountTypeId (resultSet.getInt("account_type_id"));
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
-		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id)"));
+		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 		account.setCustomer (customer);
 	}
 		catch (SQLException e) { 

@@ -2,8 +2,6 @@ package peter_workshop1;
 
 import static org.junit.Assert.*;
 
-
-
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -23,14 +21,22 @@ public class AccountDaoImplJUnit {
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.class);
 
 	@Test
-	public void testCreateAccount() {;
+	public void testCreateAccount() {	
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
 		account.setAccountTypeId(1);
+		Customer customer = new Customer (1, "Peter","de","Graaf");
+		account.setCustomer (customer);
+		
+        assertNotNull("Email isn't null", account.getEmail());
+        assertNotNull("Password isn't null",account.getPassword());
+        assertNotNull("AccountTypeId isn't null", account.getPassword());
+        assertNotNull("Customer isn't null", account.getCustomer());
+		
 		AccountDao accountDaoImpl = new AccountDaoImpl();
 		int affectedRows = accountDaoImpl.createAccount(account);
-		assertEquals("Equals?: ",3, affectedRows);
+		assertEquals("Equals?: ",1, affectedRows);
 	}
 		
 	@Test
@@ -48,25 +54,29 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.cl
 		@BeforeEach
 		public void before() {
 			try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
-				String query1 = "INSERT INTO customer (id = 5, firstname = Peter, middlename = de, surname = Graaf";
-				String query2 = "INSERT INTO account email = peterdegraaf1991@hotmail.com, password = rsvier, account_type = 1, customer_id = 5";
-				statement.execute(query1);
-				statement.execute(query2);
-				} 
+			Customer customer = new Customer (1, "Peter","de","Graaf");
+			CustomerDao customerDaoImpl = new CustomerDaoImpl();
+			customerDaoImpl.createCustomer(customer);
+			
+			AccountType accountType = new AccountType (1, "testing");
+			AccountTypeDao accountTypeDaoImpl = new AccountTypeDaoImpl();
+			accountTypeDaoImpl.createAccountType(accountType);
+			}
 			catch (SQLException e) {
 			e.printStackTrace();
 		}
 		}
-		
-/*		@AfterEach
+		@AfterEach
 		public void after() {
 			try (Statement statement = DatabaseConnection.INSTANCE.getConnection().createStatement()) {
-				String query1 = "DELETE FROM account";
+				String query1 = "DELETE * FROM account";
+				String query2 = "DELETE * FROM customer";
 				statement.execute(query1);
+				statement.execute(query2);
 				} 
 			catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-*/
+
 }

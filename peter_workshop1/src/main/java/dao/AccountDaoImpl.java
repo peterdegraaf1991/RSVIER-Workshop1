@@ -29,13 +29,15 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 		         preparedStatement.setString(2, account.getPassword()); 
 		         preparedStatement.setInt(3, account.getAccountTypeId());
 		         preparedStatement.setInt(4, account.getCustomer().getId());
+		         LOG.info(account.toString() + "\n CustomerID = '" + account.getCustomer().getId() + "'");
 		         preparedStatement.executeUpdate(); 
+		         affectedRows = preparedStatement.executeUpdate();
 		         
-		 	     ResultSet rs = preparedStatement.getGeneratedKeys();
-		 	     if (rs != null && rs.next()) {
-		 	    	affectedRows = rs.getInt(1);
-		 	     }
-		         LOG.info("Account for: " + account.getEmail() + " successfully created"); 
+//		 	     ResultSet rs = preparedStatement.executeUpdate();
+//		 	     if (rs != null && rs.next()) {
+//		 	    	affectedRows = rs.getInt(1);
+//		 	     }
+		         LOG.info("Account for: " + account.getEmail() + " successfully created \n AffectedRows = " + affectedRows); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 

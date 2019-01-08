@@ -10,7 +10,8 @@ public class Customer {
 	public Customer(){
 	}
 	
-	public Customer (String firstname, String middlename, String surname){
+	public Customer (int id, String firstname, String middlename, String surname){
+		this.id = id;
 		this.firstname = firstname;
 		this.middlename = middlename;
 		this.surname = surname;

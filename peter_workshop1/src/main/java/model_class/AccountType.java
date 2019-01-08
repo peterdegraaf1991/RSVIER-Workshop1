@@ -9,7 +9,8 @@ public class AccountType {
 	public AccountType(){
 	}
 	
-	public AccountType(String description){
+	public AccountType(int id, String description){
+		this.id = id;
 		this.description = description;	   
 	}
 

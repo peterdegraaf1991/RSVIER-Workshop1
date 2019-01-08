@@ -12,7 +12,7 @@ public class Account {
 	public Account(){
 	}
 	
-	public Account(String email, String password, int accountTypeId){
+	public Account(Customer customer, String email, String password, int accountTypeId){
 	   this.email = email;
 	   this.password = password;
 	   this.accountTypeId = accountTypeId;
@@ -45,7 +45,7 @@ public class Account {
 
 	@Override	
 	public String toString() {
-	  return id + " " + email + " " + accountTypeId;
+	  return "\n ID = '" + id + "'\n Email= '" + email + "'\n AccountTypeId= '" + accountTypeId + "'";
     }
 	public Customer getCustomer() {
 		return customer;

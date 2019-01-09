@@ -43,7 +43,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImplJunit.
 OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 
 	@Test
-	public void ACleaningDb() {
+	public void A_CleaningDb() {
 		LOG.info("entering before()");
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			String query1 = "DELETE FROM order_line";
@@ -75,7 +75,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		}
 	}
 	@Test
-	public void BInsertTestCustomer() {
+	public void B_InsertTestCustomer() {
 		LOG.info("trying to insert customer(id=1");
 		String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()){
@@ -86,7 +86,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		}
 }
 	@Test
-	public void CInsertingTestOrder(){
+	public void C_InsertingTestOrder(){
 		boolean succes = false;
 		LOG.info("trying to create Order (id=1)...0");
 		Customer customer = new Customer (1,"Peter", "de", "Graaf");

@@ -32,7 +32,7 @@ AccountDao accountDaoImpl = new AccountDaoImpl();
 
 /// Leters voor testnaam zodat ze in volgorde worden uitgevoerd.
 @Test
-public void Abefore() {
+public void A_before() {
 
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			String query1 = "DELETE FROM account";
@@ -68,7 +68,7 @@ public void Abefore() {
 }
 
 	@Test
-	public void BtestCreateAccount() {	
+	public void B_testCreateAccount() {	
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
@@ -86,7 +86,7 @@ public void Abefore() {
 	}
 
 	@Test
-	public void CtestUpdateAccount() {
+	public void C_testUpdateAccount() {
 		Account accountRead = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 		accountRead.setPassword("PasswordGewijzigd");
 		accountDaoImpl.updateAccount(accountRead);
@@ -103,7 +103,7 @@ public void Abefore() {
 	
 	// Why does this test return AccountId=0 the first time it runs (notEqual) and AccountId=1 the runs after that (equals).
 	@Test
-	public void DtestReadAccountByEmail(){
+	public void D_testReadAccountByEmail(){
 	LOG.info("Entering testReadAccountByEmail()...");
 	Account readAccount = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 	LOG.info("ReadingAccount1: " + readAccount.toString());
@@ -118,7 +118,7 @@ public void Abefore() {
 	}
 
 	@Test
-	public void EtestReadAccountById(){
+	public void E_testReadAccountById(){
 		LOG.info("Entering testReadAccountById()...");
 		Account readAccount = accountDaoImpl.readAccountById(1);
 		LOG.info("ReadingAccount1: " + readAccount.toString());
@@ -133,7 +133,7 @@ public void Abefore() {
 
 
 	@Test
-	public void FtestDeleteAccount(){
+	public void F_testDeleteAccount(){
 	assertEquals(1, accountDaoImpl.deleteAccount(2));
 	LOG.info("1 Account deleted = true asserted");
 	try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {

@@ -116,7 +116,6 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			e.printStackTrace();
 		}
  		assertTrue(succes);
-		LOG.info("exiting before()");
 }
 
 	@Test
@@ -145,7 +144,6 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 
 		int affectedRows = orderLineDaoImpl.createOrderLine(orderline);
 		assertEquals("Equals?: ",1, affectedRows);
-		LOG.info("entering testCreateOrderLine()...5");
 	}
 }
 	/*

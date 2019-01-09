@@ -21,13 +21,10 @@ import model_class.Order;
 import model_class.OrderLine;
 import model_class.Product;
 
-
-
-import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 // import org.junit.jupiter.api.Test;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,10 +47,11 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			String query2 = "DELETE FROM customer";
 			// why do i need ` for order, while not for the other queries?
 			String query3 = "DELETE FROM `order`";
-			String query4 = "ALTER TABLE order_line AUTO_INCREMENT = 1";
-			String query5 = "ALTER TABLE customer AUTO_INCREMENT = 1";
-			String query6 = "ALTER TABLE `order` AUTO_INCREMENT = 1";
-			
+			String query4 = "DELETE FROM product";
+			String query5 = "ALTER TABLE order_line AUTO_INCREMENT = 1";
+			String query6 = "ALTER TABLE customer AUTO_INCREMENT = 1";
+			String query7= "ALTER TABLE `order` AUTO_INCREMENT = 1";
+			String query8= "ALTER TABLE `order` AUTO_INCREMENT = 1";
 			LOG.info("prepare for queries...");
 			statement.execute(query1);
 			LOG.info("query 1 succes");
@@ -67,6 +65,8 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			LOG.info("query 5 succes");
 			statement.execute(query6);
 			LOG.info("query 6 succes");
+			statement.execute(query7);
+			statement.execute(query8);
 //			statement.executeBatch();
 			LOG.info("orderline, order, customer info deleted, reset to autoincrement 1");
 			} 
@@ -102,10 +102,11 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 				LOG.info("trying to create Order (id=1)...5");
 	         preparedStatement.setBigDecimal(2, order.getTotalCost());
 	 		LOG.info("trying to create Order (id=1)...6");
-	         preparedStatement.setTimestamp(3, Timestamp.from(order.getDate().atZone(ZoneId.of("Europe/Amsterdam")).toInstant()));
+	         preparedStatement.setTimestamp(4, Timestamp.from(order.getDate().atZone(ZoneId.of("Europe/Amsterdam")).toInstant()));
 	 		LOG.info("trying to create Order (id=1)...7");
-	         preparedStatement.setInt(4, order.getCustomer().getId()); 
+	         preparedStatement.setInt(3, order.getCustomer().getId()); 
 	 		LOG.info("trying to create Order (id=1)...8");
+	 		LOG.info("Customer_id is now:" +order.getCustomer().getId());
 	         preparedStatement.executeUpdate(); 
 	 		LOG.info("trying to create Order (id=1)...9");
 	 		LOG.info("Order (id=1) created");
@@ -117,14 +118,26 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
  		assertTrue(succes);
 		LOG.info("exiting before()");
 }
+
+	@Test
+	public void DA_InsertTestProduct(){
+		LOG.info("trying to insert product(id=1");
+		String queryProduct = "INSERT INTO product(id,name,price,stock) VALUES (1,'TestProduct','1.04',10)";
+		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()){
+	    statement.execute(queryProduct);
+	    LOG.info("Product (id=1) inserted");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	@Test
-	public void testCreateOrderLine() {	
+	public void D_testCreateOrderLine() {	
 		LOG.info("entering testCreateOrderLine()...");
 		OrderLine orderline = new OrderLine();		
 		orderline.setAmount(3);
 		orderline.setOrderId(1);
-		Product product = new Product ("TestOrderName", new BigDecimal("5.10"),15);
+		Product product = new Product (1,"TestOrderName", new BigDecimal("5.10"),15);
 		orderline.setProduct (product);
 
         assertNotNull("Amount isn't null", orderline.getAmount());

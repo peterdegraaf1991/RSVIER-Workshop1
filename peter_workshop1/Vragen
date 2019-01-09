@@ -5,7 +5,6 @@
 3) Tijdsplanning Leertraject Bespreken
 4) 2de contactmomement in de week, niet gericht op vragen maar 
 5) OrderLine test: 	// why do i need ` for order, while not for the other queries?
-6) Orderline test: // errormessage: Data truncated for column 'customer_id' at row 1. LocalDateTime niet juist naar Timestamp? Of TimeStamp niet juist in SQL?
 
 
 

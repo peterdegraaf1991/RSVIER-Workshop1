@@ -8,9 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.runners.*;
+import org.junit.runners.MethodSorters;
 // import org.junit.jupiter.Test;
 // 5 org.junit.jupiter.Test doesnt import
 import org.junit.Test;
@@ -32,7 +31,7 @@ AccountDao accountDaoImpl = new AccountDaoImpl();
 
 /// Leters voor testnaam zodat ze in volgorde worden uitgevoerd.
 @Test
-public void A_before() {
+public void A_CleanUp() {
 
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			String query1 = "DELETE FROM account";
@@ -53,6 +52,9 @@ public void A_before() {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+}
+@Test
+public void B_InsertCustomer_Account_AccountType() {
 		// Inserting Customer(id=1), AccountType(id=1), and Account(email=test3@hotmail.com)
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 		String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
@@ -68,7 +70,7 @@ public void A_before() {
 }
 
 	@Test
-	public void B_testCreateAccount() {	
+	public void C_testCreateAccount() {	
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
@@ -86,7 +88,7 @@ public void A_before() {
 	}
 
 	@Test
-	public void C_testUpdateAccount() {
+	public void D_testUpdateAccount() {
 		Account accountRead = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 		accountRead.setPassword("PasswordGewijzigd");
 		accountDaoImpl.updateAccount(accountRead);
@@ -103,7 +105,7 @@ public void A_before() {
 	
 	// Why does this test return AccountId=0 the first time it runs (notEqual) and AccountId=1 the runs after that (equals).
 	@Test
-	public void D_testReadAccountByEmail(){
+	public void E_testReadAccountByEmail(){
 	LOG.info("Entering testReadAccountByEmail()...");
 	Account readAccount = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 	LOG.info("ReadingAccount1: " + readAccount.toString());
@@ -118,7 +120,7 @@ public void A_before() {
 	}
 
 	@Test
-	public void E_testReadAccountById(){
+	public void F_testReadAccountById(){
 		LOG.info("Entering testReadAccountById()...");
 		Account readAccount = accountDaoImpl.readAccountById(1);
 		LOG.info("ReadingAccount1: " + readAccount.toString());
@@ -133,7 +135,7 @@ public void A_before() {
 
 
 	@Test
-	public void F_testDeleteAccount(){
+	public void G_testDeleteAccount(){
 	assertEquals(1, accountDaoImpl.deleteAccount(2));
 	LOG.info("1 Account deleted = true asserted");
 	try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {

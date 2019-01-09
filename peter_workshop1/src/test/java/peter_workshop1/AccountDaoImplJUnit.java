@@ -8,10 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.runners.*;
+// import org.junit.jupiter.Test;
+// 5 org.junit.jupiter.Test doesnt import
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +24,15 @@ import model_class.*;
 import dao.*;
 import utility.DatabaseConnection;
 
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccountDaoImplJUnit {
 
 private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImplJUnit.class);
 AccountDao accountDaoImpl = new AccountDaoImpl();
 
-//Should be @BeforeAll, but doesnt run atm
+/// Leters voor testnaam zodat ze in volgorde worden uitgevoerd.
 @Test
-public void before() {
+public void Abefore() {
 
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			String query1 = "DELETE FROM account";
@@ -63,7 +68,7 @@ public void before() {
 }
 
 	@Test
-	public void testCreateAccount() {	
+	public void BtestCreateAccount() {	
 		Account account = new Account();
 		account.setEmail("peterdegraaf1991@hotmail.com");
 		account.setPassword("rsvier");
@@ -79,16 +84,16 @@ public void before() {
 		int affectedRows = accountDaoImpl.createAccount(account);
 		assertEquals("Equals?: ",1, affectedRows);
 	}
-		
+
 	@Test
-	public void testUpdateAccount() {
-		Account account = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
-		account.setPassword("PasswordGewijzigd");
-		accountDaoImpl.updateAccount(account);
+	public void CtestUpdateAccount() {
+		Account accountRead = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
+		accountRead.setPassword("PasswordGewijzigd");
+		accountDaoImpl.updateAccount(accountRead);
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 		String query = "SELECT * FROM account WHERE email = 'test3@hotmail.com'";
 		ResultSet rs = statement.executeQuery(query);
-		rs.next();
+		rs.first();
 		assertEquals(rs.getString("password"),"PasswordGewijzigd");
 		}
 		catch (SQLException e) {
@@ -96,22 +101,24 @@ public void before() {
 		}
 	}
 	
+	// Why does this test return AccountId=0 the first time it runs (notEqual) and AccountId=1 the runs after that (equals).
 	@Test
-	public void testReadAccountByEmail(){
+	public void DtestReadAccountByEmail(){
 	LOG.info("Entering testReadAccountByEmail()...");
 	Account readAccount = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
 	LOG.info("ReadingAccount1: " + readAccount.toString());
 	Customer customer = new Customer (1, "Peter","de","Graaf");
 	Account insertedAccount = new Account (customer,"test3@hotmail.com","PasswordGewijzigd",1);
+	LOG.info("password in Account =" + insertedAccount.getPassword());
 	LOG.info("InsertedAccount: " + insertedAccount.toString());
 	assertThat(readAccount,instanceOf(Account.class));
-	assertEquals(readAccount,insertedAccount);
-	Boolean equalStatus = readAccount.equals(insertedAccount);
+	assertEquals(insertedAccount,readAccount);
+	Boolean equalStatus = insertedAccount.equals(readAccount);
 	LOG.info("Inserted account equals read Account: " + equalStatus);
 	}
-	
+
 	@Test
-	public void testReadAccountById(){
+	public void EtestReadAccountById(){
 		LOG.info("Entering testReadAccountById()...");
 		Account readAccount = accountDaoImpl.readAccountById(1);
 		LOG.info("ReadingAccount1: " + readAccount.toString());
@@ -123,10 +130,11 @@ public void before() {
 		Boolean equalStatus = readAccount.equals(insertedAccount);
 		LOG.info("Inserted account equals read Account: " + equalStatus);
 		}
-	
+
+
 	@Test
-	public void testDeleteAccount(){
-	assertEquals(accountDaoImpl.deleteAccount(2), 1);
+	public void FtestDeleteAccount(){
+	assertEquals(1, accountDaoImpl.deleteAccount(2));
 	LOG.info("1 Account deleted = true asserted");
 	try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 	String query = "SELECT * FROM account WHERE id = 2";
@@ -139,5 +147,4 @@ public void before() {
 		e.printStackTrace();
 	}
 	}
-	
 }

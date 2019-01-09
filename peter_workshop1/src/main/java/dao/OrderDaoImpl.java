@@ -89,9 +89,9 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 			Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 			order.setCustomer(customer);
 			
-			OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
-			List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
-			order.setOrderLines(orderLineList);
+//			OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
+//			List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
+//			order.setOrderLines(orderLineList);
 			}
 		
 		catch (SQLException e) { 
@@ -119,9 +119,9 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 				Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 				order.setCustomer(customer);
 				
-				OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
-				List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
-				order.setOrderLines(orderLineList);
+//				OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
+//				List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
+//				order.setOrderLines(orderLineList);
 				}
 		}
 			catch (SQLException e) { 

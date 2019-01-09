@@ -30,7 +30,6 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 		         preparedStatement.setInt(3, account.getAccountTypeId());
 		         preparedStatement.setInt(4, account.getCustomer().getId());
 		         LOG.info("Trying to create account with info:"+ account.toString() + "\n CustomerID = '" + account.getCustomer().getId() + "'");
-		         preparedStatement.executeUpdate(); 
 		         affectedRows = preparedStatement.executeUpdate();
 		         
 //		 	     ResultSet rs = preparedStatement.executeUpdate();
@@ -55,6 +54,7 @@ private static final Logger LOG = LoggerFactory.getLogger(AccountDaoImpl.class);
 			  preparedStatement.setString(1, account.getEmail()); 
 			//getter for password allowed?
 			  preparedStatement.setString(2, account.getPassword());
+			  LOG.info("Password of account =" + account.getPassword());
 			  preparedStatement.setInt(3, account.getAccountTypeId());
 			  preparedStatement.setInt(4, account.getId());
 			  preparedStatement.executeUpdate(); 

@@ -137,18 +137,20 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 		}
 
 	@Override
-	public void deleteOrderLine(int id) {
+	public int deleteOrderLine(int id) {
 		String query = "DELETE FROM order_line WHERE id = ?"; 
+		int affectedRows = 0;
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
-			  preparedStatement.executeUpdate(); 
+			  affectedRows = preparedStatement.executeUpdate(); 
 			  LOG.info("OrderLine with id: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 
 			e.printStackTrace(); 
-		} 
+		}
+		return affectedRows;
 	}
 
 }

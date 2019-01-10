@@ -17,5 +17,5 @@ public interface OrderDao {
 	
 	public void updateOrder(Order order);
 	
-	public void deleteOrder(int id); 	
+	public int deleteOrder(int id); 	
 }

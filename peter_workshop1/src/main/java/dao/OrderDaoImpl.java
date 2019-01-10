@@ -57,18 +57,20 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	}
 
 	@Override
-	public void deleteOrder(int id) {
+	public int deleteOrder(int id) {
 		String query = "DELETE FROM order WHERE id = ?"; 
+		int affectedRows = 0;
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			  preparedStatement.setInt(1, id); 
-			  preparedStatement.executeUpdate(); 
+			  affectedRows = preparedStatement.executeUpdate(); 
 			  LOG.info("Order with id: " + id + " successfully removed");
 			  } 
 		catch (SQLException e) { 
 			e.printStackTrace(); 
 		} 
+		return affectedRows;
 	}
 
 	@Override

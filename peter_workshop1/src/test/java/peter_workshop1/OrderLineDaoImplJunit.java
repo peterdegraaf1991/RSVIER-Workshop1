@@ -2,19 +2,15 @@ package peter_workshop1;
 
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import model_class.Order;
 import model_class.OrderLine;
 import model_class.Product;
 
@@ -33,7 +29,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImplJunit.
 OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 
 	@Before
-		public void CleanUp() {
+	public void Preparation() {
 			DatabaseInit.DeleteRows();
 			DatabaseInit.ResetAutoIncement();
 			DatabaseInit.InsertTestCustomer();
@@ -43,7 +39,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			}
 	
 	@Test
-	public void CreateOrderLine() {	
+	public void testCreateOrderLine() {	
 		LOG.info("entering testCreateOrderLine()...");
 		OrderLine orderline = new OrderLine();		
 		orderline.setAmount(3);
@@ -60,7 +56,8 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 	}
 
 	@Test
-	public void UpdateOrderline() {
+	public void testUpdateOrderLine() {
+		LOG.info ("entering testUpdateOrderLine...");
 		OrderLine orderLine = orderLineDaoImpl.readOrderLineById(1);
 		LOG.info(orderLine.toString());
 		orderLine.setAmount(999);
@@ -74,12 +71,12 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+		LOG.info ("exiting testUpdateOrderLine");
 	}
-
 
 	@Test
 	public void testReadOrderLineById(){
-		LOG.info ("entering ReadOrderLineById...");
+		LOG.info ("entering testReadOrderLineById...");
 		OrderLine readOrderLine = orderLineDaoImpl.readOrderLineById(1);
 		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
 		OrderLine insertedOrderLine = new OrderLine (product,10,1);
@@ -87,26 +84,27 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		assertEquals (insertedOrderLine, readOrderLine);
 		LOG.info ("exiting ReadOrderLineById");
 	}
+
+	@Test
+	public void testDeleteOrderLine(){
+			LOG.info("entering testDeleteOrderLine()...");
+			assertEquals(orderLineDaoImpl.deleteOrderLine(1), 1);
+			try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
+			String query = "SELECT * FROM order_line WHERE id = 1";
+			ResultSet rs = statement.executeQuery(query);
+			assertFalse(rs.next());
+			LOG.info("OrderLine id=1 not found in database after deletion");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+			LOG.info("exiting testDeleteOrderLine()...");
+	}
 }
-/*
+	
+	/*
 	public void testReadOrderLinesOfOrderId(){
 	}
 	
 	public void testReadAllOrderLines () {
-	}
-	
-	
-	
-	@Test
-	public void testDeleteOrderLine(){
-			assertEquals(accountDaoImpl.deleteAccount(2), 1);
-			LOG.info("1 Account deleted = true asserted");
-			try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
-			String query = "SELECT * FROM account WHERE id = 2";
-			ResultSet rs = statement.executeQuery(query);
-			assertFalse(rs.next());
-			LOG.info("AccountId not found in database after deletion asserted");
-			} 
-	}
 	}
 */

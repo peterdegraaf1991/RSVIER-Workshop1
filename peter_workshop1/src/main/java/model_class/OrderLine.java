@@ -49,6 +49,12 @@ public class OrderLine {
 	}
 
 	@Override
+	public String toString() {
+		return "OrderLine [id=" + id + ", product=" + product + ", amount="
+				+ amount + ", orderId=" + orderId + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -81,5 +87,6 @@ public class OrderLine {
 			return false;
 		return true;
 	}
+
 
 }

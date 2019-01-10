@@ -121,4 +121,14 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseInit.class);
 		}
 		LOG.info("Exiting InsertTestProduct()");
 	}
+	public static void InsertTestOrderLine(){
+		LOG.info("Entering InsertTestOrderLine()...");
+		String queryOrderLine = "INSERT INTO order_line(id,order_id,product_id,amount) VALUES (1,1,1,10)";
+		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
+			statement.execute(queryOrderLine);
+		} 
+		catch (SQLException e) {
+		e.printStackTrace();
+		}
+	}
 }

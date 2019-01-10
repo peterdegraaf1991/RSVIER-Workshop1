@@ -6,16 +6,21 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import model_class.OrderLine;
 import model_class.Product;
 
 import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utility.DatabaseConnection;
 import dao.OrderLineDao;
 import dao.OrderLineDaoImpl;
 
@@ -31,6 +36,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			DatabaseInit.InsertTestCustomer();
 			DatabaseInit.InsertTestOrder();
 			DatabaseInit.InsertTestProduct();
+			DatabaseInit.InsertTestOrderLine();
 			}
 	
 	@Test
@@ -49,24 +55,25 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		int affectedRows = orderLineDaoImpl.createOrderLine(orderline);
 		assertEquals("Equals?: ",1, affectedRows);
 	}
-}
-	/*
+
 	@Test
-	public void testUpdateOrderline() {
-		Account account = accountDaoImpl.readAccountByEmail("test3@hotmail.com");
-		account.setPassword("PasswordGewijzigd");
-		accountDaoImpl.updateAccount(account);
+	public void UpdateOrderline() {
+		OrderLine orderLine = orderLineDaoImpl.readOrderLineById(1);
+		LOG.info(orderLine.toString());
+		orderLine.setAmount(999);
+		orderLineDaoImpl.updateOrderLine(orderLine);
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
-		String query = "SELECT * FROM account WHERE email = 'test3@hotmail.com'";
+		String query = "SELECT * FROM order_line WHERE amount = 999";
 		ResultSet rs = statement.executeQuery(query);
 		rs.next();
-		assertEquals(rs.getString("password"),"PasswordGewijzigd");
+		assertEquals(rs.getInt("amount"),999);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+}
+/*	
 	@Test
 	public void testReadOrderLineById(){
 		LOG.info("Entering testReadAccountById()...");

@@ -1,7 +1,5 @@
 package peter_workshop1;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -117,7 +115,7 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseInit.class);
 		String queryOrderLine = "INSERT INTO order_line(order_id,product_id,amount) VALUES (1,1,10)";
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			statement.execute(queryOrderLine);
-		LOG.trace("TestOrderLine inserted");
+		LOG.info("TestOrderLine inserted");
 		} 
 		catch (SQLException e) {
 		e.printStackTrace();

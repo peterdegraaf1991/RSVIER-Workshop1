@@ -17,9 +17,12 @@ public class Product {
     }
 
 	public Product() {
-		// TODO Auto-generated constructor stub
 	}
 
+	public Product(int id){
+	this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 		}

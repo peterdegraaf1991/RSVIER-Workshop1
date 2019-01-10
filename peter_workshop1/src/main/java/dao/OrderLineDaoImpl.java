@@ -71,21 +71,20 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 		List<OrderLine> orderLineList = new ArrayList<>();
 		String query = "SELECT * FROM order_line WHERE order_id = ?";
 		int i = 0;
-		try {
+		try (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);){
 			
-			Connection connection = DatabaseConnection.INSTANCE.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
-			ResultSet resultSet2 = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
-			while(resultSet2.next()){
+			while(resultSet.next()){
 			LOG.info("BeforeError1 (1/3)");
 			OrderLine orderLine = new OrderLine();
-			orderLine.setId (resultSet2.getInt("id"));
-			orderLine.setAmount (resultSet2.getInt("amount"));
-			orderLine.setOrderId (resultSet2.getInt("order_id"));
-			ProductDao productDaoImpl = new ProductDaoImpl();
-			Product product = productDaoImpl.readProductById(resultSet2.getInt("product_id"));
+			orderLine.setId (resultSet.getInt("id"));
+			orderLine.setAmount (resultSet.getInt("amount"));
+			orderLine.setOrderId (resultSet.getInt("order_id"));
+			Product product = new Product();
+			product.setId(resultSet.getInt("product_id"));
 			orderLine.setProduct(product); 
 			orderLineList.add(orderLine);
 			LOG.info("BeforeError1 (2/3)");
@@ -94,10 +93,6 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			}
 			LOG.info("AfterError1 (3/3)");
 			LOG.info("OrderLineList with ' + i + ' orderlines read");
-			
-			connection.close();
-			preparedStatement.close();
-			resultSet2.close();
 		}
 			
 		catch (SQLException e) { 
@@ -120,8 +115,8 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 			orderLine.setId (resultSet.getInt("id"));
 			orderLine.setAmount (resultSet.getInt("amount"));
 			orderLine.setOrderId (resultSet.getInt("order_id"));
-			ProductDao productDaoImpl = new ProductDaoImpl();
-			Product product = productDaoImpl.readProductById(resultSet.getInt("id"));
+			Product product = new Product();
+			product.setId(resultSet.getInt("product_id"));
 			orderLine.setProduct(product); 
 			orderLineList.add(orderLine);
 			LOG.info("BeforeError2 2/3");

@@ -105,7 +105,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 	public void testReadOrderLinesOfOrderId(){
 		LOG.info("entering testReadOrderLinesOfOrderId()...");
 		List <OrderLine> insertedOrderLineList = new ArrayList<>();
-		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
+		Product product = new Product (1);
 		OrderLine insertedOrderLine = new OrderLine (product,10,1);
 		insertedOrderLineList.add(insertedOrderLine);
 		insertedOrderLineList.add(insertedOrderLine);
@@ -120,15 +120,14 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 	public void testReadAllOrderLines () {
 		LOG.info("entering testReadAllOrderLines...");
 		List <OrderLine> insertedOrderLineList = new ArrayList<>();
-		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
+		Product product = new Product (1);
 		OrderLine insertedOrderLine = new OrderLine (product,10,1);
-		insertedOrderLineList.add(insertedOrderLine);
 		insertedOrderLineList.add(insertedOrderLine);
 		insertedOrderLineList.add(insertedOrderLine);
 		LOG.info("BeforeError 2");
 		List <OrderLine> readOrderLineList= orderLineDaoImpl.readAllOrderLines();
 		LOG.info("AfterError 2");
-		assertEquals(3,readOrderLineList.size());
+		assertEquals(insertedOrderLineList.size(),readOrderLineList.size());
 		LOG.info("exiting testReadAllOrderLines()\n");
 	}
 	}

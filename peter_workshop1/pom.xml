@@ -25,6 +25,11 @@
 			<scope>test</scope>
 </dependency>
 <dependency>
+    <groupId>org.beryx</groupId>
+    <artifactId>text-io</artifactId>
+    <version>3.3.0</version>
+</dependency>
+<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-params</artifactId>
 			<version>${junit.jupiter.version}</version>

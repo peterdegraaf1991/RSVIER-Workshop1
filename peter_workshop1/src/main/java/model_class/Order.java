@@ -56,6 +56,12 @@ public void setCustomer(Customer customer) {
 	this.customer = customer;
 }
 
+@Override
+public String toString() {
+	return "Order [id=" + id + ", totalCost=" + totalCost + ", date=" + date
+			+ ", customer=" + customer + "]";
+}
+
 //public List<OrderLine> getOrderLines() {
 //	return orderLineList;
 //}

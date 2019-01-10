@@ -21,6 +21,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 	public int createOrderLine(OrderLine orderLine) {
 		String query = "INSERT INTO order_line (id, product_id, amount, order_id) VALUES( ?, ?, ?,?)"; 
 		int affectedRows = 0;
+		int generatedId = 0;
 	    try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -29,7 +30,10 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderLineDaoImpl.class
 		         preparedStatement.setInt(3, orderLine.getAmount()); 
 		         preparedStatement.setInt(4, orderLine.getOrderId());
 		         affectedRows = preparedStatement.executeUpdate(); 
-		         LOG.info("OrderLine: " + orderLine.getId() + " successfully created"); 
+		         ResultSet rs = preparedStatement.getGeneratedKeys();
+		         rs.first();
+		         generatedId = rs.getInt(1);
+		         LOG.info("OrderLine with id: '"+ generatedId + "' successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 

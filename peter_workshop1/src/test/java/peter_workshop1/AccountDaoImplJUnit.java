@@ -10,6 +10,7 @@ import java.sql.Statement;
 
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
+import org.junit.Before;
 // import org.junit.jupiter.Test;
 // 5 org.junit.jupiter.Test doesnt import
 import org.junit.Test;
@@ -32,27 +33,10 @@ AccountDao accountDaoImpl = new AccountDaoImpl();
 /// Leters voor testnaam zodat ze in volgorde worden uitgevoerd.
 @Test
 public void A_CleanUp() {
-
-		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
-			String query1 = "DELETE FROM account";
-			String query2 = "DELETE FROM customer";
-			String query3 = "DELETE FROM account_type";
-			String query4 = "ALTER TABLE account AUTO_INCREMENT = 1";
-			String query5 = "ALTER TABLE customer AUTO_INCREMENT = 1";
-			String query6 = "ALTER TABLE account_type AUTO_INCREMENT = 1";
-			statement.addBatch(query1);
-			statement.addBatch(query2);
-			statement.addBatch(query3);
-			statement.addBatch(query4);
-			statement.addBatch(query5);
-			statement.addBatch(query6);
-			statement.executeBatch();
-			LOG.info("account,customer,account_type info deleted, reset to autoincrement 1");
-			} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+DatabaseInit.DeleteRows();
+DatabaseInit.ResetAutoIncement();
 }
+
 @Test
 public void B_InsertCustomer_Account_AccountType() {
 		// Inserting Customer(id=1), AccountType(id=1), and Account(email=test3@hotmail.com)

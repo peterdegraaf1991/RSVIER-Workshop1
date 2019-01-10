@@ -22,7 +22,7 @@
 
 	<Loggers>
 
-		<Logger name="ws1" level="debug" additivity="false">
+		<Logger name="ws1" level="info" additivity="false">
 			<AppenderRef ref="FileOutput" />
 		</Logger>
 
@@ -30,7 +30,7 @@
 			<AppenderRef ref="FileHikariOutput" />
 		</Logger>
 
-		<Root level="all">
+		<Root level="info">
 			<AppenderRef ref="Console" />
 		</Root>
 

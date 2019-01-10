@@ -68,25 +68,22 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseInit.class);
 		statement.addBatch(query7);
 		statement.addBatch(query8);
 		statement.executeBatch();
-		LOG.info("All AutoIncrements have been reset");
+		LOG.trace("All AutoIncrements have been reset");
 } catch (SQLException e) {
 	e.printStackTrace();
 }
 }
 
 	public static void InsertTestCustomer() {
-		LOG.info("Entering InsertTestCustomer()...");
 		String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()){
 	    statement.execute(queryCustomer);
-	    LOG.info("Customer (id=1) inserted");
+	    LOG.trace("Customer inserted");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-	    LOG.info("Exiting InsertTestCustomer()");
 }
 	public static void InsertTestOrder(){
-		LOG.info("Entering InsertTestOrder()...");
 		Customer customer = new Customer (1,"Peter", "de", "Graaf");
 		Order order = new Order(new BigDecimal ("4.50"), LocalDateTime.now(), customer);
 		String queryOrder = "INSERT INTO `order`(id, total_cost, customer_id, date) VALUES (?,?,?,?)";
@@ -95,17 +92,14 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseInit.class);
 	         preparedStatement.setBigDecimal(2, order.getTotalCost());
 	         preparedStatement.setInt(3, order.getCustomer().getId());
 	         preparedStatement.setObject(4, order.getDate());   
-	         LOG.info(order.toString());
 	         preparedStatement.executeUpdate(); 
-	 		 LOG.info("Order (id=1) inserted");
+	 		 LOG.trace("Order inserted");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		LOG.info("Exiting InsertTestOrder()");
 	}
 	public static void InsertTestProduct(){
-		LOG.info("Entering InsertTestProduct()...");
 		String queryProduct = "INSERT INTO product(id,name,stock,price) VALUES (?,?,?,?)";
 		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);	
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryProduct)) {
@@ -113,19 +107,17 @@ private static final Logger LOG = LoggerFactory.getLogger(DatabaseInit.class);
 	         preparedStatement.setString(2, product.getName());
 	         preparedStatement.setInt(3, product.getStock()); 
 	         preparedStatement.setBigDecimal(4, product.getPrice());
-	         LOG.info(product.toString());
 	         preparedStatement.executeUpdate(); 
-	    LOG.info("Product (id=1) inserted");
+	    LOG.trace("Product inserted");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		LOG.info("Exiting InsertTestProduct()");
 	}
 	public static void InsertTestOrderLine(){
-		LOG.info("Entering InsertTestOrderLine()...");
-		String queryOrderLine = "INSERT INTO order_line(id,order_id,product_id,amount) VALUES (1,1,1,10)";
+		String queryOrderLine = "INSERT INTO order_line(order_id,product_id,amount) VALUES (1,1,10)";
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 			statement.execute(queryOrderLine);
+		LOG.trace("TestOrderLine inserted");
 		} 
 		catch (SQLException e) {
 		e.printStackTrace();

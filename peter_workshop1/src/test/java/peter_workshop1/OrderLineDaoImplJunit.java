@@ -5,11 +5,12 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model_class.OrderLine;
 import model_class.Product;
@@ -36,6 +37,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			DatabaseInit.InsertTestOrder();
 			DatabaseInit.InsertTestProduct();
 			DatabaseInit.InsertTestOrderLine();
+			DatabaseInit.InsertTestOrderLine();
 			}
 	
 	@Test
@@ -53,6 +55,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 
 		int affectedRows = orderLineDaoImpl.createOrderLine(orderline);
 		assertEquals("Equals?: ",1, affectedRows);
+		LOG.info("exiting testCreateOrderLine() \n");
 	}
 
 	@Test
@@ -71,9 +74,8 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		LOG.info ("exiting testUpdateOrderLine");
+		LOG.info ("exiting testUpdateOrderLine \n");
 	}
-
 	@Test
 	public void testReadOrderLineById(){
 		LOG.info ("entering testReadOrderLineById...");
@@ -82,7 +84,7 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 		OrderLine insertedOrderLine = new OrderLine (product,10,1);
 		assertThat (readOrderLine, instanceOf(OrderLine.class));
 		assertEquals (insertedOrderLine, readOrderLine);
-		LOG.info ("exiting ReadOrderLineById");
+		LOG.info ("exiting ReadOrderLineById \n");
 	}
 
 	@Test
@@ -97,14 +99,36 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 
-			LOG.info("exiting testDeleteOrderLine()...");
+			LOG.info("exiting testDeleteOrderLine() \n");
 	}
-}
-	
-	/*
+	@Test
 	public void testReadOrderLinesOfOrderId(){
+		LOG.info("entering testReadOrderLinesOfOrderId()...");
+		List <OrderLine> insertedOrderLineList = new ArrayList<>();
+		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
+		OrderLine insertedOrderLine = new OrderLine (product,10,1);
+		insertedOrderLineList.add(insertedOrderLine);
+		insertedOrderLineList.add(insertedOrderLine);
+		LOG.info("BeforeError 1");
+		List <OrderLine> readOrderLineList= orderLineDaoImpl.readOrderLinesOfOrderId(1);
+		LOG.info("AfterError 1");
+		assertEquals(insertedOrderLineList, readOrderLineList);
+		LOG.info("exiting testReadOrderLinesOfOrderId() \n");
 	}
-	
+
+	@Test
 	public void testReadAllOrderLines () {
+		LOG.info("entering testReadAllOrderLines...");
+		List <OrderLine> insertedOrderLineList = new ArrayList<>();
+		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
+		OrderLine insertedOrderLine = new OrderLine (product,10,1);
+		insertedOrderLineList.add(insertedOrderLine);
+		insertedOrderLineList.add(insertedOrderLine);
+		insertedOrderLineList.add(insertedOrderLine);
+		LOG.info("BeforeError 2");
+		List <OrderLine> readOrderLineList= orderLineDaoImpl.readAllOrderLines();
+		LOG.info("AfterError 2");
+		assertEquals(3,readOrderLineList.size());
+		LOG.info("exiting testReadAllOrderLines()\n");
 	}
-*/
+	}

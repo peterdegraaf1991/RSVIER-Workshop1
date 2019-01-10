@@ -10,7 +10,7 @@ public class OrderLine {
 	public OrderLine(){
 	}
 	
-	public OrderLine(Order order, Product product, int amount, int orderId) {
+	public OrderLine(Product product, int amount, int orderId) {
 		this.product = product;
 		this.amount = amount;
 		this.orderId = orderId;
@@ -75,8 +75,6 @@ public class OrderLine {
 			return false;
 		OrderLine other = (OrderLine) obj;
 		if (amount != other.amount)
-			return false;
-		if (id != other.id)
 			return false;
 		if (orderId != other.orderId)
 			return false;

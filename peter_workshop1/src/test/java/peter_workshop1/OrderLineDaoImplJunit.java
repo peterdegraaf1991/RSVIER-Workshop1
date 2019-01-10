@@ -1,8 +1,10 @@
 package peter_workshop1;
 
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -12,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import model_class.Order;
 import model_class.OrderLine;
 import model_class.Product;
 
@@ -72,22 +75,20 @@ OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 			e.printStackTrace();
 		}
 	}
-}
-/*	
+
+
 	@Test
 	public void testReadOrderLineById(){
-		LOG.info("Entering testReadAccountById()...");
-		Account readAccount = accountDaoImpl.readAccountById(1);
-		LOG.info("ReadingAccount1: " + readAccount.toString());
-		Customer customer = new Customer (1, "Peter","de","Graaf");
-		Account insertedAccount = new Account (customer,"test3@hotmail.com","PasswordGewijzigd",1);
-		LOG.info("InsertedAccount: " + insertedAccount.toString());
-		assertThat(readAccount,instanceOf(Account.class));
-		assertEquals(readAccount,insertedAccount);
-		Boolean equalStatus = readAccount.equals(insertedAccount);
-		LOG.info("Inserted account equals read Account: " + equalStatus);
-		}
-	
+		LOG.info ("entering ReadOrderLineById...");
+		OrderLine readOrderLine = orderLineDaoImpl.readOrderLineById(1);
+		Product product = new Product (1, "TestProductName", new BigDecimal("4.50"), 10);
+		OrderLine insertedOrderLine = new OrderLine (product,10,1);
+		assertThat (readOrderLine, instanceOf(OrderLine.class));
+		assertEquals (insertedOrderLine, readOrderLine);
+		LOG.info ("exiting ReadOrderLineById");
+	}
+}
+/*
 	public void testReadOrderLinesOfOrderId(){
 	}
 	

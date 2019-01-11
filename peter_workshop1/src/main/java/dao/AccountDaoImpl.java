@@ -117,7 +117,7 @@ public Account readAccountByEmail(String email) {
 		PreparedStatement preparedStatement = connection.prepareStatement(query)){
 		preparedStatement.setString(1, email); 
 		ResultSet resultSet = preparedStatement.executeQuery();
-		resultSet.first();
+		if(resultSet.next()){
 		account.setId (resultSet.getInt("id"));
 		//Should password remain null? Now for testing added
 		account.setPassword(resultSet.getString("password"));
@@ -126,6 +126,7 @@ public Account readAccountByEmail(String email) {
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
 		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 		account.setCustomer (customer);
+		}
 	}
 		catch (SQLException e) { 
 			e.printStackTrace(); 

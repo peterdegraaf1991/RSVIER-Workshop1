@@ -1,12 +1,24 @@
 package view;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 
+import utility.DatabaseConnection;
+
 public class LoginView {
 	private TextIO textIO = TextIoFactory.getTextIO();
 	TextTerminal<?> terminal = textIO.getTextTerminal();
+	
+	public int RequestInt() {
+		int option = textIO.newIntInputReader()
+				.read("Choose an option from the menu");
+		return option;
+	}
 	
 	public String RequestInputUsername() {
 		String username = textIO.newStringInputReader()
@@ -40,13 +52,16 @@ public class LoginView {
 		return firstname;
 	}
 	
-	public void printMessage(){
+	public void PrintMenuHeader(){
 		terminal.printf("Welkom in de winkel\n\n");
 	}
-	public void PrintOptions(){
-		terminal.printf("Enter option:");
-		terminal.printf("1. Login");
-		terminal.printf("2. Exit Application");
+	public void PrintMenuOptions(){
+		terminal.println("1. Login");
+		terminal.println("2. Create Account");
+		terminal.println("3. Initialize Database");
+		terminal.println("4. Clear Database");
+		terminal.println("9. Exit Application"
+				+ "\n");
 	}
 	
 	public void LoginHeader(){
@@ -75,7 +90,10 @@ public class LoginView {
 
 	public void CreateAccountHeader() {
 		terminal.printf("Creating a new account: \n");
-		
+	}
+	
+	public void InvalidInput(){
+		terminal.printf("Your input is invalid");
 	}
 	
 }

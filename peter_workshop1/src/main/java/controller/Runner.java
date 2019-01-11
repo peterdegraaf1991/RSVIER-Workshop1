@@ -6,5 +6,4 @@ public class Runner {
 		LoginController loginController = new LoginController();
 		loginController.start();
 	}
-
 }

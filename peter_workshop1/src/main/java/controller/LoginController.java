@@ -1,10 +1,16 @@
 package controller;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import dao.CustomerDao;
 import dao.CustomerDaoImpl;
+import utility.DatabaseConnection;
 import view.LoginView;
+import view.MainView;
 import model_class.*;
 
 public class LoginController {
@@ -12,10 +18,25 @@ public class LoginController {
 	private AccountDao accountDaoImpl = new AccountDaoImpl();
 	
 	public void start(){
-	CreateAccount();
+
+	int keuze = 1;
+	do{
+	DatabaseController databaseController = new DatabaseController();
+	loginView.PrintMenuHeader();
+	loginView.PrintMenuOptions();
+	keuze = loginView.RequestInt();
 	
-	loginView.LoginHeader();
-	CheckAccountByEmail();
+	switch (keuze) {
+		case 1: CheckAccountByEmail();
+		case 2: CreateAccount(); CheckPassword(); break;
+		case 3: databaseController.InitDatabase(); break;
+		case 4: databaseController.ClearDatabase(); break;
+		case 5: MainView mainViewMainView.runView();
+		case 0: break;
+		default:loginView.InvalidInput(); break;
+			}
+		}
+	while(keuze != 0);
 	}
 	
 	public void CheckAccountByEmail(){
@@ -26,7 +47,7 @@ public class LoginController {
 	}
 	
 	
-	public void RequestInputPassword(){
+	public void CheckPassword(){
 	}
 	
 	public void CreateAccount(){

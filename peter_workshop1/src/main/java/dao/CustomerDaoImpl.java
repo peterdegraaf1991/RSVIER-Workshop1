@@ -16,7 +16,8 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 
 	@Override
 	public void createCustomer(Customer customer) {
-		String query = "INSERT INTO customer (id, firstname, middlename, surname) VALUES( ?, ?, ?, ?)"; 
+		String query = "INSERT INTO customer (id, firstname, middlename, surname) VALUES( ?, ?, ?, ?)";
+		int generatedId = 0;
 	    try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -24,9 +25,13 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 		         preparedStatement.setString(2, customer.getFirstname());
 		         preparedStatement.setString(3, customer.getMiddlename());
 		         preparedStatement.setString(4, customer.getSurname());
-		         preparedStatement.executeUpdate(); 
-		         LOG.info("Customer: " + customer.getId() + " successfully created"); 
+        		 preparedStatement.executeUpdate(); 
+        		 ResultSet rs = preparedStatement.getGeneratedKeys();
+        		 if (rs.next()) {
+        			 generatedId = rs.getInt(1);
+		         LOG.info("Customer with id '" + generatedId + "' successfully created"); 
 	    } 
+	    }
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 

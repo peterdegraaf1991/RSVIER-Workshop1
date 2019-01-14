@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,22 +91,27 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 	}
 	
 	@Override
-	public Customer readCustomerByLastname(String lastname) {
-			Customer customer = new Customer();
-			String query = "SELECT * FROM customer WHERE lastname = ?"; 
+	public ArrayList<Customer> readCustomersByLastname(String lastname) {
+			ArrayList<Customer> listOfCustomers = new ArrayList<>();
+			String query = "SELECT * FROM customer WHERE surname = ?"; 
 			try 
 			   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)){
 				preparedStatement.setString(1, lastname); 
 				ResultSet resultSet = preparedStatement.executeQuery();
-				resultSet.first();
-				customer.setId (resultSet.getInt("id"));
-				customer.setFirstname (resultSet.getString("firstname"));
-				customer.setMiddlename (resultSet.getString("middlename"));
-				customer.setSurname (resultSet.getString("surname"));
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return customer;
+				
+				while(resultSet.next()){
+					Customer customer = new Customer();
+					customer.setId (resultSet.getInt("id"));
+					customer.setFirstname (resultSet.getString("firstname"));
+					customer.setMiddlename (resultSet.getString("middlename"));
+					customer.setSurname (resultSet.getString("surname"));
+					listOfCustomers.add(customer);
+					}
+				} 
+			catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			return listOfCustomers;
 	}
 }

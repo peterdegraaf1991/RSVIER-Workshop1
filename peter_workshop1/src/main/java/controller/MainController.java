@@ -9,14 +9,15 @@ MainView mainView = new MainView();
 	
 	@Override
 	public void runController() {
-
 		int keuze = 1;
+		PrintControl.newView = true;
 		
 		do{
 			if (PrintControl.newView == true){
 				mainView.ClearTerminal();
 				mainView.PrintMenuHeader();
 				mainView.PrintMenuOptions();
+				PrintControl.newView = false;
 			}
 			
 		keuze = mainView.RequestMenuOption();

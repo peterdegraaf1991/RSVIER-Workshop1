@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.ArrayList;
+
 import model_class.Customer;
 
 public interface CustomerDao {
@@ -10,6 +12,6 @@ public interface CustomerDao {
 	  public void deleteCustomer(int id);
 	 	
 	  public Customer readCustomerById(int id);	
-	  public Customer readCustomerByLastname(String lastname);
+	  public ArrayList<Customer> readCustomersByLastname(String lastname);
 	   
 }

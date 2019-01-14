@@ -9,11 +9,13 @@ public class ProductController extends Controller {
 	@Override
 	public void runController() {
 		int keuze = 1;
+		PrintControl.newView = true;
 		do{
 			if (PrintControl.newView == true){
 				productView.ClearTerminal();
 				productView.PrintMenuHeader();
 				productView.PrintMenuOptions();
+				PrintControl.newView = false;
 			}
 			
 		keuze = productView.RequestMenuOption();

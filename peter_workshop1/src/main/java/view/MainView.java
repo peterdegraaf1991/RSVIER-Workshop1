@@ -2,8 +2,6 @@ package view;
 
 import java.util.concurrent.TimeUnit;
 
-
-
 public class MainView extends View{
 
 	@Override

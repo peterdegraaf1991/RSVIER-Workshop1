@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model_class.Account;
 import model_class.Customer;
 import dao.AccountDao;
@@ -15,11 +17,13 @@ private AccountDao accountDaoImpl = new AccountDaoImpl();
 @Override
 public void runController() {
 	int keuze = 1;
+	PrintControl.newView = true;
 	do{
 		if (PrintControl.newView == true){
 	accountView.ClearTerminal();
 	accountView.PrintMenuHeader();
 	accountView.PrintMenuOptions();
+	PrintControl.newView = false;
 		}
 	keuze = accountView.RequestMenuOption();
 	
@@ -33,19 +37,28 @@ public void runController() {
 	}
 
 	public void CreateAccount(){
-		Customer customer = new Customer();
-		customer.setFirstname(accountView.RequestInputFirstname());
-		customer.setMiddlename(accountView.RequestInputMiddlename());
-		customer.setSurname(accountView.RequestInputSurname());
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
-		customerDaoImpl.createCustomer(customer);
-		
+		ArrayList<Customer> list = customerDaoImpl.readCustomersByLastname(accountView.RequestInputSurname());
+	
+		int option;
+		if(list.size() > 0){;
+			for (int i = 0; i < list.size(); i++)
+				accountView.PrintPersons(i +". " + list.get(i).toString());
+				option = accountView.ChoosePerson(list.size());
+		}
+		else {
+			accountView.NoPersonFound(); return;
+		}
+		Customer customer = list.get(option);
 		Account account = new Account();
+		account.setCustomer(customer);
 		account.setEmail(accountView.RequestInputUsername());
 		account.setPassword(accountView.RequestInputPassword());
+		// Created accounts are always id 1 for now
 		account.setAccountTypeId(1);
-		account.setCustomer (customer);
 		accountDaoImpl.createAccount(account);
+		PrintControl.newView = true;
 	}
 	
 }
+

@@ -88,6 +88,17 @@ public class Customer {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", "
+				+ "name=" + firstname + " "
+				+ (middlename != null ? middlename + " ": "")
+				+ surname + "]";
+	}
+
+	
+	
 	/* might remove builder.
     private Customer(Builder builder){
 		   this.firstname = builder.firstname;  

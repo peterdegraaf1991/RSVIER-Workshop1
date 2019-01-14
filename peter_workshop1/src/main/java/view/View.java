@@ -19,7 +19,7 @@ public abstract class  View {
 	}
 	
 	public void InvalidInput() {
-		terminal.printf("Your input is invalid");
+		terminal.println("Your input is invalid");
 	}
 	public void ClearTerminal() {
 		terminal.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");

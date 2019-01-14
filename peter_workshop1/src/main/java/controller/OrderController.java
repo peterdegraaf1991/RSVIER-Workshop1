@@ -5,15 +5,17 @@ import view.OrderView;
 public class OrderController extends Controller {
 
 	OrderView orderView = new OrderView();
-	
+
 	@Override
 	public void runController() {
 		int keuze = 1;
+		PrintControl.newView = true;
 		do{
 			if (PrintControl.newView == true){
 				orderView.ClearTerminal();
 				orderView.PrintMenuHeader();
 				orderView.PrintMenuOptions();
+				PrintControl.newView = false;
 			}
 			
 		keuze = orderView.RequestMenuOption();

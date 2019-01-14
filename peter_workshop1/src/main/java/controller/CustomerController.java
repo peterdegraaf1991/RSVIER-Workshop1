@@ -8,11 +8,13 @@ public class CustomerController extends Controller{
 	@Override
 	public void runController() {
 		int keuze = 1;
+		PrintControl.newView = true;
 		do{
 			if (PrintControl.newView == true){
 				customerView.ClearTerminal();
 				customerView.PrintMenuHeader();
 				customerView.PrintMenuOptions();
+				PrintControl.newView = false;
 				}
 			
 		keuze = customerView.RequestMenuOption();

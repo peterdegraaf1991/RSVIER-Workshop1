@@ -3,6 +3,12 @@
 1) Verbeteren voor aanroepen DAO en Controllers?
 	- Nu maak ik steeds een nieuwe aan met bv: AccountController accountController = new AccountController();
 	- Idem voor de Dao's? Is gebruikmaken van static methode een optie?
+2)	Method for reset of the AutoIncrement in DatabaseController doesn't work (atleast for the account table)
+
+
+Notes: 
+- One person can have multiple accounts now.
+
 
 08-01-2018
 

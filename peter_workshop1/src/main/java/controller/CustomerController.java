@@ -84,7 +84,6 @@ public class CustomerController extends Controller{
 		customerDaoImpl.updateCustomer(customer);
 //		Print succesfull message	
 	}
-	
 
 	private void CreateCustomer() {
 		Customer customer = new Customer();

@@ -17,19 +17,19 @@ private AccountDao accountDaoImpl = new AccountDaoImpl();
 @Override
 public void runController() {
 	int keuze = 1;
-	PrintControl.newView = true;
+	Controller.newView = true;
 	do{
-		if (PrintControl.newView == true){
+		if (Controller.newView == true){
 	accountView.ClearTerminal();
 	accountView.PrintMenuHeader();
 	accountView.PrintMenuOptions();
-	PrintControl.newView = false;
+	Controller.newView = false;
 		}
 	keuze = accountView.RequestMenuOption();
 	
 	switch (keuze) {
 		case 1: CreateAccount(); break;
-		case 9: keuze = 0; PrintControl.newView = true; break;
+		case 9: keuze = 0; Controller.newView = true; break;
 		default:accountView.InvalidInput(); break;
 			}
 		}
@@ -54,10 +54,10 @@ public void runController() {
 		account.setCustomer(customer);
 		account.setEmail(accountView.RequestInputUsername());
 		account.setPassword(accountView.RequestInputPassword());
-		// Created accounts are always id 1 for now
+		// Created accounts are always typeId 1 for now
 		account.setAccountTypeId(1);
 		accountDaoImpl.createAccount(account);
-		PrintControl.newView = true;
+		Controller.newView = true;
 	}
 	
 }

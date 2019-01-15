@@ -7,7 +7,7 @@ import view.LoginView;
 
 public class LoginController extends Controller {
 	
-	Account userAccount = new Account();
+	static Account loggedInAccount = new Account();
 	private LoginView loginView = new LoginView();
 	AccountDao accountDao = new AccountDaoImpl();
 	
@@ -16,13 +16,13 @@ public class LoginController extends Controller {
 	DatabaseController databaseController = new DatabaseController();
 	
 	int keuze = 1;
-	PrintControl.newView = true;
+	Controller.newView = true;
 	do{
-		if (PrintControl.newView == true){
+		if (Controller.newView == true){
 				loginView.ClearTerminal();
 				loginView.PrintMenuHeader();
 				loginView.PrintMenuOptions();
-				PrintControl.newView = false;
+				Controller.newView = false;
 			}
 	keuze = loginView.RequestMenuOption();
 	switch (keuze) {
@@ -38,14 +38,15 @@ public class LoginController extends Controller {
 	}
 	
 	public void CheckAccountByEmail(){
-		userAccount = accountDao.readAccountByEmail(loginView.RequestInputUsername());
-		System.out.println(userAccount);
-		if (userAccount.getId() == 0){
+		// This reads the password from the database, which probably isn't the safest thing to do :)
+		loggedInAccount = accountDao.readAccountByEmail(loginView.RequestInputUsername());
+		System.out.println(loggedInAccount);
+		if (loggedInAccount.getId() == 0){
 			loginView.UnknownUsername();
 			return;
 		}
-// 		Checking Password (may be seperate method)
-		if (loginView.RequestInputPassword().equals(userAccount.getPassword())){
+// 		Checking Password (may be separate method)
+		if (loginView.RequestInputPassword().equals(loggedInAccount.getPassword())){
 			loginView.LoginSuccesfull();
 
 			MainController mainController = new MainController();
@@ -53,7 +54,7 @@ public class LoginController extends Controller {
 		}
 		else
 			loginView.IncorrectPassword();
-//			PrintControl.newView = true;
+//			Controller.newView = true;
 	
 	}
 	

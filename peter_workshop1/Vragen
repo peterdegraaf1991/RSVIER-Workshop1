@@ -4,11 +4,11 @@
 	- Nu maak ik steeds een nieuwe aan met bv: AccountController accountController = new AccountController();
 	- Idem voor de Dao's? Is gebruikmaken van static methode een optie?
 2)	Method for reset of the AutoIncrement in DatabaseController doesn't work (atleast for the account table)
-
+3)  How do I implement a 'safe' login validation?
 
 Notes: 
 - One person can have multiple accounts now.
-
+- Might add bookmarks and line resets of text.io instead of /n for newView sometime in the future.
 
 08-01-2018
 

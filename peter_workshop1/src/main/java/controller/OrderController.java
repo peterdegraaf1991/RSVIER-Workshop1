@@ -9,19 +9,19 @@ public class OrderController extends Controller {
 	@Override
 	public void runController() {
 		int keuze = 1;
-		PrintControl.newView = true;
+		Controller.newView = true;
 		do{
-			if (PrintControl.newView == true){
+			if (Controller.newView == true){
 				orderView.ClearTerminal();
 				orderView.PrintMenuHeader();
 				orderView.PrintMenuOptions();
-				PrintControl.newView = false;
+				Controller.newView = false;
 			}
 			
 		keuze = orderView.RequestMenuOption();
 		switch (keuze) {
 			case 1: 
-			case 9: keuze = 0; PrintControl.newView = true; break;
+			case 9: keuze = 0; Controller.newView = true; break;
 			default:orderView.InvalidInput(); break;
 				}
 			}

@@ -8,19 +8,19 @@ public class CustomerController extends Controller{
 	@Override
 	public void runController() {
 		int keuze = 1;
-		PrintControl.newView = true;
+		Controller.newView = true;
 		do{
-			if (PrintControl.newView == true){
+			if (Controller.newView == true){
 				customerView.ClearTerminal();
 				customerView.PrintMenuHeader();
 				customerView.PrintMenuOptions();
-				PrintControl.newView = false;
+				Controller.newView = false;
 				}
 			
 		keuze = customerView.RequestMenuOption();
 		switch (keuze) {
 			case 1: 
-			case 9: keuze = 0; PrintControl.newView = true; break;
+			case 9: keuze = 0; Controller.newView = true; break;
 			default:customerView.InvalidInput(); break;
 				}
 			}

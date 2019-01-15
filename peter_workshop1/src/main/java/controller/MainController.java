@@ -10,14 +10,14 @@ MainView mainView = new MainView();
 	@Override
 	public void runController() {
 		int keuze = 1;
-		PrintControl.newView = true;
+		Controller.newView = true;
 		
 		do{
-			if (PrintControl.newView == true){
+			if (Controller.newView == true){
 				mainView.ClearTerminal();
 				mainView.PrintMenuHeader();
 				mainView.PrintMenuOptions();
-				PrintControl.newView = false;
+				Controller.newView = false;
 			}
 			
 		keuze = mainView.RequestMenuOption();
@@ -44,7 +44,7 @@ MainView mainView = new MainView();
 			
 			case 9: //Logout 
 			keuze = 0; 
-			PrintControl.newView = true; 
+			Controller.newView = true; 
 			mainView.logoutTimer(); 
 			break;
 			

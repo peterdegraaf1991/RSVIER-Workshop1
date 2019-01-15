@@ -133,7 +133,33 @@ public Account readAccountByEmail(String email) {
 		} 
 		return account;
 	}
+
+@Override
+public Account readAccountByCustomerId(int id) {
+	Account account = new Account();
+	String query = "SELECT * FROM account WHERE customer_id = ?";
+	try 
+	   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(query)){
+		preparedStatement.setInt(1, id); 
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.first();
+		//?password remains null?
+		account.setId (resultSet.getInt("id"));
+		account.setPassword(resultSet.getString("password"));
+		account.setEmail (resultSet.getString("email"));
+		account.setAccountTypeId (resultSet.getInt("account_type_id"));
+		CustomerDao customerDaoImpl = new CustomerDaoImpl();
+		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
+		account.setCustomer (customer);
+	}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+		return account;
+	}
 }
+
 	
 	
 

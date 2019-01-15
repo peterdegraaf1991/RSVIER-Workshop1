@@ -6,6 +6,7 @@ import model_class.Account;
 
 		public int createAccount(Account account);
 
+		public Account readAccountByCustomerId(int id);
 		public Account readAccountById(int id);
 		public Account readAccountByEmail(String email);
 		

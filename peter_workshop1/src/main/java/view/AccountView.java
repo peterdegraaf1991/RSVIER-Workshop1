@@ -14,7 +14,8 @@ public class AccountView extends View {
 
 	public void PrintMenuOptions() {
 		terminal.println("1. Create Account");
-		terminal.println("2. Uninplemented...");
+		terminal.println("2. Change Email of Account");
+		terminal.println("2. Change Password of Account");
 		terminal.println("9. Back");
 		terminal.println("0. Unimplemented");
 	}
@@ -29,7 +30,7 @@ public class AccountView extends View {
 		String password = textIO.newStringInputReader() 
 		        .withMinLength(6)
 		        .withInputMasking(true)
-		        .read("Enter the email for this account");
+		        .read("Enter the password for this account");
 		return password;
 	}
 /*
@@ -60,7 +61,7 @@ public class AccountView extends View {
 		int option = textIO.newIntInputReader()
 				.withMinVal(0)
 				.withMaxVal(i-1)
-				.read("Choose the person you want to create an account for");
+				.read("Choose the person you want to select");
 		return option;
 }
 

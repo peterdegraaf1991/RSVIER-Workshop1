@@ -28,7 +28,9 @@ public void runController() {
 	keuze = accountView.RequestMenuOption();
 	
 	switch (keuze) {
-		case 1: CreateAccount(); break;
+		case 1: CreateAccount(ChoosePersonFromList()); break;
+		case 2: ChangeEmail(); break;
+		case 3: ChangePassword(); break;
 		case 9: keuze = 0; Controller.newView = true; break;
 		default:accountView.InvalidInput(); break;
 			}
@@ -36,20 +38,10 @@ public void runController() {
 	while(keuze != 0);
 	}
 
-	public void CreateAccount(){
-		CustomerDao customerDaoImpl = new CustomerDaoImpl();
-		ArrayList<Customer> list = customerDaoImpl.readCustomersByLastname(accountView.RequestInputSurname());
-	
-		int option;
-		if(list.size() > 0){;
-			for (int i = 0; i < list.size(); i++)
-				accountView.PrintPersons(i +". " + list.get(i).toString());
-				option = accountView.ChoosePerson(list.size());
+	public void CreateAccount(Customer customer){
+		if (customer == null) {
+			return;
 		}
-		else {
-			accountView.NoPersonFound(); return;
-		}
-		Customer customer = list.get(option);
 		Account account = new Account();
 		account.setCustomer(customer);
 		account.setEmail(accountView.RequestInputUsername());
@@ -60,5 +52,41 @@ public void runController() {
 		Controller.newView = true;
 	}
 	
-}
+	/// Might go into PersonController
+	public Customer ChoosePersonFromList(){
+		CustomerDao customerDaoImpl = new CustomerDaoImpl();
+		ArrayList<Customer> list = customerDaoImpl.readCustomersByLastname(accountView.RequestInputSurname());
+			if (list.size() <= 0){
+				accountView.NoPersonFound(); return null;
+			}
+			for (int i = 0; i < list.size(); i++){
+			accountView.PrintPersons(i +". " + list.get(i).toString());
+		}
+		int option = accountView.ChoosePerson(list.size());
+		Customer customer = list.get(option);
+		return customer;		
+	}
+	
+	public void ChangePassword (){
+	Customer customer = ChoosePersonFromList();
+		if (customer == null){
+			return;
+		}
+	Account account = accountDaoImpl.readAccountByCustomerId(customer.getId());
+	account.setPassword(accountView.RequestInputPassword());
+	accountDaoImpl.updateAccount(account);
+	}		
+	
+	public void ChangeEmail (){
+	Customer customer = ChoosePersonFromList();
+		if (customer == null){
+			return;
+		}
+	Account account = accountDaoImpl.readAccountByCustomerId(customer.getId());
+	account.setEmail(accountView.RequestInputUsername());
+	accountDaoImpl.updateAccount(account);
+	}		
+	
+	
+	}
 

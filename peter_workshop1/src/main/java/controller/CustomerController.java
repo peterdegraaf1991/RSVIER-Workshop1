@@ -25,8 +25,8 @@ public class CustomerController extends Controller{
 			
 		keuze = customerView.RequestMenuOption();
 		switch (keuze) {
-			case 1: CreateCustomer();
-			case 2: runEditPersonMenu(ChoosePersonFromList());
+			case 1: CreateCustomer(); break;
+			case 2: runEditPersonMenu(ChoosePersonFromList());break;
 			case 9: keuze = 0; Controller.newView = true; break;
 //			case 0:
 			default:customerView.InvalidInput(); break;
@@ -41,8 +41,8 @@ public class CustomerController extends Controller{
 		do{
 			if (Controller.newView == true){
 				customerView.ClearTerminal();
-				customerView.PrintMenuHeader();
-				customerView.PrintMenuOptions();
+				customerView.PrintEditMenuHeader();
+				customerView.PrintEditMenuOptions();
 				Controller.newView = false;
 				}
 			
@@ -87,9 +87,15 @@ public class CustomerController extends Controller{
 	
 
 	private void CreateCustomer() {
-		// TODO Auto-generated method stub
-		
+		Customer customer = new Customer();
+		customer.setFirstname(customerView.RequestInputFirstname());
+		customer.setMiddlename(customerView.RequestInputMiddlename());
+		customer.setSurname(customerView.RequestInputSurname());
+		if (customerDaoImpl.CustomerNameExists(customer) == 0)
+			customerDaoImpl.createCustomer(customer);
+		else{
+			customerView.AlreadyExists();
+		}
+	}
 	}
 	
-	
-	}

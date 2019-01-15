@@ -47,6 +47,7 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 			 preparedStatement.setString(1, customer.getFirstname());
 	         preparedStatement.setString(2, customer.getMiddlename());
 	         preparedStatement.setString(3, customer.getSurname());
+	         preparedStatement.setInt(4, customer.getId());
 			  preparedStatement.executeUpdate(); 
 			  LOG.info("customerid: " + customer.getId()+ " has been updated");
 		}
@@ -129,5 +130,26 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 			e.printStackTrace(); 
 		} 
 	}
+	
+	public int CustomerNameExists(Customer customer) {
+		String query = "SELECT id FROM customer WHERE firstname=? AND middlename = ? AND surname = ?"; 
+		int rowCount = 0;
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			  preparedStatement.setString(1, customer.getFirstname()); 
+			  preparedStatement.setString(2, customer.getMiddlename()); 
+			  preparedStatement.setString(3, customer.getSurname());
+			  ResultSet rs = preparedStatement.executeQuery(); 
+	          while (rs.next()) 
+	        	  rowCount++; 
+			  System.out.println("Rows Found = " + rowCount);
+		   		}
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+			} 
+		return rowCount;
+		}
 }
+
 

@@ -114,4 +114,20 @@ private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoImpl.class)
 				} 
 			return listOfCustomers;
 	}
+
+	@Override
+	public void deleteCustomer(String lastname) {
+		String query = "DELETE FROM customer WHERE surname = ?"; 
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
+			  preparedStatement.setString(1, lastname); 
+			  preparedStatement.executeUpdate(); 
+			  LOG.info("Person successfully removed");
+			  } 
+		catch (SQLException e) { 
+			e.printStackTrace(); 
+		} 
+	}
 }
+

@@ -47,10 +47,10 @@ public class AccountView extends View {
 	}
 */
 	public String RequestInputSurname() {
-		String firstname = textIO.newStringInputReader()
+		String lastname = textIO.newStringInputReader()
 				.withDefaultValue("Graaf")
 		        .read("Enter surname");
-		return firstname;
+		return lastname;
 	}
 	
 	public void PrintPersons(String personToString) {

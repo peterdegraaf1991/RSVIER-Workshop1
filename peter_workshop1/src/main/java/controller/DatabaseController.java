@@ -33,28 +33,22 @@ public class DatabaseController {
 	
 	public static void ClearDatabase(){
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
-				String query1 = "DELETE FROM account";
-				String query2 = "DELETE FROM account_type";
-				String query3 = "DELETE FROM order_line";
-				String query4 = "DELETE FROM `order`";
-				String query5 = "DELETE FROM customer";
-				String query6 = "DELETE FROM address";
-				String query7 = "DELETE FROM address_type";
-				String query8 = "DELETE FROM product";
-				
-				statement.addBatch(query1);
-				statement.addBatch(query2);
-				statement.addBatch(query3);
-				statement.addBatch(query4);
-				statement.addBatch(query5);
-				statement.addBatch(query6);
-				statement.addBatch(query7);
-				statement.addBatch(query8);
+	
+				statement.addBatch("SET FOREIGN_KEY_CHECKS=0");
+				statement.addBatch("TRUNCATE `account`");
+				statement.addBatch("TRUNCATE `account_type`");
+				statement.addBatch("TRUNCATE `order_line`");
+				statement.addBatch("TRUNCATE `order`");
+				statement.addBatch("TRUNCATE `customer`");
+				statement.addBatch("TRUNCATE `address`");
+				statement.addBatch("TRUNCATE `address_type`");
+				statement.addBatch("TRUNCATE `product`");
+				statement.addBatch("SET FOREIGN_KEY_CHECKS=1");
 				statement.executeBatch();
 				} 
 				catch (SQLException e) {
 					e.printStackTrace();
-				try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
+/*				try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {
 				 
 				String query1 = "ALTER TABLE `account` AUTO_INCREMENT = 1";
 				String query2 = "ALTER TABLE account_type AUTO_INCREMENT = 1";
@@ -78,6 +72,6 @@ public class DatabaseController {
 				catch (SQLException e2) {
 				e2.printStackTrace();
 				}
-				}
+*/				}
 }
 }

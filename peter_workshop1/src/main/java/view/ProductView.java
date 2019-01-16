@@ -2,9 +2,6 @@ package view;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
-
-import model_class.Product;
 
 public class ProductView extends View{
 
@@ -24,11 +21,9 @@ public class ProductView extends View{
 	}
 
 
-	public void printProduct(List<Product> list) {
-		for (int i = 0; i < list.size(); i++){
-			terminal.println("i." + list.get(i).toString());
+	public void printProduct(String ProductToString) {
+			terminal.println(ProductToString);
 		}
-	}
 
 	public int RequestProductNumber(int size) {
 		int index = textIO.newIntInputReader()
@@ -55,6 +50,11 @@ public class ProductView extends View{
 				.withMinVal(0)
 				.read("Enter amount of products currently in stock");
 		return stock;
+	}
+
+	public void NoProductFound() {
+		terminal.println("No product(s) found in the store");
+		
 	}
 
 }

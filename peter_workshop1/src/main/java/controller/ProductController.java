@@ -25,7 +25,7 @@ public class ProductController extends Controller {
 			
 		keuze = productView.RequestMenuOption();
 		switch (keuze) {
-			case 1: ShowProductlist(); break;
+			case 1: PrintProductlist(); break;
 			case 2: AddProduct(); break;
 			case 3: UpdateProduct(SelectProductFromList()); break;
 			case 4: DeleteProduct(); break;
@@ -37,6 +37,8 @@ public class ProductController extends Controller {
 		}
 
 	private void UpdateProduct(Product product) {
+		 if (product == null)
+				return;
 	product.setName(productView.RequestName());
 	product.setPrice(productView.RequestPrice());
 	product.setStock(productView.RequestStock());
@@ -45,13 +47,19 @@ public class ProductController extends Controller {
 	}
 
 	private void DeleteProduct() {
-	productDaoImpl.deleteProduct(SelectProductFromList().getId());
+	Product product = SelectProductFromList();
+	 if (product == null)
+			return;
+	productDaoImpl.deleteProduct(product.getId());
 	// Print succes message
 	}
-		
+	
+	//duplicate with ShowProductList, but List<product is needed)
 	private Product SelectProductFromList() {
-	List<Product> list = productDaoImpl.readAllProducts();
-	productView.printProduct(list);
+	List<Product> list = PrintProductlist();
+	if (list == null){
+		return null;
+	}
 	int index = productView.RequestProductNumber(list.size());
 	return list.get(index);
 	}
@@ -65,11 +73,18 @@ public class ProductController extends Controller {
 	// Print succes message
 	}
 
-	private void ShowProductlist() {
+	private List<Product> PrintProductlist() {
 		List<Product> list = productDaoImpl.readAllProducts();
-		productView.printProduct(list);
+		if (list.size() <= 0){
+			productView.NoProductFound(); return null;
 		}
+		for (int i = 0; i < list.size(); i++){
+			productView.printProduct("i." + list.get(i).toString());
+		}
+		return list;
 	}
+}
+	
 
 
 

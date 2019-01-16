@@ -28,7 +28,7 @@ public class ProductView extends View{
 	public int RequestProductNumber(int size) {
 		int index = textIO.newIntInputReader()
 				.withMinVal(0)
-				.withMaxVal(size)
+				.withMaxVal(size-1)
 				.read("Select Product:");
 		return index;
 	}

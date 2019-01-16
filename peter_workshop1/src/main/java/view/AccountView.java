@@ -8,6 +8,8 @@ public class AccountView extends View {
 	private TextIO textIO = TextIoFactory.getTextIO();
 	TextTerminal<?> terminal = textIO.getTextTerminal();
 	
+	
+	
 	public void PrintMenuHeader() {
 		terminal.println("Header AccountView \n");
 	}
@@ -67,6 +69,11 @@ public class AccountView extends View {
 
 	public void NoPersonFound() {
 		terminal.println("No person with that lastname found\nPlease create a person first");
+		
+	}
+
+	public void NoAccountFound() {
+		terminal.println("This person doesn't have an account yet");
 		
 	}
 }

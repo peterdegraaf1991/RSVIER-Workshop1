@@ -21,15 +21,23 @@ public class DatabaseController {
 		String queryCustomer2 = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (999,'Mathijs','de','Graaf')";
 		String queryAccountType = "INSERT INTO account_type (id, description) VALUES (1, 'testing')";
 		String queryAccount = "INSERT INTO account(email,password,customer_id,account_type_id) VALUES ('testaccount@email.com','rsvier',1,1)";
+		String queryProduct = "INSERT INTO product (name,price,stock) VALUES ('Bordspel',49.50,105)";
+		String queryOrder = "INSERT INTO `order` (total_cost, customer_id, date) VALUES (10,1,`2019-01-15 20:34:46`)";
+		String queryOrderLine = "INSERT INTO order_line (order_id,product_id,amount) VALUES ('Bordspel',49.50,105)";
 		statement.execute(queryCustomer);
 		statement.execute(queryCustomer2);
 		statement.execute(queryAccountType);
 		statement.execute(queryAccount);
+		statement.execute(queryProduct);
+		statement.execute(queryOrder);
+		statement.execute(queryOrderLine);
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public static void ClearDatabase(){
 		try (Connection connection = DatabaseConnection.INSTANCE.getConnection(); Statement statement = connection.createStatement()) {

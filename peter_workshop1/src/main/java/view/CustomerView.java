@@ -29,7 +29,7 @@ public class CustomerView extends View{
 	public String RequestInputSurname() {
 		String lastname = textIO.newStringInputReader()
 				.withDefaultValue("Graaf")
-		        .read("Enter surname");
+		        .read("Enter surname of the Person");
 		return lastname;
 	}
 	
@@ -47,7 +47,6 @@ public class CustomerView extends View{
 	
 	public void NoPersonFound() {
 		terminal.println("No person with that lastname found\nPlease create a person first");
-		
 	}
 	
 	public String RequestInputFirstname() {

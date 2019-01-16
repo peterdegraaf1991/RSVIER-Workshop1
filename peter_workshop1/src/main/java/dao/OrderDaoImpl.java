@@ -15,39 +15,43 @@ import org.slf4j.LoggerFactory;
 import utility.DatabaseConnection;
 import model_class.Customer;
 import model_class.Order;
-import model_class.OrderLine;
 
 public class OrderDaoImpl implements OrderDao {
 
 private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	
 	@Override
-	public void createOrder(Order order) {
-		String query = "INSERT INTO order (id, total_cost, date, customer_id,) VALUES( ?, ?, ?, ?)"; 
+	public int createOrder(Order order) {
+		String query = "INSERT INTO `order` (total_cost, date, customer_id) VALUES(?,?,?)"; 
+		int generatedKey = 0;
 	    try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
-		         preparedStatement.setInt(1, order.getId()); 
-		         preparedStatement.setBigDecimal(2, order.getTotalCost());
-		         preparedStatement.setTimestamp(3, Timestamp.from(order.getDate().atZone(ZoneId.of("Europe/Amsterdam")).toInstant()));
-		         preparedStatement.setInt(4, order.getCustomer().getId()); 
-		         preparedStatement.executeUpdate(); 
-		         LOG.info("order: " + order.getId() + " successfully created"); 
+		         preparedStatement.setBigDecimal(1, order.getTotalCost());
+		         preparedStatement.setObject(2, order.getDate());
+		         preparedStatement.setInt(3, order.getCustomer().getId()); 
+		         preparedStatement.execute(); 
+		         ResultSet rs = preparedStatement.getGeneratedKeys();
+		         if(rs.next());
+		         	generatedKey = rs.getInt(1);
+			         LOG.info("order: " + generatedKey + " successfully created"); 
 	    } 
 	    catch (SQLException e) { 
 	    	e.printStackTrace(); 
 		} 
+	    return generatedKey;
 	}
 	
 	@Override
 	public void updateOrder(Order order) {
-		String query = "UPDATE order SET total_cost = ? , date = ?, customer_id = ?  WHERE id = ?"; 
+		String query = "UPDATE `order` SET total_cost = ? , date = ?, customer_id = ?  WHERE id = ?"; 
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 			preparedStatement.setBigDecimal(1, order.getTotalCost());
-	        preparedStatement.setTimestamp(2, Timestamp.from(order.getDate().atZone(ZoneId.of("Europe/Amsterdam")).toInstant())); 
+	        preparedStatement.setObject(2, order.getDate());
 	        preparedStatement.setInt(3, order.getCustomer().getId()); 
+	        preparedStatement.setInt(4, order.getId()); 
 	        preparedStatement.executeUpdate(); 
 			LOG.info("order with id '" + order.getId()+ "' has been updated");
 		}
@@ -58,7 +62,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 
 	@Override
 	public int deleteOrder(int id) {
-		String query = "DELETE FROM order WHERE id = ?"; 
+		String query = "DELETE FROM 'order' WHERE id = ?"; 
 		int affectedRows = 0;
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
@@ -76,7 +80,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	@Override
 	public Order readOrderById(int id) {
 		Order order = new Order();
-		String query = "SELECT * FROM order WHERE id = ?"; 
+		String query = "SELECT * FROM 'order' WHERE id = ?"; 
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query)){
@@ -106,7 +110,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	@Override
 	public List<Order> readOrdersOfCustomerId(int customer_id) {
 		List<Order> orderList = new ArrayList<>();
-		String query = "SELECT * FROM order WHERE Customer_id = ?";
+		String query = "SELECT * FROM `order` WHERE Customer_id = ?";
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query)){
@@ -130,6 +134,24 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 				e.printStackTrace(); 
 			} 
 			return orderList;
+		}
+
+	@Override
+	public List<Integer> readCustomerIdsWithOrder() {
+		List<Integer> list = new ArrayList<>();
+		String query = "SELECT DISTINCT customer_id FROM `order`";
+		try 
+		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				list.add(resultSet.getInt("customer_id"));
+				}
+		}
+			catch (SQLException e) { 
+				e.printStackTrace(); 
+			} 
+			return list;
 		}
 	}
 

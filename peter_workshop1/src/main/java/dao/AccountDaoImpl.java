@@ -143,8 +143,7 @@ public Account readAccountByCustomerId(int id) {
 		PreparedStatement preparedStatement = connection.prepareStatement(query)){
 		preparedStatement.setInt(1, id); 
 		ResultSet resultSet = preparedStatement.executeQuery();
-		resultSet.first();
-		//?password remains null?
+		if (resultSet.next()){
 		account.setId (resultSet.getInt("id"));
 		account.setPassword(resultSet.getString("password"));
 		account.setEmail (resultSet.getString("email"));
@@ -152,6 +151,7 @@ public Account readAccountByCustomerId(int id) {
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
 		Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
 		account.setCustomer (customer);
+		}
 	}
 		catch (SQLException e) { 
 			e.printStackTrace(); 

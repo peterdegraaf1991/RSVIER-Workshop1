@@ -55,7 +55,7 @@ public class ProductController extends Controller {
 	}
 	
 	//duplicate with ShowProductList, but List<product is needed)
-	private Product SelectProductFromList() {
+	public Product SelectProductFromList() {
 	List<Product> list = PrintProductlist();
 	if (list == null){
 		return null;
@@ -79,7 +79,7 @@ public class ProductController extends Controller {
 			productView.NoProductFound(); return null;
 		}
 		for (int i = 0; i < list.size(); i++){
-			productView.printProduct("i." + list.get(i).toString());
+			productView.printProduct(i +". " + list.get(i).toString());
 		}
 		return list;
 	}

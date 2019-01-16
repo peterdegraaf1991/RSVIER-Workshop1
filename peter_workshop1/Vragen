@@ -1,3 +1,7 @@
+15-01-2018
+
+Ik begin in mijn Controllers vaak een check if (... == null) return; te krijgen. Dit lijkt mij niet heel netjes en beter te kunnen.
+
 14-01-2018
 
 1) Verbeteren voor aanroepen DAO en Controllers?

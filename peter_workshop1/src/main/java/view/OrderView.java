@@ -57,23 +57,23 @@ public class OrderView extends View {
 
 	public void orderSuccesfullyDeleted() {
 		terminal.println("Order Succesfully Deleted");
-		
+
 	}
 
 	public BigDecimal requestTotalCost() {
-		Double newTotalPrice = textIO.newDoubleInputReader()
-		        .read("Enter the new total price for this order:");
+		Double newTotalPrice = textIO.newDoubleInputReader().read(
+				"Enter the new total price for this order:");
 		return new BigDecimal(newTotalPrice).setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public void TotalCostUpdated() {
 		terminal.println("Total Price for the order has succesfully been changed");
-		
+
 	}
 
 	public void noOrdersFound() {
 		terminal.println("No customers with an order found");
-		
+
 	}
 
 }

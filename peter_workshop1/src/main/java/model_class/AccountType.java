@@ -4,14 +4,13 @@ public class AccountType {
 
 	private int id;
 	private String description;
-	
-	
-	public AccountType(){
+
+	public AccountType() {
 	}
-	
-	public AccountType(int id, String description){
+
+	public AccountType(int id, String description) {
 		this.id = id;
-		this.description = description;	   
+		this.description = description;
 	}
 
 	public int getId() {

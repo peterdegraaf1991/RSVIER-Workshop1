@@ -1,21 +1,22 @@
 package dao;
 
 import model_class.Account;
-	
-	public interface AccountDao {
 
-		public int createAccount(Account account);
+public interface AccountDao {
 
-		public Account readAccountByCustomerId(int id);
-		public Account readAccountById(int id);
-		public Account readAccountByEmail(String email);
-		
-		public void updateAccount(Account account);
-	
-		public int deleteAccount(int id);
+	public int createAccount(Account account);
 
-		
-//		public void printAccount();
-//		public void printAccount(String email);
-		
-	}
+	public Account readAccountByCustomerId(int id);
+
+	public Account readAccountById(int id);
+
+	public Account readAccountByEmail(String email);
+
+	public void updateAccount(Account account);
+
+	public int deleteAccount(int id);
+
+	// public void printAccount();
+	// public void printAccount(String email);
+
+}

@@ -3,14 +3,14 @@ package model_class;
 public class Customer {
 
 	private int id;
-	private String firstname; 
-	private String middlename; 
+	private String firstname;
+	private String middlename;
 	private String surname;
-    
-	public Customer(){
+
+	public Customer() {
 	}
-	
-	public Customer (int id, String firstname, String middlename, String surname){
+
+	public Customer(int id, String firstname, String middlename, String surname) {
 		this.id = id;
 		this.firstname = firstname;
 		this.middlename = middlename;
@@ -44,10 +44,11 @@ public class Customer {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -60,6 +61,7 @@ public class Customer {
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -91,51 +93,29 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", "
-				+ "name=" + firstname + " "
-				+ (middlename != null ? middlename + " ": "")
-				+ surname + "]";
+		return "Customer [id=" + id + ", " + "name=" + firstname + " "
+				+ (middlename != null ? middlename + " " : "") + surname + "]";
 	}
 
-	
-	
-	/* might remove builder.
-    private Customer(Builder builder){
-		   this.firstname = builder.firstname;  
-		   this.middlename = builder.middlename;
-		   this.surname = builder.surname;
-		   this.id = builder.id;
-	    }
-    
-	public static class Builder{
-		private String	firstname;
-		private String 	middlename;
-		private String 	surname;
-		private int		id;
-
-        public Builder firstname(String firstname) {
-          this.firstname = firstname;
-          return this;
-        }
-
-        public Builder middlename(String middlename) {
-            this.middlename = middlename;
-            return this;
-          }
-
-        public Builder surname(String surname) {
-            this.surname = surname;
-            return this;
-          }
-
-        public Builder id(int id){
-	    	this.id = id;
-	    	return this;
-	    	}
-
-	    public Customer build() {
-	    	return new Customer(this);
-	    }
-	}
-*/
+	/*
+	 * might remove builder. private Customer(Builder builder){ this.firstname =
+	 * builder.firstname; this.middlename = builder.middlename; this.surname =
+	 * builder.surname; this.id = builder.id; }
+	 * 
+	 * public static class Builder{ private String firstname; private String
+	 * middlename; private String surname; private int id;
+	 * 
+	 * public Builder firstname(String firstname) { this.firstname = firstname;
+	 * return this; }
+	 * 
+	 * public Builder middlename(String middlename) { this.middlename =
+	 * middlename; return this; }
+	 * 
+	 * public Builder surname(String surname) { this.surname = surname; return
+	 * this; }
+	 * 
+	 * public Builder id(int id){ this.id = id; return this; }
+	 * 
+	 * public Customer build() { return new Customer(this); } }
+	 */
 }

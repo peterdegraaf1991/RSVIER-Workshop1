@@ -3,8 +3,9 @@ package view;
 public class OrderLineView extends View {
 
 	public void ProductAlreadyAdded() {
-	terminal.println("This Product already has been added to this order");
+		terminal.println("This Product already has been added to this order");
 	}
+
 	public Boolean AddMoreProducts() {
 		char option = textIO.newCharInputReader()
 				.withInlinePossibleValues('y', 'n')
@@ -16,7 +17,7 @@ public class OrderLineView extends View {
 			System.out.println("Chosen option = n (false)");
 		return false;
 	}
-	
+
 	public int requestAmount(int inStock) {
 		int amount = textIO
 				.newIntInputReader()
@@ -26,11 +27,11 @@ public class OrderLineView extends View {
 						+ "Currently in Stock:" + inStock + "\n");
 		return amount;
 	}
-	
-	
+
 	@Override
 	public void PrintMenuHeader() {
 	}
+
 	@Override
 	public void PrintMenuOptions() {
 	}

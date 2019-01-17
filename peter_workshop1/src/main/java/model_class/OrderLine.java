@@ -7,15 +7,15 @@ public class OrderLine {
 	private int amount;
 	private int orderId;
 
-	public OrderLine(){
+	public OrderLine() {
 	}
-	
+
 	public OrderLine(Product product, int amount, int orderId) {
 		this.product = product;
 		this.amount = amount;
 		this.orderId = orderId;
 	}
-	
+
 	public int getOrderId() {
 		return orderId;
 	}
@@ -84,7 +84,5 @@ public class OrderLine {
 			return false;
 		return true;
 	}
-
-
 
 }

@@ -3,73 +3,69 @@ package model_class;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
-
 public class Order {
-  private int id;
-  private BigDecimal totalCost;
-  private LocalDateTime date;
-  private Customer customer;
-//  private List<OrderLine> orderLineList;
-  
-  public Order(BigDecimal totalCost, LocalDateTime date, Customer customer/*, List<OrderLine> orderLineList*/) {
-	  this.totalCost = totalCost;
-	  this.date = date;
-	  this.customer = customer;
-//	  this.orderLineList = orderLineList;
-  }
+	private int id;
+	private BigDecimal totalCost;
+	private LocalDateTime date;
+	private Customer customer;
 
-public Order() {
-	// TODO Auto-generated constructor stub
-}
+	// private List<OrderLine> orderLineList;
 
-public int getId() {
-	return id;
-}
+	public Order(BigDecimal totalCost, LocalDateTime date, Customer customer) {
+		this.totalCost = totalCost;
+		this.date = date;
+		this.customer = customer;
+		// this.orderLineList = orderLineList;
+	}
 
-public void setId(int id) {
-	this.id = id;
-}
+	public Order() {
+		// TODO Auto-generated constructor stub
+	}
 
-public BigDecimal getTotalCost() {
-	return totalCost;
-}
+	public int getId() {
+		return id;
+	}
 
-public void setTotalCost(BigDecimal totalCost) {
-	this.totalCost = totalCost;
-}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-public LocalDateTime getDate() {
-	return date;
-}
+	public BigDecimal getTotalCost() {
+		return totalCost;
+	}
 
-public void setDate(LocalDateTime date) {
-	this.date = date;
-}
+	public void setTotalCost(BigDecimal totalCost) {
+		this.totalCost = totalCost;
+	}
 
-public Customer getCustomer() {
-	return customer;
-}
+	public LocalDateTime getDate() {
+		return date;
+	}
 
-public void setCustomer(Customer customer) {
-	this.customer = customer;
-}
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 
-@Override
-public String toString() {
-	return "Order [id=" + id + ", totalCost=" + totalCost + ", date=" + date
-			+ ", customer=" + customer + "]";
-}
+	public Customer getCustomer() {
+		return customer;
+	}
 
-//public List<OrderLine> getOrderLines() {
-//	return orderLineList;
-//}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-//public void setOrderLines(List<OrderLine> orderLines) {
-//	this.orderLineList = orderLines;
-//}
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", totalCost=" + totalCost + ", date="
+				+ date + ", customer=" + customer + "]";
+	}
 
+	// public List<OrderLine> getOrderLines() {
+	// return orderLineList;
+	// }
 
-
+	// public void setOrderLines(List<OrderLine> orderLines) {
+	// this.orderLineList = orderLines;
+	// }
 
 }

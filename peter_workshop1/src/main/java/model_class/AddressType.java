@@ -5,12 +5,11 @@ public class AddressType {
 	private String description;
 	private int id;
 
-	
 	public AddressType(String description) {
 		this.description = description;
 	}
 
-    public AddressType() {
+	public AddressType() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,10 +22,10 @@ public class AddressType {
 	}
 
 	public int getId() {
-    	return id;
-    }
+		return id;
+	}
 
-    public String getDescription() {
-    	return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 }

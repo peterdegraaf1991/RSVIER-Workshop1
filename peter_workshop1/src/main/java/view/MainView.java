@@ -2,12 +2,12 @@ package view;
 
 import java.util.concurrent.TimeUnit;
 
-public class MainView extends View{
+public class MainView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
 		terminal.println("This is MainViewHeader\n\n");
-		
+
 	}
 
 	@Override
@@ -33,11 +33,10 @@ public class MainView extends View{
 			TimeUnit.SECONDS.sleep(1);
 			terminal.println("Logging out in 1");
 			TimeUnit.SECONDS.sleep(1);
-			
-			
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }

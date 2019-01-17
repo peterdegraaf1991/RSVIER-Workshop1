@@ -3,7 +3,7 @@ package view;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ProductView extends View{
+public class ProductView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
@@ -20,34 +20,30 @@ public class ProductView extends View{
 		terminal.println("0. Unimplemented");
 	}
 
-
 	public void printProduct(String ProductToString) {
-			terminal.println(ProductToString);
-		}
+		terminal.println(ProductToString);
+	}
 
 	public int RequestProductNumber(int size) {
-		int index = textIO.newIntInputReader()
-				.withMinVal(0)
-				.withMaxVal(size-1)
-				.read("Select Product:");
+		int index = textIO.newIntInputReader().withMinVal(0)
+				.withMaxVal(size - 1).read("Select Product:");
 		return index;
 	}
 
 	public String RequestName() {
-			String productName = textIO.newStringInputReader()
-			        .read("Enter Productname:");
-			return productName;
+		String productName = textIO.newStringInputReader().read(
+				"Enter Productname:");
+		return productName;
 	}
 
 	public BigDecimal RequestPrice() {
-		Double productPrice = textIO.newDoubleInputReader()
-		        .read("Enter ProductPrice:");
+		Double productPrice = textIO.newDoubleInputReader().read(
+				"Enter ProductPrice:");
 		return new BigDecimal(productPrice).setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public int RequestStock() {
-		int stock = textIO.newIntInputReader()
-				.withMinVal(0)
+		int stock = textIO.newIntInputReader().withMinVal(0)
 				.read("Enter amount of products currently in stock");
 		return stock;
 	}

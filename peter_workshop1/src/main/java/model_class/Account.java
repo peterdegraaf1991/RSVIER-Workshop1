@@ -7,33 +7,33 @@ public class Account {
 	private String email;
 	private String password;
 	private int accountTypeId;
-	
-	
-	public Account(){
+
+	public Account() {
 	}
-	
-	public Account(Customer customer, String email, String password, int accountTypeId){
-	   this.email = email;
-	   this.password = password;
-	   this.accountTypeId = accountTypeId;
-	   this.customer = customer;
-    }
 
-	public int getId(){
+	public Account(Customer customer, String email, String password,
+			int accountTypeId) {
+		this.email = email;
+		this.password = password;
+		this.accountTypeId = accountTypeId;
+		this.customer = customer;
+	}
+
+	public int getId() {
 		return id;
-		}
+	}
 
-	public String getEmail(){
+	public String getEmail() {
 		return email;
-		}
+	}
 
 	public int getAccountTypeId() {
 		return accountTypeId;
-		}
-	
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
-		}
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -43,14 +43,18 @@ public class Account {
 		this.accountTypeId = accountTypeId;
 	}
 
-	@Override	
+	@Override
 	public String toString() {
-	  return "AccountToString Methode: \n AccountId = '" + id + "'\n Email= '" + email + "'\n Password: '" + password + "'\n AccountTypeId= '" + accountTypeId + "' " ;
-    }
+		return "AccountToString Methode: \n AccountId = '" + id
+				+ "'\n Email= '" + email + "'\n Password: '" + password
+				+ "'\n AccountTypeId= '" + accountTypeId + "' ";
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
-//getter for password allowed?
+
+	// getter for password allowed?
 	public String getPassword() {
 		return password;
 	}
@@ -105,6 +109,5 @@ public class Account {
 			return false;
 		return true;
 	}
-	
 
 }

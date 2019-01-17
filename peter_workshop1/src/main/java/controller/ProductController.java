@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import model_class.OrderLine;
 import model_class.Product;
 import dao.ProductDao;
 import dao.ProductDaoImpl;
@@ -83,6 +84,15 @@ public class ProductController extends Controller {
 		}
 		return list;
 	}
+	
+	public void updateStock(List<OrderLine> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Product product = list.get(i).getProduct();
+			product.setStock(product.getStock() - list.get(i).getAmount());
+			productDaoImpl.updateProduct(product);
+		}
+	}
+	
 }
 	
 

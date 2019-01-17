@@ -1,5 +1,8 @@
 package view;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class OrderView extends View {
 
 	@Override
@@ -15,9 +18,8 @@ public class OrderView extends View {
 
 	@Override
 	public void PrintMenuOptions() {
-		terminal.println("1. View Orders of Customer");
-		terminal.println("2. Add Order for Customer");
-		terminal.println("3. Edit Order");
+		terminal.println("1. Add Order");
+		terminal.println("2. Edit Order");
 		terminal.println("9. Back");
 		terminal.println("0. Unimplemented");
 
@@ -25,8 +27,8 @@ public class OrderView extends View {
 
 	public void PrintEditMenuOptions() {
 		terminal.println("1. Change Products");
-		terminal.println("2. Change Amount");
-		terminal.println("4. Delete");
+		terminal.println("2. Change Totalcost");
+		terminal.println("3. Delete");
 		terminal.println("9. Back");
 		terminal.println("0. Unimplemented");
 
@@ -35,28 +37,6 @@ public class OrderView extends View {
 	public void printCustomerNamesWithOrder(String string) {
 		terminal.println(string);
 
-	}
-
-	public int requestAmount(int inStock) {
-		int amount = textIO
-				.newIntInputReader()
-				.withMinVal(1)
-				.withMaxVal(inStock)
-				.read("How many do you wish to order? \n"
-						+ "Currently in Stock:" + inStock + "\n");
-		return amount;
-	}
-
-	public Boolean AddMoreProducts() {
-		char option = textIO.newCharInputReader()
-				.withInlinePossibleValues('y', 'n')
-				.read("Do you wish to add another product to the order?");
-		if (option == 'y') {
-			System.out.println("Chosen option = y (true))");
-			return true;
-		} else
-			System.out.println("Chosen option = n (false)");
-		return false;
 	}
 
 	public void Continue() {
@@ -73,6 +53,27 @@ public class OrderView extends View {
 				.withMaxVal(size - 1)
 				.read("Choose the order you want to select");
 		return option;
+	}
+
+	public void orderSuccesfullyDeleted() {
+		terminal.println("Order Succesfully Deleted");
+		
+	}
+
+	public BigDecimal requestTotalCost() {
+		Double newTotalPrice = textIO.newDoubleInputReader()
+		        .read("Enter the new total price for this order:");
+		return new BigDecimal(newTotalPrice).setScale(2, RoundingMode.HALF_UP);
+	}
+
+	public void TotalCostUpdated() {
+		terminal.println("Total Price for the order has succesfully been changed");
+		
+	}
+
+	public void noOrdersFound() {
+		terminal.println("No customers with an order found");
+		
 	}
 
 }

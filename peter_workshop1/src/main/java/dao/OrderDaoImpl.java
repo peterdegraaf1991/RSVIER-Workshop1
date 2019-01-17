@@ -62,7 +62,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 
 	@Override
 	public int deleteOrder(int id) {
-		String query = "DELETE FROM 'order' WHERE id = ?"; 
+		String query = "DELETE FROM `order` WHERE id = ?"; 
 		int affectedRows = 0;
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
@@ -114,20 +114,17 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			preparedStatement.setInt(1, customer_id); 
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
 				Order order = new Order();
 				order.setId (resultSet.getInt("id"));
 				order.setTotalCost (resultSet.getBigDecimal("total_cost"));
 				order.setDate (resultSet.getTimestamp("date").toLocalDateTime());
-				
-				CustomerDao customerDaoImpl = new CustomerDaoImpl();
-				Customer customer = customerDaoImpl.readCustomerById(resultSet.getInt("customer_id"));
+				Customer customer = new Customer();
+				customer.setId(customer_id);
 				order.setCustomer(customer);
-				
-//				OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
-//				List<OrderLine> orderLineList = orderLineDaoImpl.readOrderLinesOfOrderId(resultSet.getInt("id"));
-//				order.setOrderLines(orderLineList);
+				orderList.add(order);
 				}
 		}
 			catch (SQLException e) { 

@@ -96,5 +96,16 @@ public class CustomerController extends Controller{
 			customerView.AlreadyExists();
 		}
 	}
+	
+
+	public Customer selectCustomer() {
+		Customer customer = ChoosePersonFromList();
+		if (customer == null) {
+			// No customer message
+			return null;
+		}
+		return customer;
+	}
+	
 	}
 	

@@ -12,25 +12,19 @@ import model_class.Product;
 import dao.CustomerDaoImpl;
 import dao.OrderDao;
 import dao.OrderDaoImpl;
-import dao.OrderLineDao;
-import dao.OrderLineDaoImpl;
-import dao.ProductDaoImpl;
 import view.CustomerView;
 import view.OrderView;
-import view.ProductView;
 
 public class OrderController extends Controller {
 
 	OrderDao orderDaoImpl = new OrderDaoImpl();
-	OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 	CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
-	ProductDaoImpl productDaoImpl = new ProductDaoImpl();
 
 	CustomerController customerController = new CustomerController();
 	ProductController productController = new ProductController();
-	OrderView orderView = new OrderView();
+	OrderLineController orderLineController = new OrderLineController();
 
-	ProductView productView = new ProductView();
+	OrderView orderView = new OrderView();
 	CustomerView customerView = new CustomerView();
 
 	@Override
@@ -48,15 +42,15 @@ public class OrderController extends Controller {
 			keuze = orderView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
-//				viewOrdersOfCustomer();
-				break;
-			case 2:
 				createOrder();
 				break;
-			case 3:
-				editOrderMenu(selectOrderFromCustomer(selectCustomersWithOrder()));
+			case 2:
+				Order order = selectOrderFromCustomer(selectCustomersWithOrder());
+				if (order == null) {
+					break;
+				}
+				editOrderMenu(order);
 				break;
-
 			case 9:
 				keuze = 0;
 				Controller.newView = true;
@@ -83,12 +77,18 @@ public class OrderController extends Controller {
 			switch (keuze) {
 			case 1:
 				changeProducts(order);
+				keuze = 0;
+				Controller.newView = true;
 				break;
 			case 2:
 				changeTotalCost(order);
+				keuze = 0;
+				Controller.newView = true;
 				break;
 			case 3:
 				deleteOrder(order);
+				keuze = 0;
+				Controller.newView = true;
 				break;
 
 			case 9:
@@ -103,30 +103,23 @@ public class OrderController extends Controller {
 	}
 
 	private void deleteOrder(Order order) {
-		// TODO Auto-generated method stub
-		
+		if (order != null) {
+			orderDaoImpl.deleteOrder(order.getId());
+			orderView.orderSuccesfullyDeleted();
+		}
 	}
 
 	public void createOrder() {
-		Customer customer = selectCustomer();
+		Customer customer = customerController.selectCustomer();
 		int orderId = createNewOrderId(customer);
-		List<OrderLine> orderLineList = createOrderLines(orderId);
+		List<OrderLine> orderLineList = orderLineController
+				.createOrderLines(orderId);
 		BigDecimal totalCost = calculateTotalCost(orderLineList);
-		updateStock(orderLineList);
+		productController.updateStock(orderLineList);
 		Order order = orderDaoImpl.readOrderById(orderId);
 		order.setTotalCost(totalCost);
 		order.setDate(LocalDateTime.now());
 		orderDaoImpl.updateOrder(order);
-	}
-
-	// Customer Controller
-	public Customer selectCustomer() {
-		Customer customer = customerController.ChoosePersonFromList();
-		if (customer == null) {
-			// No customer message
-			return null;
-		}
-		return customer;
 	}
 
 	public int createNewOrderId(Customer customer) {
@@ -136,31 +129,6 @@ public class OrderController extends Controller {
 		order.setTotalCost(new BigDecimal(0));
 		int generatedId = orderDaoImpl.createOrder(order);
 		return generatedId;
-	}
-
-	// OrderLine Controller
-	public List<OrderLine> createOrderLines(int orderId) {
-		List<OrderLine> orderList = new ArrayList<>();
-		List<Product> productList = new ArrayList<>();
-		boolean addProduct = true;
-		OrderLine orderLine = new OrderLine();
-		while (addProduct) {
-			Product product = productController.SelectProductFromList();
-			if (productList.contains(product)) {
-				productView.ProductAlreadyAdded();
-			} else {
-				orderLine.setProduct(product);
-				orderLine
-						.setAmount(orderView.requestAmount(product.getStock()));
-				orderLine.setOrderId(orderId);
-				orderLineDaoImpl.createOrderLine(orderLine);
-				orderList.add(orderLine);
-				productList.add(product);
-			}
-			if (orderView.AddMoreProducts() == false)
-				addProduct = false;
-		}
-		return orderList;
 	}
 
 	public BigDecimal calculateTotalCost(List<OrderLine> list) {
@@ -173,17 +141,13 @@ public class OrderController extends Controller {
 		return totalCost;
 	}
 
-	// Product Controller
-	public void updateStock(List<OrderLine> list) {
-		for (int i = 0; i < list.size(); i++) {
-			Product product = list.get(i).getProduct();
-			product.setStock(product.getStock() - list.get(i).getAmount());
-			productDaoImpl.updateProduct(product);
-		}
-	}
-
 	private Customer selectCustomersWithOrder() {
 		List<Integer> customerIdList = orderDaoImpl.readCustomerIdsWithOrder();
+		System.out.println(customerIdList);
+		if (customerIdList.isEmpty()) {
+			orderView.noOrdersFound();
+			return null;
+		}
 		List<Customer> customerList = new ArrayList<>();
 		for (int i = 0; i < customerIdList.size(); i++) {
 			Customer customer = customerDaoImpl.readCustomerById(customerIdList
@@ -200,6 +164,9 @@ public class OrderController extends Controller {
 	}
 
 	private Order selectOrderFromCustomer(Customer customer) {
+		if (customer == null) {
+			return null;
+		}
 		List<Order> orderList = orderDaoImpl.readOrdersOfCustomerId(customer
 				.getId());
 
@@ -211,14 +178,12 @@ public class OrderController extends Controller {
 
 	}
 
-
 	private void changeTotalCost(Order order) {
-	BigDecimal newTotalCost = orderView.requestTotalCost();
+		BigDecimal newTotalCost = orderView.requestTotalCost();
 		order.setTotalCost(newTotalCost);
 		orderDaoImpl.updateOrder(order);
-
+		orderView.TotalCostUpdated();
 	}
-
 
 	private void changeProducts(Order order) {
 		// TODO Auto-generated method stub

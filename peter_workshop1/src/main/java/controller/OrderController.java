@@ -54,7 +54,7 @@ public class OrderController extends Controller {
 				createOrder();
 				break;
 			case 3:
-				editOrderMenu(selectOrderFromCustomer(selectCustomersWithOrder());
+				editOrderMenu(selectOrderFromCustomer(selectCustomersWithOrder()));
 				break;
 
 			case 9:

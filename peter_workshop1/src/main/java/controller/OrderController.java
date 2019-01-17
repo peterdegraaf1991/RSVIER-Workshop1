@@ -48,7 +48,7 @@ public class OrderController extends Controller {
 			keuze = orderView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
-				viewOrdersOfCustomer();
+//				viewOrdersOfCustomer();
 				break;
 			case 2:
 				createOrder();

@@ -54,7 +54,9 @@ public class ProductView extends View{
 
 	public void NoProductFound() {
 		terminal.println("No product(s) found in the store");
-		
 	}
-
+	
+	public void ProductAlreadyAdded() {
+	terminal.println("This Product already has been added to this order");
+	}
 }

@@ -80,7 +80,7 @@ private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 	@Override
 	public Order readOrderById(int id) {
 		Order order = new Order();
-		String query = "SELECT * FROM 'order' WHERE id = ?"; 
+		String query = "SELECT * FROM `order` WHERE id = ?"; 
 		try 
 		   (Connection connection = DatabaseConnection.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query)){

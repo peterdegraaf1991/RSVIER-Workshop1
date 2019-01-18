@@ -30,13 +30,22 @@ public class ProductController extends Controller {
 				PrintProductlist();
 				break;
 			case 2:
+				if (workerOrAdminPermission() == true)
 				AddProduct();
+				else
+				productView.noPermission();
 				break;
 			case 3:
+				if (workerOrAdminPermission() == true)
 				UpdateProduct(SelectProductFromList());
+				else
+				productView.noPermission();
 				break;
 			case 4:
-				DeleteProduct();
+				if (workerOrAdminPermission() == true)
+					DeleteProduct();
+					else
+					productView.noPermission();
 				break;
 			case 9:
 				keuze = 0;

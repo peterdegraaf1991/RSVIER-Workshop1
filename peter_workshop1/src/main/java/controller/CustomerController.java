@@ -1,15 +1,23 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import model_class.Account;
 import model_class.Customer;
+import model_class.Order;
+import dao.AccountDao;
+import dao.AccountDaoImpl;
 import dao.CustomerDao;
 import dao.CustomerDaoImpl;
+import dao.OrderDaoImpl;
 import view.CustomerView;
 
 public class CustomerController extends Controller {
 	CustomerView customerView = new CustomerView();
 	CustomerDao customerDaoImpl = new CustomerDaoImpl();
+	AccountDao accountDaoImpl = new AccountDaoImpl();
+	OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
 
 	@Override
 	public void runController() {
@@ -75,6 +83,11 @@ public class CustomerController extends Controller {
 	}
 
 	public Customer ChoosePersonFromList() {
+		// Check if permission to select for list. Else return loggedInCustomer
+		if (workerOrAdminPermission() == false) {
+			Customer customer = LoginController.loggedInCustomer;
+			return customer;
+		}
 		CustomerDao customerDaoImpl = new CustomerDaoImpl();
 		ArrayList<Customer> list = customerDaoImpl
 				.readCustomersByLastname(customerView.RequestInputSurname());
@@ -90,9 +103,27 @@ public class CustomerController extends Controller {
 		return customer;
 	}
 
-	private void DeleteCustomer(int id) {
-		customerDaoImpl.deleteCustomer(id);
+	private boolean customerIdHasAccount(int customerId) {
+		Account account = accountDaoImpl.readAccountByCustomerId(customerId);
+		if (account.getId() == 0)
+			return false;
+		else
+			return true;
+
+	}
+
+	private void DeleteCustomer(int customerId) {
+		if (orderDaoImpl.readOrdersOfCustomerId(customerId).isEmpty() == false){
+			customerView.firstDeleteOrders();
+			return;
+		}
+		if (customerIdHasAccount(customerId) == true)
+			customerView.firstDeleteAccount();
+
+		else
+			customerDaoImpl.deleteCustomer(customerId);
 		// Print succesfull message
+
 	}
 
 	private void UpdateCustomer(Customer customer) {
@@ -104,6 +135,11 @@ public class CustomerController extends Controller {
 	}
 
 	private void CreateCustomer() {
+		// Check if Account has permission
+		if (workerOrAdminPermission() != true) {
+			customerView.noPermission();
+			return;
+		}
 		Customer customer = new Customer();
 		customer.setFirstname(customerView.RequestInputFirstname());
 		customer.setMiddlename(customerView.RequestInputMiddlename());
@@ -115,6 +151,7 @@ public class CustomerController extends Controller {
 		}
 	}
 
+	// replaced with choosepersonfromlist
 	public Customer selectCustomer() {
 		Customer customer = ChoosePersonFromList();
 		if (customer == null) {

@@ -62,4 +62,14 @@ public class CustomerView extends View {
 		terminal.println("Cannot create customer: customer with that name already exists");
 	}
 
+	public void firstDeleteAccount() {
+		terminal.println("First delete the account of this person");
+		
+	}
+
+	public void firstDeleteOrders() {
+		terminal.println("First delete all orders of this customer");
+		
+	}
+
 }

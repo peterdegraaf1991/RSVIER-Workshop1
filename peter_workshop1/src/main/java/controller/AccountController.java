@@ -26,7 +26,7 @@ public class AccountController extends Controller {
 
 			switch (keuze) {
 			case 1:
-				CreateAccount(customerController.ChoosePersonFromList());
+				CreateAccount();
 				break;
 			case 2:
 				ChangeEmail();
@@ -34,6 +34,8 @@ public class AccountController extends Controller {
 			case 3:
 				ChangePassword();
 				break;
+			case 4:
+				DeleteAccount();
 			case 9:
 				keuze = 0;
 				Controller.newView = true;
@@ -45,7 +47,25 @@ public class AccountController extends Controller {
 		} while (keuze != 0);
 	}
 
-	public void CreateAccount(Customer customer) {
+	private void DeleteAccount() {
+		if (workerOrAdminPermission() == false){
+			if (accountView.confirmDeleteAccount() == true)
+			accountDaoImpl.deleteAccount(LoginController.loggedInAccount.getId());
+			System.exit(0);
+		}
+		if (workerOrAdminPermission() == true){
+			Customer customer = customerController.ChoosePersonFromList();
+			Account account = accountDaoImpl.readAccountByCustomerId(customer.getId());
+			accountDaoImpl.deleteAccount(account.getId());
+			//SuccesMessage
+		}
+	}
+
+	public void CreateAccount() {
+		if(adminPermission() == false){
+			return;
+		}
+		Customer customer = customerController.ChoosePersonFromList();
 		if (customer == null) {
 			return;
 		}

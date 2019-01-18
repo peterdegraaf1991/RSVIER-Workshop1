@@ -81,9 +81,13 @@ public class OrderController extends Controller {
 				Controller.newView = true;
 				break;
 			case 2:
+				if (workerOrAdminPermission() == true){
 				changeTotalCost(order);
 				keuze = 0;
 				Controller.newView = true;
+				}
+				else 
+				orderView.noPermission();
 				break;
 			case 3:
 				deleteOrder(order);
@@ -105,6 +109,7 @@ public class OrderController extends Controller {
 	private void deleteOrder(Order order) {
 		if (order != null) {
 			orderDaoImpl.deleteOrder(order.getId());
+			// add amount back to stock has to be added here
 			orderView.orderSuccesfullyDeleted();
 		}
 	}
@@ -143,7 +148,13 @@ public class OrderController extends Controller {
 
 	private Customer selectCustomersWithOrder() {
 		List<Integer> customerIdList = orderDaoImpl.readCustomerIdsWithOrder();
-		System.out.println(customerIdList);
+		if (workerOrAdminPermission() == false) {
+			if (customerIdList.contains(LoginController.loggedInCustomer
+					.getId()) == true)
+				return LoginController.loggedInCustomer;
+			else
+				return null;
+		}
 		if (customerIdList.isEmpty()) {
 			orderView.noOrdersFound();
 			return null;

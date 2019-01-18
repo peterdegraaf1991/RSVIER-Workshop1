@@ -15,7 +15,8 @@ public class AccountView extends View {
 	public void PrintMenuOptions() {
 		terminal.println("1. Create Account");
 		terminal.println("2. Change Email of Account");
-		terminal.println("2. Change Password of Account");
+		terminal.println("3. Change Password of Account");
+		terminal.println("4. Delete Account");
 		terminal.println("9. Back");
 		terminal.println("0. Unimplemented");
 	}
@@ -67,4 +68,25 @@ public class AccountView extends View {
 		terminal.println("This person doesn't have an account yet");
 
 	}
+
+	public void PersonAlreadyHasAccount() {
+		terminal.println("This person already has an account");
+	}
+
+	public void OnlyAdminHasPermission() {
+		terminal.println("Only an admin has permission for this action");
+
+	}
+
+	public boolean confirmDeleteAccount() {
+		Character option = textIO
+				.newCharInputReader()
+				.withInlinePossibleValues('y', 'n')
+				.read("Are you sure you wish to delete your account? \nThis action will exit the application");
+		if (option == 'y')
+			return true;
+		else
+			return false;
+	}
+
 }

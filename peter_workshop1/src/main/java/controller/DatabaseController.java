@@ -23,7 +23,8 @@ public class DatabaseController {
 			statement.addBatch("INSERT INTO account_type (id, description) VALUES (1, 'Customer')");
 			statement.addBatch("INSERT INTO account_type (id, description) VALUES (2, 'Worker')");
 			statement.addBatch("INSERT INTO account_type (id, description) VALUES (3, 'Admin')");
-			statement.addBatch("INSERT INTO account(email,password,customer_id,account_type_id) VALUES ('testaccount@email.com','rsvier',1,3)");
+			statement.addBatch("INSERT INTO account(email,password,hash,customer_id,account_type_id) VALUES ('AdminAccount@email.com','adminaccount','sha1:64000:18:uZ2K5AOUBZhSXewoTvzbTaSV6bafZZRP:fIPrhx2nlTzlOzNQfJrWjgcY',1,3)");
+			statement.addBatch("INSERT INTO account(email,password,hash,customer_id,account_type_id) VALUES ('CustomerAccount@email.com','customeraccount','sha1:64000:18:XN0Kvt41W/v7iQHnrmhFOrw2XMERsGHu:DgIc8nqQEE59x8yhJygkPXqV',999,1)");
 			statement.addBatch("INSERT INTO product (name,price,stock) VALUES ('Bordspel',49.50,105)");
 			statement.addBatch("INSERT INTO `order` (total_cost, customer_id, date) VALUES (10,1,CURRENT_TIMESTAMP)");
 			statement.addBatch("INSERT INTO order_line (order_id,product_id,amount) VALUES (1,1,20)");

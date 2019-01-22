@@ -49,10 +49,12 @@ CREATE TABLE IF NOT EXISTS `peter_workshop1`.`account` (
   `password` VARCHAR(180) NOT NULL,
   `account_type_id` INT NOT NULL,
   `customer_id` INT NOT NULL,
+  `hash` VARCHAR(900) NOT NULL DEFAULT 0,
   INDEX `fk_account_type` (`account_type_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
   INDEX `fk_customer_id_1` (`customer_id` ASC) VISIBLE,
+  UNIQUE INDEX `customer_id_UNIQUE` (`customer_id` ASC) VISIBLE,
   CONSTRAINT `fk_account_type`
     FOREIGN KEY (`account_type_id`)
     REFERENCES `peter_workshop1`.`account_type` (`id`)
@@ -129,7 +131,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `peter_workshop1`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `total_cost` DECIMAL(6,2) NOT NULL,
+  `total_cost` DECIMAL(12,2) NOT NULL,
   `customer_id` INT NOT NULL,
   `date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
@@ -158,13 +160,13 @@ CREATE TABLE IF NOT EXISTS `peter_workshop1`.`order_line` (
   CONSTRAINT `fk_product_id`
     FOREIGN KEY (`product_id`)
     REFERENCES `peter_workshop1`.`product` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_id`
     FOREIGN KEY (`order_id`)
     REFERENCES `peter_workshop1`.`order` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

@@ -5,6 +5,9 @@ import model_class.Customer;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import view.LoginView;
+import utility.Hashing;
+import utility.Hashing.CannotPerformOperationException;
+import utility.Hashing.InvalidHashException;
 
 public class LoginController extends Controller {
 
@@ -41,23 +44,33 @@ public class LoginController extends Controller {
 	}
 
 	public void CheckAccountByEmail() {
-		// This reads the password from the database, which probably isn't the
-		// safest thing to do :)
 		loggedInAccount = accountDao.readAccountByEmail(loginView
 				.RequestInputUsername());
+		int accountId = loggedInAccount.getId();
+		System.out.println(accountDao.readHash(loggedInAccount.getId()));
+		System.out.println(accountDao.readAccountById(loggedInAccount.getId()).getPassword());
 
-		if (loginView.RequestInputPassword().equals(
-				loggedInAccount.getPassword())
-				&& loggedInAccount.getId() != 0) {
-			loginView.LoginSuccesfull();
-			loggedInCustomer = loggedInAccount.getCustomer();
+		if (loggedInAccount.getId() != 0) {
+			String hash = accountDao.readHash(accountId);
+			try {
+				if (Hashing.verifyPassword(loginView.RequestInputPassword(), hash) == true) {
+					loginView.LoginSuccesfull();
+					loggedInCustomer = loggedInAccount.getCustomer();
 
-			MainController mainController = new MainController();
-			mainController.runController();
-		} else
+					MainController mainController = new MainController();
+					mainController.runController();
+				} else {
+					loginView.IncorrectEmailOrPassword();
+					requestNewMenu();
+				}
+			} catch (CannotPerformOperationException | InvalidHashException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
 			loginView.IncorrectEmailOrPassword();
-		// Controller.newView = true;
-
+			requestNewMenu();
+		}
+					
 	}
-
 }

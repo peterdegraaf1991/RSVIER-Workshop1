@@ -20,7 +20,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public int createAccount(Account account) {
 		int affectedRows = 0;
-		String query = "INSERT INTO account (email, password, account_type_id, customer_id) VALUES(?, ?, ?, ?)";
+		String query = "INSERT INTO account (email, account_type_id, customer_id, hash) VALUES(?, ?, ?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnection();
 				PreparedStatement preparedStatement = connection
@@ -28,9 +28,10 @@ public class AccountDaoImpl implements AccountDao {
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			preparedStatement.setString(1, account.getEmail());
-			preparedStatement.setString(2, account.getPassword());
+//			preparedStatement.setString(2, account.getPassword());
 			preparedStatement.setInt(3, account.getAccountTypeId());
 			preparedStatement.setInt(4, account.getCustomer().getId());
+			preparedStatement.setString(5, account.getHash());
 			LOG.info("Trying to create account with info:" + account.toString()
 					+ "\n CustomerID = '" + account.getCustomer().getId() + "'");
 			affectedRows = preparedStatement.executeUpdate();
@@ -126,7 +127,6 @@ public class AccountDaoImpl implements AccountDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				account.setId(resultSet.getInt("id"));
-				// Should password remain null? Now for testing added
 				account.setPassword(resultSet.getString("password"));
 				account.setEmail(resultSet.getString("email"));
 				account.setAccountTypeId(resultSet.getInt("account_type_id"));
@@ -165,6 +165,24 @@ public class AccountDaoImpl implements AccountDao {
 			e.printStackTrace();
 		}
 		return account;
+	}
+
+	@Override
+	public String readHash(int id) {
+		String query = "SELECT hash FROM account WHERE id = ?";
+		String hash = null;
+		try (Connection connection = DatabaseConnection.INSTANCE
+				.getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement(query)) {
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			hash = resultSet.getString("hash");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return hash;
 	}
 }
 

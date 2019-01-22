@@ -13,14 +13,14 @@ public class LoginView extends View {
 
 	public String RequestInputUsername() {
 		String username = textIO.newStringInputReader()
-				.withDefaultValue("testaccount@email.com")
+				.withDefaultValue("AdminAccount@email.com")
 				.read("Enter Username");
 		return username;
 	}
 
 	public String RequestInputPassword() {
 		String password = textIO.newStringInputReader().withMinLength(6)
-				.withInputMasking(true).withDefaultValue("rsvier")
+				.withInputMasking(true).withDefaultValue("adminaccount")
 				.read("Enter Password");
 		return password;
 	}

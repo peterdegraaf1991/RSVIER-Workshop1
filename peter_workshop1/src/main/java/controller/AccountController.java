@@ -4,6 +4,7 @@ import model_class.Account;
 import model_class.Customer;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
+import utility.Hashing.CannotPerformOperationException;
 import view.AccountView;
 
 public class AccountController extends Controller {
@@ -91,9 +92,17 @@ public class AccountController extends Controller {
 		Account account = new Account();
 		account.setCustomer(customer);
 		account.setEmail(accountView.RequestInputUsername());
-		account.setPassword(accountView.RequestInputPassword());
-		// Created accounts are always typeId 1 for now
-		account.setAccountTypeId(1);
+		String password = accountView.RequestInputPassword();
+		account.setPassword(password);
+		String hash = null;
+		try {
+			hash = utility.Hashing.createHash(password);
+		} catch (CannotPerformOperationException e) {
+			e.printStackTrace();
+		}
+		account.setHash(hash);
+		int accountTypeId = accountView.requestAccountType();
+		account.setAccountTypeId(accountTypeId);
 		accountDaoImpl.createAccount(account);
 		accountView.accountCreated();
 		Controller.newView = true;

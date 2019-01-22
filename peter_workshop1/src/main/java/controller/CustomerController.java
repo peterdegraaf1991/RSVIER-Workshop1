@@ -86,7 +86,6 @@ public class CustomerController extends Controller {
 	}
 
 	public Customer ChoosePersonFromList() {
-		// Check if permission to select for list. Else return loggedInCustomer
 		if (workerOrAdminPermission() == false) {
 			Customer customer = LoginController.loggedInCustomer;
 			return customer;

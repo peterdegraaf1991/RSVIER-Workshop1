@@ -16,6 +16,8 @@ public interface AccountDao {
 
 	public int deleteAccount(int id);
 
+	public String readHash(int id);
+	
 	// public void printAccount();
 	// public void printAccount(String email);
 

@@ -7,6 +7,7 @@ public class Account {
 	private String email;
 	private String password;
 	private int accountTypeId;
+	private String hash;
 
 	public Account() {
 	}
@@ -17,6 +18,14 @@ public class Account {
 		this.password = password;
 		this.accountTypeId = accountTypeId;
 		this.customer = customer;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
 	}
 
 	public int getId() {

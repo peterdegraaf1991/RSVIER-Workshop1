@@ -95,17 +95,25 @@ public class AccountView extends View {
 
 	public void PasswordChanged() {
 		terminal.println("The password has been changed");
-		
+
 	}
 
 	public void emailChanged() {
 		terminal.println("The email has been changed");
-		
+
 	}
 
 	public void accountDeleted() {
 		terminal.println("The account has been deleted");
-		
+
+	}
+
+	public int requestAccountType() {
+		int option = textIO
+				.newIntInputReader()
+				.withInlinePossibleValues(1,2,3)
+				.read("Which level of permissions do you want to give this account?\n1.Customer\n2.Worker\n3.Admin\n");
+		return option;
 	}
 
 }

@@ -27,15 +27,19 @@ public class AccountController extends Controller {
 			switch (keuze) {
 			case 1:
 				CreateAccount();
+				requestNewMenu();
 				break;
 			case 2:
 				ChangeEmail();
+				requestNewMenu();
 				break;
 			case 3:
 				ChangePassword();
+				requestNewMenu();
 				break;
 			case 4:
 				DeleteAccount();
+				requestNewMenu();
 			case 9:
 				keuze = 0;
 				Controller.newView = true;
@@ -48,25 +52,40 @@ public class AccountController extends Controller {
 	}
 
 	private void DeleteAccount() {
-		if (workerOrAdminPermission() == false){
+		if (workerOrAdminPermission() == false) {
 			if (accountView.confirmDeleteAccount() == true)
-			accountDaoImpl.deleteAccount(LoginController.loggedInAccount.getId());
+				accountDaoImpl.deleteAccount(LoginController.loggedInAccount
+						.getId());
 			System.exit(0);
 		}
-		if (workerOrAdminPermission() == true){
+		if (workerOrAdminPermission() == true) {
 			Customer customer = customerController.ChoosePersonFromList();
-			Account account = accountDaoImpl.readAccountByCustomerId(customer.getId());
-			accountDaoImpl.deleteAccount(account.getId());
-			//SuccesMessage
+			Account account = accountDaoImpl.readAccountByCustomerId(customer
+					.getId());
+			if (account.equals(LoginController.loggedInAccount)) {
+				if (accountView.confirmDeleteAccount() == true) {
+					accountDaoImpl.deleteAccount(account.getId());
+					System.exit(0);
+				}
+			} 
+			else {
+				accountDaoImpl.deleteAccount(account.getId());
+				accountView.accountDeleted();
+			}
+			return;
 		}
 	}
 
 	public void CreateAccount() {
-		if(adminPermission() == false){
+		if (adminPermission() == false) {
 			return;
 		}
 		Customer customer = customerController.ChoosePersonFromList();
 		if (customer == null) {
+			return;
+		}
+		if (accountDaoImpl.readAccountByCustomerId(customer.getId()).getId() != 0) {
+			accountView.PersonAlreadyHasAccount();
 			return;
 		}
 		Account account = new Account();
@@ -76,6 +95,7 @@ public class AccountController extends Controller {
 		// Created accounts are always typeId 1 for now
 		account.setAccountTypeId(1);
 		accountDaoImpl.createAccount(account);
+		accountView.accountCreated();
 		Controller.newView = true;
 	}
 
@@ -92,6 +112,7 @@ public class AccountController extends Controller {
 		}
 		account.setPassword(accountView.RequestInputPassword());
 		accountDaoImpl.updateAccount(account);
+		accountView.PasswordChanged();
 	}
 
 	public void ChangeEmail() {
@@ -107,6 +128,7 @@ public class AccountController extends Controller {
 		}
 		account.setEmail(accountView.RequestInputUsername());
 		accountDaoImpl.updateAccount(account);
+		accountView.emailChanged();
 	}
 
 }

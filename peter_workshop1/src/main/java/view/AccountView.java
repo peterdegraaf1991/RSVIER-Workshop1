@@ -89,4 +89,23 @@ public class AccountView extends View {
 			return false;
 	}
 
+	public void accountCreated() {
+		terminal.println("The account has been created");
+	}
+
+	public void PasswordChanged() {
+		terminal.println("The password has been changed");
+		
+	}
+
+	public void emailChanged() {
+		terminal.println("The email has been changed");
+		
+	}
+
+	public void accountDeleted() {
+		terminal.println("The account has been deleted");
+		
+	}
+
 }

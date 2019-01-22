@@ -93,29 +93,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", " + "name=" + firstname + " "
+		return "[" + firstname + " "
 				+ (middlename != null ? middlename + " " : "") + surname + "]";
 	}
 
-	/*
-	 * might remove builder. private Customer(Builder builder){ this.firstname =
-	 * builder.firstname; this.middlename = builder.middlename; this.surname =
-	 * builder.surname; this.id = builder.id; }
-	 * 
-	 * public static class Builder{ private String firstname; private String
-	 * middlename; private String surname; private int id;
-	 * 
-	 * public Builder firstname(String firstname) { this.firstname = firstname;
-	 * return this; }
-	 * 
-	 * public Builder middlename(String middlename) { this.middlename =
-	 * middlename; return this; }
-	 * 
-	 * public Builder surname(String surname) { this.surname = surname; return
-	 * this; }
-	 * 
-	 * public Builder id(int id){ this.id = id; return this; }
-	 * 
-	 * public Customer build() { return new Customer(this); } }
-	 */
 }

@@ -17,27 +17,31 @@ public class OrderLineController {
 
 	// OrderLine Controller
 	public List<OrderLine> createOrderLines(int orderId) {
-		List<OrderLine> orderList = new ArrayList<>();
+		List<OrderLine> orderLineList = new ArrayList<>();
 		List<Product> productList = new ArrayList<>();
+
 		boolean addProduct = true;
-		OrderLine orderLine = new OrderLine();
 		while (addProduct) {
 			Product product = productController.SelectProductFromList();
 			if (productList.contains(product)) {
 				orderLineView.ProductAlreadyAdded();
 			} else {
+				OrderLine orderLine = new OrderLine();
 				orderLine.setProduct(product);
 				orderLine.setAmount(orderLineView.requestAmount(product
 						.getStock()));
 				orderLine.setOrderId(orderId);
 				orderLineDaoImpl.createOrderLine(orderLine);
-				orderList.add(orderLine);
+				System.out.println("OrderLineList is before: " + orderLineList);
+				orderLineList.add(orderLine);
+				System.out.println("OrderLineList is after: " + orderLineList);
 				productList.add(product);
 			}
 			if (orderLineView.AddMoreProducts() == false)
 				addProduct = false;
 		}
-		return orderList;
+		System.out.println("Returning the following orderLine: " + orderLineList);
+		return orderLineList;
 	}
 
 }

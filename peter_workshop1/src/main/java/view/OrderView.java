@@ -49,9 +49,10 @@ public class OrderView extends View {
 	}
 
 	public int chooseOrder(int size) {
-		int option = textIO.newIntInputReader().withMinVal(0)
+		int option = textIO.newIntInputReader()
+				.withMinVal(0)
 				.withMaxVal(size - 1)
-				.read("Choose the order you want to select");
+				.read("\nChoose the order you want to select");
 		return option;
 	}
 
@@ -62,7 +63,7 @@ public class OrderView extends View {
 
 	public BigDecimal requestTotalCost() {
 		Double newTotalPrice = textIO.newDoubleInputReader().read(
-				"Enter the new total price for this order:");
+				"\nEnter the new total price for this order:");
 		return new BigDecimal(newTotalPrice).setScale(2, RoundingMode.HALF_UP);
 	}
 
@@ -76,4 +77,12 @@ public class OrderView extends View {
 
 	}
 
-}
+	public int chooseProductFromOrderLine(int size) {
+			int option = textIO.newIntInputReader()
+					.withMinVal(0)
+					.withMaxVal(size - 1)
+					.read("\nChoose the order you want to select");
+			return option;
+		}
+	}
+

@@ -35,6 +35,7 @@ public class CustomerController extends Controller {
 			switch (keuze) {
 			case 1:
 				CreateCustomer();
+				requestNewMenu();
 				break;
 			case 2:
 				runEditPersonMenu(ChoosePersonFromList());
@@ -66,9 +67,11 @@ public class CustomerController extends Controller {
 			switch (keuze) {
 			case 1:
 				UpdateCustomer(customer);
+				requestNewMenu();
 				break;
 			case 2:
 				DeleteCustomer(customer.getId());
+				requestNewMenu();
 				break;
 			case 9:
 				keuze = 0;

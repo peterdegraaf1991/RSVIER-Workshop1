@@ -19,20 +19,23 @@ public abstract class Controller {
 	public boolean workerOrAdminPermission() {
 		if (LoginController.loggedInAccount.getAccountTypeId() == (2 | 3)) {
 			return true;
-		}
-		else {
-//			view.noPermission();
-			return false;
-		}
-	}
-	
-	public boolean adminPermission() {
-		if (LoginController.loggedInAccount.getAccountTypeId() == (3)) {
-			return true;
-		}
-		else {
+		} else {
 			view.noPermission();
 			return false;
 		}
+	}
+
+	public boolean adminPermission() {
+		if (LoginController.loggedInAccount.getAccountTypeId() == (3)) {
+			return true;
+		} else {
+			view.noPermission();
+			return false;
+		}
+	}
+
+	public void requestNewMenu() {
+		view.requestContinue();
+		newView = true;
 	}
 }

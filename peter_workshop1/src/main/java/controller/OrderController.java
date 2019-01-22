@@ -12,13 +12,18 @@ import model_class.Product;
 import dao.CustomerDaoImpl;
 import dao.OrderDao;
 import dao.OrderDaoImpl;
+import dao.OrderLineDaoImpl;
+import dao.ProductDaoImpl;
 import view.CustomerView;
+import view.OrderLineView;
 import view.OrderView;
 
 public class OrderController extends Controller {
 
 	OrderDao orderDaoImpl = new OrderDaoImpl();
 	CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
+	OrderLineDaoImpl orderLineDaoImpl = new OrderLineDaoImpl();
+	ProductDaoImpl productDaoImpl = new ProductDaoImpl();
 
 	CustomerController customerController = new CustomerController();
 	ProductController productController = new ProductController();
@@ -26,6 +31,7 @@ public class OrderController extends Controller {
 
 	OrderView orderView = new OrderView();
 	CustomerView customerView = new CustomerView();
+	OrderLineView orderLineView = new OrderLineView();
 
 	@Override
 	public void runController() {
@@ -43,6 +49,7 @@ public class OrderController extends Controller {
 			switch (keuze) {
 			case 1:
 				createOrder();
+				requestNewMenu();
 				break;
 			case 2:
 				Order order = selectOrderFromCustomer(selectCustomersWithOrder());
@@ -78,21 +85,21 @@ public class OrderController extends Controller {
 			case 1:
 				changeProducts(order);
 				keuze = 0;
-				Controller.newView = true;
+				requestNewMenu();
 				break;
 			case 2:
-				if (workerOrAdminPermission() == true){
-				changeTotalCost(order);
-				keuze = 0;
-				Controller.newView = true;
-				}
-				else 
-				orderView.noPermission();
+				if (workerOrAdminPermission() == true) {
+					changeTotalCost(order);
+					keuze = 0;
+					Controller.newView = true;
+				} else
+					orderView.noPermission();
+				requestNewMenu();
 				break;
 			case 3:
 				deleteOrder(order);
 				keuze = 0;
-				Controller.newView = true;
+				requestNewMenu();
 				break;
 
 			case 9:
@@ -139,9 +146,10 @@ public class OrderController extends Controller {
 	public BigDecimal calculateTotalCost(List<OrderLine> list) {
 		BigDecimal totalCost = new BigDecimal(0);
 		for (int i = 0; i < list.size(); i++) {
-			Product product = list.get(i).getProduct();
-			totalCost = product.getPrice().multiply(
-					new BigDecimal(list.get(i).getAmount()));
+			int productId = list.get(i).getProduct().getId();
+			Product product = productDaoImpl.readProductById(productId);
+			totalCost = totalCost.add(product.getPrice().multiply(
+					new BigDecimal(list.get(i).getAmount())));
 		}
 		return totalCost;
 	}
@@ -182,11 +190,10 @@ public class OrderController extends Controller {
 				.getId());
 
 		for (int i = 0; i < orderList.size(); i++) {
-			orderView.printOrders(i + ". " + orderList.get(i).toString());
+			orderView.printOrders(i + ". " + orderList.get(i));
 		}
 		int option = orderView.chooseOrder(orderList.size());
 		return orderList.get(option);
-
 	}
 
 	private void changeTotalCost(Order order) {
@@ -196,8 +203,59 @@ public class OrderController extends Controller {
 		orderView.TotalCostUpdated();
 	}
 
-	private void changeProducts(Order order) {
-		// TODO Auto-generated method stub
+	private void updateTotalCostOfOrder(Order order) {
+		List<OrderLine> listOrderLines = orderLineDaoImpl
+				.readOrderLinesOfOrderId(order.getId());
+		BigDecimal newTotalCost = calculateTotalCost(listOrderLines);
+		order.setTotalCost(newTotalCost);
+		orderDaoImpl.updateOrder(order);
+	}
 
+	private void changeProducts(Order order) {
+		OrderLine orderLine = selectOrderLineFromOrder(order);
+		int oldProductId = orderLine.getProduct().getId();
+		int oldAmount = orderLine.getAmount();
+		Product oldProduct = productDaoImpl.readProductById(oldProductId);
+		Product newProduct = productController.SelectProductFromList();
+		int newProductCurrentStock = newProduct.getStock();
+
+		// Update Stocks:
+		if (oldProduct.equals(newProduct) == false) {
+			int newProductAmount = orderLineView.requestAmount(newProduct
+					.getStock());
+			orderLine.setAmount(newProductAmount);
+			int oldProductStock = oldProduct.getStock();
+			oldProduct.setStock(oldProductStock + oldAmount);
+			productDaoImpl.updateProduct(oldProduct);
+			newProduct.setStock(newProductCurrentStock - newProductAmount);
+			productDaoImpl.updateProduct(newProduct);
+		}
+		if (oldProduct.equals(newProduct) == true) {
+			int newProductAmount = orderLineView.requestAmount(oldProduct
+					.getStock() + oldAmount);
+			orderLine.setAmount(newProductAmount);
+			newProduct.setStock(newProductCurrentStock + (oldAmount - newProductAmount));
+			productDaoImpl.updateProduct(newProduct);
+		}
+		orderLine.setProduct(newProduct);
+		orderLineDaoImpl.updateOrderLine(orderLine);
+		updateTotalCostOfOrder(order);
+	}
+
+	// OrderLine Controller
+	private OrderLine selectOrderLineFromOrder(Order order) {
+		List<OrderLine> listOrderLines = orderLineDaoImpl
+				.readOrderLinesOfOrderId(order.getId());
+		for (int i = 0; i < listOrderLines.size(); i++) {
+			int productId = listOrderLines.get(i).getProduct().getId();
+			String productName = productDaoImpl.readProductById(productId)
+					.getName();
+			
+			orderView.printOrders(i + ". " + "[Productname: " + productName
+					+ ", Amount: " + listOrderLines.get(i).getAmount() + "]");
+		}
+		int option = orderView
+				.chooseProductFromOrderLine(listOrderLines.size());
+		return listOrderLines.get(option);
 	}
 }

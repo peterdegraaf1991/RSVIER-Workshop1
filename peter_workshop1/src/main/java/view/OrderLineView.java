@@ -21,7 +21,7 @@ public class OrderLineView extends View {
 	public int requestAmount(int inStock) {
 		int amount = textIO
 				.newIntInputReader()
-				.withMinVal(1)
+				.withMinVal(0)
 				.withMaxVal(inStock)
 				.read("How many do you wish to order? \n"
 						+ "Currently in Stock:" + inStock + "\n");

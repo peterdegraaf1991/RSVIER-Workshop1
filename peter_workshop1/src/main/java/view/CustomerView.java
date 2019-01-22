@@ -28,7 +28,7 @@ public class CustomerView extends View {
 
 	public String RequestInputSurname() {
 		String lastname = textIO.newStringInputReader()
-				.withDefaultValue("Graaf").read("Enter surname of the Person");
+				.withDefaultValue("Graaf").read("Enter surname");
 		return lastname;
 	}
 
@@ -38,7 +38,7 @@ public class CustomerView extends View {
 
 	public int ChoosePerson(int i) {
 		int option = textIO.newIntInputReader().withMinVal(0).withMaxVal(i - 1)
-				.read("Choose the person you want to select");
+				.read("Choose the person you want to select for this action");
 		return option;
 	}
 

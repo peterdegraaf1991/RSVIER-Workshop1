@@ -28,24 +28,29 @@ public class ProductController extends Controller {
 			switch (keuze) {
 			case 1:
 				PrintProductlist();
+				requestNewMenu();
 				break;
 			case 2:
 				if (workerOrAdminPermission() == true)
-				AddProduct();
+					AddProduct();
+				
 				else
-				productView.noPermission();
+					productView.noPermission();
+				requestNewMenu();
 				break;
 			case 3:
 				if (workerOrAdminPermission() == true)
-				UpdateProduct(SelectProductFromList());
+					UpdateProduct(SelectProductFromList());
 				else
-				productView.noPermission();
+					productView.noPermission();
+				requestNewMenu();
 				break;
 			case 4:
 				if (workerOrAdminPermission() == true)
 					DeleteProduct();
-					else
+				else
 					productView.noPermission();
+				requestNewMenu();
 				break;
 			case 9:
 				keuze = 0;
@@ -76,7 +81,6 @@ public class ProductController extends Controller {
 		// Print succes message
 	}
 
-	// duplicate with ShowProductList, but List<product is needed)
 	public Product SelectProductFromList() {
 		List<Product> list = PrintProductlist();
 		if (list == null) {
@@ -109,7 +113,8 @@ public class ProductController extends Controller {
 
 	public void updateStock(List<OrderLine> list) {
 		for (int i = 0; i < list.size(); i++) {
-			Product product = list.get(i).getProduct();
+			int productId = list.get(i).getProduct().getId();
+			Product product = productDaoImpl.readProductById(productId);
 			product.setStock(product.getStock() - list.get(i).getAmount());
 			productDaoImpl.updateProduct(product);
 		}

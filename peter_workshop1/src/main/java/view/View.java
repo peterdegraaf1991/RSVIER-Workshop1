@@ -31,7 +31,13 @@ public class View {
 
 	public void PrintMenuHeader() {
 	}
-	
-	
-	
-}
+
+	public void requestContinue() {
+			char option = textIO.newCharInputReader()
+					.withInlinePossibleValues('y')
+					.read(
+					"\nDo you wish to go back to the menu?");
+		}
+		
+	}
+

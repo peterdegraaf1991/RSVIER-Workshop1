@@ -46,10 +46,10 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `peter_workshop1`.`account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(180) NOT NULL,
+  `password` VARCHAR(180) NOT NULL DEFAULT 'hashed',
   `account_type_id` INT NOT NULL,
   `customer_id` INT NOT NULL,
-  `hash` VARCHAR(900) NOT NULL DEFAULT 0,
+  `hash` VARCHAR(150) NOT NULL DEFAULT 0,
   INDEX `fk_account_type` (`account_type_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   PRIMARY KEY (`id`),

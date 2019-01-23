@@ -179,7 +179,7 @@ public class CustomerController extends Controller {
 	public Customer selectCustomer() {
 		Customer customer = ChoosePersonFromList();
 		if (customer == null) {
-			// No customer message
+			System.out.println("MELDING HIER");
 			return null;
 		}
 		return customer;

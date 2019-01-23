@@ -151,6 +151,8 @@ public class OrderController extends Controller {
 
 	public void createOrder() {
 		Customer customer = customerController.selectCustomer();
+		if (customer.getId() == 0)
+			return;
 		int orderId = createNewOrderId(customer);
 		List<OrderLine> orderLineList = orderLineController
 				.createOrderLines(orderId);

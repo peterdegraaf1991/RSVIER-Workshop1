@@ -5,7 +5,7 @@
 	
 2) Mockito; hoe test je een methode die geen returnvalue heeft? Checken of de juiste methodes zijn aangeroepen?
 
-
+3) Hikari: Connections sluiten op moment niet. Na 10x geopend te hebben, is de pool vol.
 
 15-01-2019
 

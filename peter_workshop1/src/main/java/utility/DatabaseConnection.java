@@ -28,41 +28,36 @@ public enum DatabaseConnection {
 	private String password;
 	private String url;
 	private Connection connection;
+	private HikariDataSource dataSource = new HikariDataSource();
 
-// Connection managed by DriverManager
-/*	public Connection getConnection() {
-		if (username == null || password == null || url == null)
+	// Connection managed by DriverManager
+	/*
+	 * public Connection getConnection() { if (username == null || password ==
+	 * null || url == null) getLoginDetails();
+	 * 
+	 * try { if (connection == null || connection.isClosed()) { connection =
+	 * DriverManager.getConnection(url, username, password); } } catch
+	 * (SQLException e) { e.printStackTrace(); } return connection; }
+	 */
+
+	// Connection managed by Hikari
+	public Connection getConnection() {
+		if (username == null || password == null || url == null){
 			getLoginDetails();
-
+		dataSource.setJdbcUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		}
 		try {
 			if (connection == null || connection.isClosed()) {
-				connection = DriverManager.getConnection(url, username,
-						password);
+				connection = dataSource.getConnection();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return connection;
 	}
-*/
-	
-// Connection managed by Hikari
-	public Connection getConnection() {
-		if (username == null || password == null || url == null)
-			getLoginDetails();
 
-		HikariDataSource ds = new HikariDataSource();
-		ds.setJdbcUrl(url);
-		ds.setUsername(username);
-		ds.setPassword(password);
-		try {
-			return ds.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
 	private void getLoginDetails() {
 		File xmlFile = new File("src/main/java/utility/LoginDetails.xml");
 		try {

@@ -5,8 +5,6 @@
 	
 2) Mockito; hoe test je een methode die geen returnvalue heeft? Checken of de juiste methodes zijn aangeroepen?
 
-3) Hikari: Connections sluiten op moment niet. Na 10x geopend te hebben, is de pool vol.
-
 15-01-2019
 
 1) Ik begin in mijn Controllers vaak een check if (... == null) return; te krijgen. Dit lijkt mij niet heel netjes en beter te kunnen.

@@ -21,7 +21,7 @@ public class OrderView extends View {
 		terminal.println("1. Add Order");
 		terminal.println("2. Edit Order");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 
 	}
 
@@ -30,7 +30,7 @@ public class OrderView extends View {
 		terminal.println("2. Change Totalcost");
 		terminal.println("3. Delete");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 
 	}
 

@@ -62,6 +62,11 @@ public class OrderController extends Controller {
 				keuze = 0;
 				Controller.newView = true;
 				break;
+			
+			case 0:
+				orderView.logoutTimer();
+				System.exit(0);
+				break;
 			default:
 				orderView.InvalidInput();
 				break;
@@ -105,6 +110,11 @@ public class OrderController extends Controller {
 			case 9:
 				keuze = 0;
 				Controller.newView = true;
+				break;
+				
+			case 0:
+				orderView.logoutTimer();
+				System.exit(0);
 				break;
 			default:
 				orderView.InvalidInput();

@@ -18,7 +18,7 @@ public class AccountView extends View {
 		terminal.println("3. Change Password of Account");
 		terminal.println("4. Delete Account");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 	}
 
 	public String RequestInputUsername() {

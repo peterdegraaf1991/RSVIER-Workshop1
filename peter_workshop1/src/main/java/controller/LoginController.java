@@ -34,7 +34,8 @@ public class LoginController extends Controller {
 				;
 				break;
 			case 0:
-				keuze = 0;
+				loginView.logoutTimer();
+				System.exit(0);
 				break;
 			default:
 				loginView.InvalidInput();

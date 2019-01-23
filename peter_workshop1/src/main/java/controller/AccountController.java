@@ -45,8 +45,8 @@ public class AccountController extends Controller {
 				DeleteAccount();
 				requestNewMenu();
 			case 9:
-				keuze = 0;
-				Controller.newView = true;
+				accountView.logoutTimer();
+				System.exit(0);
 				break;
 			default:
 				accountView.InvalidInput();

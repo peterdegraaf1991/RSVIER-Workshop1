@@ -16,14 +16,14 @@ public class CustomerView extends View {
 		terminal.println("1. Create new Customer");
 		terminal.println("2. Edit Customer");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 	}
 
 	public void PrintEditMenuOptions() {
 		terminal.println("1. Change Name");
 		terminal.println("2. Delete Customer");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 	}
 
 	public String RequestInputSurname() {

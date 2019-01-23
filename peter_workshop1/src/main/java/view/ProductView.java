@@ -17,7 +17,7 @@ public class ProductView extends View {
 		terminal.println("3. Update product");
 		terminal.println("4. Delete product");
 		terminal.println("9. Back");
-		terminal.println("0. Unimplemented");
+		terminal.println("0. Logout & Exit");
 	}
 
 	public void printProduct(String ProductToString) {

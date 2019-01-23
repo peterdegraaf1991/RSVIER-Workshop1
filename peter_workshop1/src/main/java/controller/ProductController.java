@@ -56,6 +56,10 @@ public class ProductController extends Controller {
 				keuze = 0;
 				Controller.newView = true;
 				break;
+			case 0:
+				productView.logoutTimer();
+				System.exit(0);
+				break;
 			default:
 				productView.InvalidInput();
 				break;

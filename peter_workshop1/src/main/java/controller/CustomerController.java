@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+
 import model_class.Account;
 import model_class.Customer;
 import dao.AccountDao;
@@ -41,7 +42,10 @@ public class CustomerController extends Controller {
 				keuze = 0;
 				Controller.newView = true;
 				break;
-			// case 0:
+			case 0:
+				customerView.logoutTimer();
+				System.exit(0);
+				break;
 			default:
 				customerView.InvalidInput();
 				break;
@@ -74,7 +78,10 @@ public class CustomerController extends Controller {
 				keuze = 0;
 				Controller.newView = true;
 				break;
-			// case 0:
+			case 0:
+				customerView.logoutTimer();
+				System.exit(0);
+				break;
 			default:
 				customerView.InvalidInput();
 				break;

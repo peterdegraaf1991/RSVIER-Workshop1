@@ -22,14 +22,14 @@ public class LoginView extends View {
 	
 	public String RequestInputPassword() {
 		String password = null;
-//		do {
+		do {
 		password = textIO.newStringInputReader().withMinLength(6)
 				.withInputMasking(true).withDefaultValue("AdminPassword")
 				.read("Enter Password");
 		if (!passwordIsValid(password))
 			passwordNotValid();
-//		}
-//		while (!passwordIsValid(password));
+		}
+		while (!passwordIsValid(password));
 		return password;
 	}
 

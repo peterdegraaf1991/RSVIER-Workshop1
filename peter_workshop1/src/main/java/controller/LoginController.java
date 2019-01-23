@@ -30,7 +30,7 @@ public class LoginController extends Controller {
 			keuze = loginView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
-				CheckAccountByEmail(); /* CheckPassword() */
+				CheckAccountByEmail();
 				;
 				break;
 			case 0:
@@ -47,9 +47,6 @@ public class LoginController extends Controller {
 		loggedInAccount = accountDao.readAccountByEmail(loginView
 				.RequestInputUsername());
 		int accountId = loggedInAccount.getId();
-		System.out.println(accountDao.readHash(loggedInAccount.getId()));
-		System.out.println(accountDao.readAccountById(loggedInAccount.getId()).getPassword());
-
 		if (loggedInAccount.getId() != 0) {
 			String hash = accountDao.readHash(accountId);
 			try {

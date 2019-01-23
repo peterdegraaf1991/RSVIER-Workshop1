@@ -6,7 +6,7 @@ public class MainView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
-		terminal.println("This is MainViewHeader\n\n");
+		terminal.println("Main Menu\n");
 
 	}
 

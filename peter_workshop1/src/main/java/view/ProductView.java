@@ -7,7 +7,7 @@ public class ProductView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
-		terminal.println("Header ProductView \n");
+		terminal.println("Product Menu\n");
 	}
 
 	@Override

@@ -7,7 +7,7 @@ public class OrderView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
-		terminal.println("Header OrderView \n");
+		terminal.println("Order Menun\n");
 
 	}
 

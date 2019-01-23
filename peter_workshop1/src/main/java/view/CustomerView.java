@@ -4,11 +4,11 @@ public class CustomerView extends View {
 
 	@Override
 	public void PrintMenuHeader() {
-		terminal.println("Header CustomerView \n");
+		terminal.println("Customer Menu \n");
 	}
 
 	public void PrintEditMenuHeader() {
-		terminal.println("Header CustomerEditView \n");
+		terminal.println("Edit Customer Menu \n");
 	}
 
 	@Override

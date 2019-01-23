@@ -9,7 +9,7 @@ public class AccountView extends View {
 	TextTerminal<?> terminal = textIO.getTextTerminal();
 
 	public void PrintMenuHeader() {
-		terminal.println("Header AccountView \n");
+		terminal.println("Account Menu\n");
 	}
 
 	public void PrintMenuOptions() {

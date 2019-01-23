@@ -11,7 +11,7 @@ import utility.Hashing.InvalidHashException;
 
 public class LoginController extends Controller {
 
-	static Account loggedInAccount = new Account();
+	public static Account loggedInAccount = new Account();
 	static Customer loggedInCustomer = new Customer();
 	private LoginView loginView = new LoginView();
 	AccountDao accountDao = new AccountDaoImpl();

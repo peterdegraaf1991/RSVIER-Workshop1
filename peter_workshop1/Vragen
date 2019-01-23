@@ -1,8 +1,17 @@
-15-01-2018
+23-01-2019
 
-Ik begin in mijn Controllers vaak een check if (... == null) return; te krijgen. Dit lijkt mij niet heel netjes en beter te kunnen.
+1) 	Eerder noemde je de mogelijkheid (of gevaar) dat je met 1 query meerdere tables uit de database haalt.
+	Wanneer gebeurd dit, waneer niet. Dit is mij nog niet duidelijk.
+	
+2) Mockito; hoe test je een methode die geen returnvalue heeft? Checken of de juiste methodes zijn aangeroepen?
 
-14-01-2018
+
+
+15-01-2019
+
+1) Ik begin in mijn Controllers vaak een check if (... == null) return; te krijgen. Dit lijkt mij niet heel netjes en beter te kunnen.
+
+14-01-2019
 
 1) Verbeteren voor aanroepen DAO en Controllers?
 	- Nu maak ik steeds een nieuwe aan met bv: AccountController accountController = new AccountController();
@@ -16,7 +25,7 @@ Notes:
 - Check naamconfentie van methode & variablen. Starten nu wisselend wel/niet met hoofdletter
 - Duplicate names (bv. Peter de Graaf) can have multiple accounts.
 
-08-01-2018
+08-01-2019
 
 1) @BeforeEach werkt niet, heb ik juiste instellingen in de pom?
 2) Bij testReadAccount() id niet meenemen bij equals? Dit omdat input = 0, sql generates, output = generatedId
@@ -26,7 +35,7 @@ Notes:
 
 
 
-02-01-2018
+02-01-2019
 1) 
 Bij aanmaken van account, idem voor customerId. Heb ik nog een fout staan in de database of probeer ik iets wat niet kan?
 java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`peter_workshop1`.`account`, CONSTRAINT `fk_account_type` FOREIGN KEY (`account_type_id`) REFERENCES `account_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

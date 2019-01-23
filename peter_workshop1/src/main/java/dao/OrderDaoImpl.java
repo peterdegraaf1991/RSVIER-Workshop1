@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
+import model_class.Account;
 import model_class.Customer;
 import model_class.Order;
 
@@ -156,5 +157,30 @@ public class OrderDaoImpl implements OrderDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<Order> readAllOrders() {
+		List<Order> orderList = new ArrayList<>();
+		String query = "SELECT * FROM `order`";
+		try (Connection connection = DatabaseConnection.INSTANCE
+				.getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement(query)) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Order order = new Order();
+				order.setId(resultSet.getInt("id"));
+				order.setTotalCost(resultSet.getBigDecimal("total_cost"));
+				Customer customer = new Customer();
+				customer.setId(resultSet.getInt("customer_id"));
+				order.setCustomer(customer);
+				order.setDate(resultSet.getTimestamp("date").toLocalDateTime());
+				orderList.add(order);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orderList;
 	}
 }

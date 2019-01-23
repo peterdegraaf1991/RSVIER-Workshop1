@@ -51,7 +51,10 @@ public class OrderController extends Controller {
 				createOrder();
 				requestNewMenu();
 				break;
-			case 2:
+			case 2: ViewAllOrders();
+					requestNewMenu();
+					break;
+			case 3:
 				Order order = selectOrderFromCustomer(selectCustomersWithOrder());
 				if (order == null) {
 					break;
@@ -73,6 +76,21 @@ public class OrderController extends Controller {
 			}
 		} while (keuze != 0);
 	}
+
+	private void ViewAllOrders() {
+		if (workerOrAdminPermission() == false)
+			orderView.noPermission();
+		List<Order> list = orderDaoImpl.readAllOrders();
+		if (list.size() <= 0) {
+			orderView.noOrdersFound();
+			return;
+		}
+		for (int i = 0; i < list.size(); i++) {
+			String customerName = customerDaoImpl.readCustomerById(list.get(i).getId()).toString();
+			orderView.printString(i + ". " + "name:" + customerName + list.get(i).toString());
+		}
+	}
+		
 
 	public void editOrderMenu(Order order) {
 		int keuze = 1;

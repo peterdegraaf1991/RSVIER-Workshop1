@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model_class.Account;
 import model_class.Customer;
+import model_class.Product;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,6 +186,28 @@ public class AccountDaoImpl implements AccountDao {
 			e.printStackTrace();
 		}
 		return hash;
+	}
+
+	@Override
+	public List<Account> readAllAccounts() {
+		List<Account> accountList = new ArrayList<>();
+		String query = "SELECT * FROM account";
+		try (Connection connection = DatabaseConnection.INSTANCE
+				.getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement(query)) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Account account = new Account();
+				account.setId(resultSet.getInt("id"));
+				account.setEmail(resultSet.getString("email"));
+				account.setAccountTypeId(resultSet.getInt("account_type_id"));
+				accountList.add(account);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accountList;
 	}
 }
 

@@ -19,7 +19,8 @@ public class OrderView extends View {
 	@Override
 	public void PrintMenuOptions() {
 		terminal.println("1. Add Order");
-		terminal.println("2. Edit Order");
+		terminal.println("2. View all Orders");
+		terminal.println("3. Edit Order");
 		terminal.println("9. Back");
 		terminal.println("0. Logout & Exit");
 

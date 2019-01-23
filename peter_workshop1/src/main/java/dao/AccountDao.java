@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import model_class.Account;
 
 public interface AccountDao {
@@ -11,6 +13,8 @@ public interface AccountDao {
 	public Account readAccountById(int id);
 
 	public Account readAccountByEmail(String email);
+	
+	public List<Account> readAllAccounts ();
 
 	public void updateAccount(Account account);
 

@@ -52,15 +52,15 @@ public class Account {
 		this.accountTypeId = accountTypeId;
 	}
 
-	@Override
-	public String toString() {
-		return "AccountToString Methode: \n AccountId = '" + id
-				+ "'\n Email= '" + email + "'\n Password: '" + password
-				+ "'\n AccountTypeId= '" + accountTypeId + "' ";
-	}
 
 	public Customer getCustomer() {
 		return customer;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", email=" + email + ", accountTypeId="
+				+ accountTypeId + "]";
 	}
 
 	// getter for password allowed?

@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
+import model_class.Account;
 import model_class.Customer;
 
 public class CustomerDaoImpl implements CustomerDao {
@@ -156,5 +158,29 @@ public class CustomerDaoImpl implements CustomerDao {
 			e.printStackTrace();
 		}
 		return rowCount;
+	}
+
+	@Override
+	public List<Customer> readAllCustomers() {
+		List<Customer> customerList = new ArrayList<>();
+		String query = "SELECT * FROM customer";
+		try (Connection connection = DatabaseConnection.INSTANCE
+				.getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement(query)) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Customer customer = new Customer();
+				customer.setId(resultSet.getInt("id"));
+				customer.setFirstname(resultSet.getString("firstname"));
+				customer.setMiddlename(resultSet.getString("middlename"));
+				customer.setSurname(resultSet.getString("surname"));
+				customerList.add(customer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return customerList;
+	
 	}
 }

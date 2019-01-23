@@ -23,4 +23,6 @@ public interface OrderDao {
 
 	public int deleteOrder(int id);
 
+	public List<Order> readAllOrders();
+
 }

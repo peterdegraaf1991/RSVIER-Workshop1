@@ -56,8 +56,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", totalCost=" + totalCost + ", date="
-				+ date + ", customer=" + customer + "]";
+		return "[id = " + id + ", totalCost=" + totalCost + ", date="
+				+ date + "]";
 	}
 
 	// public List<OrderLine> getOrderLines() {

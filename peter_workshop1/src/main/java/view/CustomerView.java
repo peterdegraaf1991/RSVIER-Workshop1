@@ -13,8 +13,9 @@ public class CustomerView extends View {
 
 	@Override
 	public void PrintMenuOptions() {
-		terminal.println("1. Create new Customer");
-		terminal.println("2. Edit Customer");
+		terminal.println("1. Create new user");
+		terminal.println("2. View all users");
+		terminal.println("3. Edit user");
 		terminal.println("9. Back");
 		terminal.println("0. Logout & Exit");
 	}
@@ -64,12 +65,22 @@ public class CustomerView extends View {
 
 	public void firstDeleteAccount() {
 		terminal.println("First delete the account of this person");
-		
+
 	}
 
 	public void firstDeleteOrders() {
 		terminal.println("First delete all orders of this customer");
-		
+
+	}
+
+	public void NoCustomerFound() {
+		terminal.println("No users have been found");
+
+	}
+
+	public void printCustomer(String string) {
+		terminal.println(string);
+
 	}
 
 }

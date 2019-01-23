@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model_class.Account;
 import model_class.Customer;
@@ -36,6 +37,10 @@ public class CustomerController extends Controller {
 				requestNewMenu();
 				break;
 			case 2:
+				ViewAllCustomers();
+				requestNewMenu();
+				break;
+			case 3:
 				runEditPersonMenu(ChoosePersonFromList());
 				break;
 			case 9:
@@ -51,6 +56,19 @@ public class CustomerController extends Controller {
 				break;
 			}
 		} while (keuze != 0);
+	}
+
+	private void ViewAllCustomers() {
+		if (workerOrAdminPermission() == false)
+			customerView.noPermission();
+		List<Customer> list = customerDaoImpl.readAllCustomers();
+		if (list.size() <= 0) {
+			customerView.NoCustomerFound();
+			return;
+		}
+		for (int i = 0; i < list.size(); i++) {
+			customerView.printCustomer(i + ". " + list.get(i).toString());
+		}
 	}
 
 	public void runEditPersonMenu(Customer customer) {
@@ -119,7 +137,7 @@ public class CustomerController extends Controller {
 	}
 
 	private void DeleteCustomer(int customerId) {
-		if (orderDaoImpl.readOrdersOfCustomerId(customerId).isEmpty() == false){
+		if (orderDaoImpl.readOrdersOfCustomerId(customerId).isEmpty() == false) {
 			customerView.firstDeleteOrders();
 			return;
 		}

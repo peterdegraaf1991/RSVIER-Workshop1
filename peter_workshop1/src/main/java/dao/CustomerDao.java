@@ -1,7 +1,9 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import model_class.Account;
 import model_class.Customer;
 
 public interface CustomerDao {
@@ -18,5 +20,7 @@ public interface CustomerDao {
 	public ArrayList<Customer> readCustomersByLastname(String lastname);
 
 	public int CustomerNameExists(Customer customer);
+
+	public List<Customer> readAllCustomers();
 
 }

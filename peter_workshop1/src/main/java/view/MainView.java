@@ -13,8 +13,7 @@ public class MainView extends View {
 		terminal.println("1. Account Management");
 		terminal.println("2. Orders");
 		terminal.println("3. Products");
-		terminal.println("4. Customer");
+		terminal.println("4. Customers");
 		terminal.println("9. Logout");
-		terminal.println("0. Logout & Exit");
 	}
 }

@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.List;
+
 import model_class.Account;
 import model_class.Customer;
+import model_class.Product;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import utility.Hashing;
@@ -34,16 +37,22 @@ public class AccountController extends Controller {
 				requestNewMenu();
 				break;
 			case 2:
-				ChangeEmail();
+				viewAllAccounts();
 				requestNewMenu();
 				break;
 			case 3:
-				ChangePassword();
+				ChangeEmail();
 				requestNewMenu();
 				break;
 			case 4:
+				ChangePassword();
+				requestNewMenu();
+				break;
+			case 5:
 				DeleteAccount();
 				requestNewMenu();
+				break;
+
 			case 9:
 				accountView.logoutTimer();
 				System.exit(0);
@@ -54,6 +63,20 @@ public class AccountController extends Controller {
 			}
 		} while (keuze != 0);
 	}
+
+	private void viewAllAccounts() {
+		if (workerOrAdminPermission() == false)
+			accountView.noPermission();
+		List<Account> list = accountDaoImpl.readAllAccounts();
+		if (list.size() <= 0) {
+			accountView.NoAccountFound();
+			return;
+		}
+		for (int i = 0; i < list.size(); i++) {
+			accountView.printAccount(i + ". " + list.get(i).toString());
+		}
+	}
+		
 
 	private void DeleteAccount() {
 		if (workerOrAdminPermission() == false) {

@@ -23,24 +23,22 @@ public class View {
 	public void ClearTerminal() {
 		terminal.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}
-	
+
 	public void noPermission() {
-		terminal.println("You have no permission for this action");	
+		terminal.println("You have no permission for this action");
 	}
 
-	public void PrintMenuOptions() {	
+	public void PrintMenuOptions() {
 	}
 
 	public void PrintMenuHeader() {
 	}
 
 	public void requestContinue() {
-			char option = textIO.newCharInputReader()
-					.withInlinePossibleValues('y')
-					.read(
-					"\nDo you wish to go back to the menu?");
-		}
-		
+		char option = textIO.newCharInputReader().withInlinePossibleValues('y')
+				.read("\nDo you wish to go back to the menu?");
+	}
+
 	public void logoutTimer() {
 		try {
 			terminal.println("Logging out in 3");
@@ -54,5 +52,8 @@ public class View {
 			e.printStackTrace();
 		}
 	}
-}
 
+	public void printString(String string) {
+		terminal.println(string);
+	}
+}

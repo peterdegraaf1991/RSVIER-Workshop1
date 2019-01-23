@@ -14,9 +14,10 @@ public class AccountView extends View {
 
 	public void PrintMenuOptions() {
 		terminal.println("1. Create Account");
-		terminal.println("2. Change Email of Account");
-		terminal.println("3. Change Password of Account");
-		terminal.println("4. Delete Account");
+		terminal.println("2. View all Accounts");
+		terminal.println("3. Change Email of Account");
+		terminal.println("4. Change Password of Account");
+		terminal.println("5. Delete Account");
 		terminal.println("9. Back");
 		terminal.println("0. Logout & Exit");
 	}
@@ -26,7 +27,7 @@ public class AccountView extends View {
 				"Enter the email for this account");
 		return username;
 	}
-	
+
 	public String RequestInputSurname() {
 		String lastname = textIO.newStringInputReader()
 				.withDefaultValue("Graaf").read("Enter surname");
@@ -95,9 +96,14 @@ public class AccountView extends View {
 	public int requestAccountType() {
 		int option = textIO
 				.newIntInputReader()
-				.withInlinePossibleValues(1,2,3)
+				.withInlinePossibleValues(1, 2, 3)
 				.read("Which level of permissions do you want to give this account?\n1.Customer\n2.Worker\n3.Admin\n");
 		return option;
+	}
+
+	public void printAccount(String string) {
+		terminal.println(string);
+
 	}
 
 }

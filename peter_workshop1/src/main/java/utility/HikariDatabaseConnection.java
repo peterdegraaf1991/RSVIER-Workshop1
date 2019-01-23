@@ -18,33 +18,16 @@ import org.slf4j.LoggerFactory;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public enum DatabaseConnection {
+public enum HikariDatabaseConnection {
 	INSTANCE;
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(DatabaseConnection.class);
+			.getLogger(HikariDatabaseConnection.class);
 
 	private String username;
 	private String password;
 	private String url;
-	private Connection connection;
 
-/*	public Connection getConnection() {
-		if (username == null || password == null || url == null)
-			getLoginDetails();
-
-		try {
-			if (connection == null || connection.isClosed()) {
-				connection = DriverManager.getConnection(url, username,
-						password);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
-*/
-	
 	public Connection getConnection() {
 		if (username == null || password == null || url == null)
 			getLoginDetails();
@@ -60,7 +43,7 @@ public enum DatabaseConnection {
 		}
 		return null;
 	}
-	
+
 	private void getLoginDetails() {
 		File xmlFile = new File("src/main/java/utility/LoginDetails.xml");
 		try {

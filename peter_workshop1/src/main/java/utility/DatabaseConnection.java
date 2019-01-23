@@ -29,6 +29,7 @@ public enum DatabaseConnection {
 	private String url;
 	private Connection connection;
 
+// Connection managed by DriverManager
 /*	public Connection getConnection() {
 		if (username == null || password == null || url == null)
 			getLoginDetails();
@@ -45,6 +46,7 @@ public enum DatabaseConnection {
 	}
 */
 	
+// Connection managed by Hikari
 	public Connection getConnection() {
 		if (username == null || password == null || url == null)
 			getLoginDetails();

@@ -26,23 +26,7 @@ public class AccountView extends View {
 				"Enter the email for this account");
 		return username;
 	}
-
-	public String RequestInputPassword() {
-		String password = textIO.newStringInputReader().withMinLength(6)
-				.withInputMasking(true)
-				.read("Enter the password for this account");
-		return password;
-	}
-
-	/*
-	 * public String RequestInputFirstname() { String firstname =
-	 * textIO.newStringInputReader() .read("Enter firstname"); return firstname;
-	 * }
-	 * 
-	 * public String RequestInputMiddlename() { String firstname =
-	 * textIO.newStringInputReader() .read("Enter middlename"); return
-	 * firstname; }
-	 */
+	
 	public String RequestInputSurname() {
 		String lastname = textIO.newStringInputReader()
 				.withDefaultValue("Graaf").read("Enter surname");

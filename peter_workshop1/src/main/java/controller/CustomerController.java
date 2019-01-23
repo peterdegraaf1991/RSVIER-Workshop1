@@ -1,11 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import model_class.Account;
 import model_class.Customer;
-import model_class.Order;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import dao.CustomerDao;

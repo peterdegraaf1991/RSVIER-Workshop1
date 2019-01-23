@@ -4,13 +4,16 @@ import model_class.Account;
 import model_class.Customer;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
+import utility.Hashing;
 import utility.Hashing.CannotPerformOperationException;
 import view.AccountView;
+import view.LoginView;
 
 public class AccountController extends Controller {
 	AccountView accountView = new AccountView();
 	private AccountDao accountDaoImpl = new AccountDaoImpl();
 	CustomerController customerController = new CustomerController();
+	LoginView loginView = new LoginView();
 
 	@Override
 	public void runController() {
@@ -92,8 +95,7 @@ public class AccountController extends Controller {
 		Account account = new Account();
 		account.setCustomer(customer);
 		account.setEmail(accountView.RequestInputUsername());
-		String password = accountView.RequestInputPassword();
-		account.setPassword(password);
+		String password = loginView.RequestInputPassword();
 		String hash = null;
 		try {
 			hash = utility.Hashing.createHash(password);
@@ -119,7 +121,13 @@ public class AccountController extends Controller {
 			accountView.NoAccountFound();
 			return;
 		}
-		account.setPassword(accountView.RequestInputPassword());
+		String hash = null;
+		try {
+			hash = Hashing.createHash(loginView.RequestInputPassword());
+		} catch (CannotPerformOperationException e) {
+			e.printStackTrace();
+		}
+		account.setHash(hash);
 		accountDaoImpl.updateAccount(account);
 		accountView.PasswordChanged();
 	}

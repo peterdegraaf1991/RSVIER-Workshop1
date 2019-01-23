@@ -18,11 +18,24 @@ public class LoginView extends View {
 		return username;
 	}
 
+	
+	
 	public String RequestInputPassword() {
-		String password = textIO.newStringInputReader().withMinLength(6)
-				.withInputMasking(true).withDefaultValue("adminaccount")
+		String password = null;
+//		do {
+		password = textIO.newStringInputReader().withMinLength(6)
+				.withInputMasking(true).withDefaultValue("AdminPassword")
 				.read("Enter Password");
+		if (!passwordIsValid(password))
+			passwordNotValid();
+//		}
+//		while (!passwordIsValid(password));
 		return password;
+	}
+
+	private void passwordNotValid() {
+	 terminal.println("The entered password doesnt match the password pattern.\nPlease try again.\n");
+		
 	}
 
 	public void IncorrectEmailOrPassword() {
@@ -37,4 +50,9 @@ public class LoginView extends View {
 		terminal.println("This username doesn't exist");
 	}
 
+	public boolean passwordIsValid(String password){
+		String emailPattern = "(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{1,}";
+		boolean result = password.matches(emailPattern);
+		return result;
+	}
 }

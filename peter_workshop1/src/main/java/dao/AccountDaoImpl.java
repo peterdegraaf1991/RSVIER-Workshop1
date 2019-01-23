@@ -29,9 +29,10 @@ public class AccountDaoImpl implements AccountDao {
 
 			preparedStatement.setString(1, account.getEmail());
 //			preparedStatement.setString(2, account.getPassword());
-			preparedStatement.setInt(3, account.getAccountTypeId());
-			preparedStatement.setInt(4, account.getCustomer().getId());
-			preparedStatement.setString(5, account.getHash());
+			preparedStatement.setInt(2, account.getAccountTypeId());
+			preparedStatement.setInt(3, account.getCustomer().getId());
+			preparedStatement.setString(4, account.getHash());
+			LOG.warn("Creating account with new hash:" + account.getHash());
 			LOG.info("Trying to create account with info:" + account.toString()
 					+ "\n CustomerID = '" + account.getCustomer().getId() + "'");
 			affectedRows = preparedStatement.executeUpdate();
@@ -51,7 +52,7 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public void updateAccount(Account account) {
-		String query = "UPDATE account SET email = ? , password = ? , account_type_id = ? WHERE id = ?";
+		String query = "UPDATE account SET email = ? , hash = ? , account_type_id = ? WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnection();
 				PreparedStatement preparedStatement = connection
@@ -59,8 +60,7 @@ public class AccountDaoImpl implements AccountDao {
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
 			preparedStatement.setString(1, account.getEmail());
 			// getter for password allowed?
-			preparedStatement.setString(2, account.getPassword());
-			LOG.info("Password of account =" + account.getPassword());
+			preparedStatement.setString(2, account.getHash());
 			preparedStatement.setInt(3, account.getAccountTypeId());
 			preparedStatement.setInt(4, account.getId());
 			preparedStatement.executeUpdate();

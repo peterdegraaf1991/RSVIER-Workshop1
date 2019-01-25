@@ -19,7 +19,7 @@ public class AddressDaoImpl implements AddressDao {
 	public void createAddress(Address address) {
 		String query = "INSERT INTO address (id, customer_id, house_number, address_type_id, street, house_extension, zip_code, city) VALUES( ?, ?, ?, ?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -42,7 +42,7 @@ public class AddressDaoImpl implements AddressDao {
 	public void updateAddress(Address address) {
 		String query = "UPDATE address SET customer_id = ?, house_number = ?, address_type_id = ?, street = ?, house_extension = ?, zip_code = ?, city = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -64,7 +64,7 @@ public class AddressDaoImpl implements AddressDao {
 	public void deleteAddress(int id) {
 		String query = "DELETE FROM address WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -81,7 +81,7 @@ public class AddressDaoImpl implements AddressDao {
 		Address address = new Address();
 		String query = "Select * FROM address WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -106,7 +106,7 @@ public class AddressDaoImpl implements AddressDao {
 		Address address = new Address();
 		String query = "Select * FROM address WHERE customer_id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, customer_id);

@@ -9,7 +9,6 @@ import java.util.List;
 
 import model_class.Account;
 import model_class.Customer;
-import model_class.Product;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public class AccountDaoImpl implements AccountDao {
 		int affectedRows = 0;
 		String query = "INSERT INTO account (email, account_type_id, customer_id, hash) VALUES(?, ?, ?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -57,7 +56,7 @@ public class AccountDaoImpl implements AccountDao {
 	public void updateAccount(Account account) {
 		String query = "UPDATE account SET email = ? , hash = ? , account_type_id = ? WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -79,7 +78,7 @@ public class AccountDaoImpl implements AccountDao {
 		String query = "DELETE FROM account WHERE id = ?";
 		int affectedRows = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -97,7 +96,7 @@ public class AccountDaoImpl implements AccountDao {
 		Account account = new Account();
 		String query = "SELECT * FROM account WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -123,7 +122,7 @@ public class AccountDaoImpl implements AccountDao {
 		Account account = new Account();
 		String query = "SELECT * FROM account WHERE email = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setString(1, email);
@@ -149,7 +148,7 @@ public class AccountDaoImpl implements AccountDao {
 		Account account = new Account();
 		String query = "SELECT * FROM account WHERE customer_id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -175,7 +174,7 @@ public class AccountDaoImpl implements AccountDao {
 		String query = "SELECT hash FROM account WHERE id = ?";
 		String hash = null;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -193,7 +192,7 @@ public class AccountDaoImpl implements AccountDao {
 		List<Account> accountList = new ArrayList<>();
 		String query = "SELECT * FROM account";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();

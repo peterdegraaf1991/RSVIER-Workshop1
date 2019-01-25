@@ -21,7 +21,7 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void createAccountType(AccountType accountType) {
 		String query = "INSERT INTO account_type (id, description) VALUES(?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -39,7 +39,7 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void updateAccountType(AccountType accountType) {
 		String query = "UPDATE account_type SET description = ? WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -57,7 +57,7 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 	public void deleteAccountType(int id) {
 		String query = "DELETE FROM account_type WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -74,7 +74,7 @@ public class AccountTypeDaoImpl implements AccountTypeDao {
 		AccountType accountType = new AccountType();
 		String query = "SELECT * FROM account_type WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);

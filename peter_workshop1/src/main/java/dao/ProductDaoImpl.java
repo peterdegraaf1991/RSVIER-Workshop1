@@ -22,7 +22,7 @@ public class ProductDaoImpl implements ProductDao {
 	public void createProduct(Product product) {
 		String query = "INSERT INTO product (name, id, price, stock) VALUES( ?, ?, ?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -42,7 +42,7 @@ public class ProductDaoImpl implements ProductDao {
 		Product product = new Product();
 		String query = "SELECT * FROM product WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -65,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 		Product product = new Product();
 		String query = "SELECT * FROM product WHERE name = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setString(1, name);
@@ -86,7 +86,7 @@ public class ProductDaoImpl implements ProductDao {
 		List<Product> productList = new ArrayList<>();
 		String query = "SELECT * FROM product";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -109,7 +109,7 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product product) {
 		String query = "UPDATE product SET name = ?, price = ? , stock = ?  WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -128,7 +128,7 @@ public class ProductDaoImpl implements ProductDao {
 	public void deleteProduct(int id) {
 		String query = "DELETE FROM product WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {

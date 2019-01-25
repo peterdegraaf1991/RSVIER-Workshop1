@@ -19,7 +19,7 @@ public class AddressTypeDaoImpl implements AddressTypeDao {
 	public void createAddressType(AddressType addressType) {
 		String query = "INSERT INTO address_type (id, description) VALUES( ?, ?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -37,7 +37,7 @@ public class AddressTypeDaoImpl implements AddressTypeDao {
 	public void updateAddressType(AddressType addressType) {
 		String query = "UPDATE address_type SET description = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -54,7 +54,7 @@ public class AddressTypeDaoImpl implements AddressTypeDao {
 	public void deleteAddressType(int id) {
 		String query = "DELETE FROM address_type WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -71,7 +71,7 @@ public class AddressTypeDaoImpl implements AddressTypeDao {
 		AddressType addressType = new AddressType();
 		String query = "SELECT * FROM address_type WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);

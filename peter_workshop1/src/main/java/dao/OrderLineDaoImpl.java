@@ -24,7 +24,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 		int affectedRows = 0;
 		int generatedId = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -49,7 +49,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 		OrderLine orderLine = new OrderLine();
 		String query = "SELECT * FROM order_line WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -78,7 +78,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 		String query = "SELECT * FROM order_line WHERE order_id = ?";
 		int i = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query);) {
 
@@ -114,7 +114,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 		List<OrderLine> orderLineList = new ArrayList<>();
 		String query = "SELECT * FROM order_line";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -142,7 +142,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 	public void updateOrderLine(OrderLine orderLine) {
 		String query = "UPDATE order_line SET product_id = ?, amount = ?, order_id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -162,7 +162,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 		String query = "DELETE FROM order_line WHERE id = ?";
 		int affectedRows = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {

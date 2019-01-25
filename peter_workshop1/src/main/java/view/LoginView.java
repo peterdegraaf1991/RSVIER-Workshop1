@@ -1,5 +1,7 @@
 package view;
 
+import dao.DaoFactory;
+
 public class LoginView extends View {
 
 	public void PrintMenuHeader() {
@@ -18,24 +20,20 @@ public class LoginView extends View {
 		return username;
 	}
 
-	
-	
 	public String RequestInputPassword() {
 		String password = null;
 		do {
-		password = textIO.newStringInputReader().withMinLength(6)
-				.withInputMasking(true).withDefaultValue("AdminPassword")
-				.read("Enter Password");
-		if (!passwordIsValid(password))
-			passwordNotValid();
-		}
-		while (!passwordIsValid(password));
+			password = textIO.newStringInputReader().withMinLength(6)
+					.withInputMasking(true).withDefaultValue("AdminPassword")
+					.read("Enter Password");
+			if (!passwordIsValid(password))
+				passwordNotValid();
+		} while (!passwordIsValid(password));
 		return password;
 	}
 
 	private void passwordNotValid() {
-	 terminal.println("The entered password doesnt match the password pattern.\nPlease try again.\n");
-		
+		terminal.println("The entered password doesnt match the password pattern. Atleast one capital is required.\nPlease try again.\n");
 	}
 
 	public void IncorrectEmailOrPassword() {
@@ -50,9 +48,16 @@ public class LoginView extends View {
 		terminal.println("This username doesn't exist");
 	}
 
-	public boolean passwordIsValid(String password){
+	public boolean passwordIsValid(String password) {
 		String emailPattern = "(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{1,}";
 		boolean result = password.matches(emailPattern);
 		return result;
+	}
+
+	public void UseSQLOrMongo() {
+		int input = textIO.newIntInputReader().withDefaultValue(1)
+				.withInlinePossibleValues(1, 2)
+				.read("Do you wish to use SQL(1) or Mongo(2) as database?");
+		new DaoFactory(input);
 	}
 }

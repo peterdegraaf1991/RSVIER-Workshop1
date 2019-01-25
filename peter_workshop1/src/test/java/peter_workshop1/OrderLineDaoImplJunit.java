@@ -67,7 +67,7 @@ public class OrderLineDaoImplJunit {
 		orderLine.setAmount(999);
 		orderLineDaoImpl.updateOrderLine(orderLine);
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query = "SELECT * FROM order_line WHERE amount = 999";
 			ResultSet rs = statement.executeQuery(query);
@@ -96,7 +96,7 @@ public class OrderLineDaoImplJunit {
 		LOG.info("entering testDeleteOrderLine()...");
 		assertEquals(orderLineDaoImpl.deleteOrderLine(1), 1);
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query = "SELECT * FROM order_line WHERE id = 1";
 			ResultSet rs = statement.executeQuery(query);

@@ -3,7 +3,6 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import model_class.Account;
 import model_class.Customer;
 
 public interface CustomerDao {

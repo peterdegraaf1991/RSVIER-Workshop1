@@ -36,6 +36,9 @@ public class Mockito {
 	        when(mockAccountDao.readAccountByCustomerId(customer.getId())).thenReturn(account);
 	        when(mockAccountDao.deleteAccount(account.getId())).thenReturn(1);
 	        
-	        assertEquals(account, )
+	        assertEquals(account){
+	        	
+	 
+	        }
 	}
 }

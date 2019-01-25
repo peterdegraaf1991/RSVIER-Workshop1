@@ -16,7 +16,7 @@ public class DatabaseController {
 	public static void InitDatabase() {
 
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			statement.addBatch("INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')");
 			statement.addBatch("INSERT INTO customer(id,firstname,middlename,surname) VALUES (999,'Mathijs','de','Graaf')");
@@ -40,7 +40,7 @@ public class DatabaseController {
 
 	public static void ClearDatabase() {
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			statement.addBatch("SET FOREIGN_KEY_CHECKS=0");
 			statement.addBatch("TRUNCATE `account`");

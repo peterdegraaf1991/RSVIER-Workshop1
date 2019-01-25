@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
-import model_class.Account;
 import model_class.Customer;
 import model_class.Order;
 
@@ -27,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
 		String query = "INSERT INTO `order` (total_cost, date, customer_id) VALUES(?,?,?)";
 		int generatedKey = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -50,7 +47,7 @@ public class OrderDaoImpl implements OrderDao {
 	public void updateOrder(Order order) {
 		String query = "UPDATE `order` SET total_cost = ? , date = ?, customer_id = ?  WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -70,7 +67,7 @@ public class OrderDaoImpl implements OrderDao {
 		String query = "DELETE FROM `order` WHERE id = ?";
 		int affectedRows = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -88,7 +85,7 @@ public class OrderDaoImpl implements OrderDao {
 		Order order = new Order();
 		String query = "SELECT * FROM `order` WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -120,7 +117,7 @@ public class OrderDaoImpl implements OrderDao {
 		List<Order> orderList = new ArrayList<>();
 		String query = "SELECT * FROM `order` WHERE Customer_id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, customer_id);
@@ -146,7 +143,7 @@ public class OrderDaoImpl implements OrderDao {
 		List<Integer> list = new ArrayList<>();
 		String query = "SELECT DISTINCT customer_id FROM `order`";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -164,7 +161,7 @@ public class OrderDaoImpl implements OrderDao {
 		List<Order> orderList = new ArrayList<>();
 		String query = "SELECT * FROM `order`";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();

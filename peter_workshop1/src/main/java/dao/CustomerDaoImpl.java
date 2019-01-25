@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utility.DatabaseConnection;
-import model_class.Account;
 import model_class.Customer;
 
 public class CustomerDaoImpl implements CustomerDao {
@@ -23,7 +22,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		String query = "INSERT INTO customer (id, firstname, middlename, surname) VALUES( ?, ?, ?, ?)";
 		int generatedId = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -47,7 +46,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public void updateCustomer(Customer customer) {
 		String query = "UPDATE customer SET firstname = ?, middlename = ?, surname = ? WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -66,7 +65,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public void deleteCustomer(int id) {
 		String query = "DELETE FROM customer WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -83,7 +82,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		Customer customer = new Customer();
 		String query = "SELECT * FROM customer WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setInt(1, id);
@@ -104,7 +103,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		ArrayList<Customer> listOfCustomers = new ArrayList<>();
 		String query = "SELECT * FROM customer WHERE surname = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setString(1, lastname);
@@ -128,7 +127,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public void deleteCustomer(String lastname) {
 		String query = "DELETE FROM customer WHERE surname = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query,
 								PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -144,7 +143,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		String query = "SELECT id FROM customer WHERE firstname=? AND middlename = ? AND surname = ?";
 		int rowCount = 0;
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			preparedStatement.setString(1, customer.getFirstname());
@@ -165,7 +164,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		List<Customer> customerList = new ArrayList<>();
 		String query = "SELECT * FROM customer";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();

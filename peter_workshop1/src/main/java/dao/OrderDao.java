@@ -1,13 +1,9 @@
 package dao;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import model_class.Customer;
+import java.util.List;
 import model_class.Order;
-import model_class.OrderLine;
+
 
 public interface OrderDao {
 

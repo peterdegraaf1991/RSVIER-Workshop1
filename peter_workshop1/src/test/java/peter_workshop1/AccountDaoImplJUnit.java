@@ -43,7 +43,7 @@ public class AccountDaoImplJUnit {
 		// Inserting Customer(id=1), AccountType(id=1), and
 		// Account(email=test3@hotmail.com)
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
 			String queryAccountType = "INSERT INTO account_type (id, description) VALUES (1, 'testing')";
@@ -82,7 +82,7 @@ public class AccountDaoImplJUnit {
 		accountRead.setPassword("PasswordGewijzigd");
 		accountDaoImpl.updateAccount(accountRead);
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query = "SELECT * FROM account WHERE email = 'test3@hotmail.com'";
 			ResultSet rs = statement.executeQuery(query);
@@ -132,7 +132,7 @@ public class AccountDaoImplJUnit {
 		assertEquals(1, accountDaoImpl.deleteAccount(2));
 		LOG.info("1 Account deleted = true asserted");
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query = "SELECT * FROM account WHERE id = 2";
 			ResultSet rs = statement.executeQuery(query);

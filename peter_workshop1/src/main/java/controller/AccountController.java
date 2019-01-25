@@ -52,8 +52,11 @@ public class AccountController extends Controller {
 				DeleteAccount();
 				requestNewMenu();
 				break;
-
-			case 9:
+			case 9: 				
+				keuze = 0;
+				Controller.newView = true;
+				break;
+			case 0:
 				accountView.logoutTimer();
 				System.exit(0);
 				break;
@@ -76,14 +79,12 @@ public class AccountController extends Controller {
 			accountView.printAccount(i + ". " + list.get(i).toString());
 		}
 	}
-		
 
 	private void DeleteAccount() {
 		if (workerOrAdminPermission() == false) {
 			if (accountView.confirmDeleteAccount() == true)
-				accountDaoImpl.deleteAccount(LoginController.loggedInAccount
-						.getId());
-			System.exit(0);
+				accountDaoImpl.deleteAccount(LoginController.loggedInAccount.getId());
+				System.exit(0);
 		}
 		if (workerOrAdminPermission() == true) {
 			Customer customer = customerController.ChoosePersonFromList();

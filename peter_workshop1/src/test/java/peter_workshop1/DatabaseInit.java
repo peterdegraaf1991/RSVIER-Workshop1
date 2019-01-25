@@ -24,7 +24,7 @@ public class DatabaseInit {
 
 	public static void DeleteRows() {
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query1 = "DELETE FROM account";
 			String query2 = "DELETE FROM account_type";
@@ -52,7 +52,7 @@ public class DatabaseInit {
 
 	public static void ResetAutoIncement() {
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			String query1 = "ALTER TABLE account AUTO_INCREMENT = 1";
 			String query2 = "ALTER TABLE account_type AUTO_INCREMENT = 1";
@@ -81,7 +81,7 @@ public class DatabaseInit {
 	public static void InsertTestCustomer() {
 		String queryCustomer = "INSERT INTO customer(id,firstname,middlename,surname) VALUES (1,'Peter','de','Graaf')";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			statement.execute(queryCustomer);
 			LOG.trace("Customer inserted");
@@ -96,7 +96,7 @@ public class DatabaseInit {
 				customer);
 		String queryOrder = "INSERT INTO `order`(id, total_cost, customer_id, date) VALUES (?,?,?,?)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(queryOrder)) {
 			preparedStatement.setInt(1, order.getId());
@@ -115,7 +115,7 @@ public class DatabaseInit {
 		Product product = new Product(1, "TestProductName", new BigDecimal(
 				"4.50"), 10);
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(queryProduct)) {
 			preparedStatement.setInt(1, product.getId());
@@ -132,7 +132,7 @@ public class DatabaseInit {
 	public static void InsertTestOrderLine() {
 		String queryOrderLine = "INSERT INTO order_line(order_id,product_id,amount) VALUES (1,1,10)";
 		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnection();
+				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {
 			statement.execute(queryOrderLine);
 			LOG.info("TestOrderLine inserted");

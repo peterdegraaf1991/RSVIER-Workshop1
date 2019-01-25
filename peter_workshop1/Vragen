@@ -1,7 +1,7 @@
 25-01-2019
 
 1) Auto increment functie in MongoDb.
-2) Ik heb nog 
+2) Is het nodig om mongo connections te sluiten zoals ik met try with resources deed?
 
 23-01-2019
 

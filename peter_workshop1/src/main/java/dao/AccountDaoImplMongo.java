@@ -42,7 +42,6 @@ public class AccountDaoImplMongo implements AccountDao {
 		DBCollection collection = db.getCollection("account");
 		createDBObject(account);
 		// probably have to close connection somewhere
-		mongo.close();
 
 		// returning 1 for affected rows
 		return 1;

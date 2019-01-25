@@ -42,51 +42,10 @@ public class AccountDaoImplMongo implements AccountDao {
 		DB db = DatabaseConnection.INSTANCE.getConnectionMongo();
 		DBCollection collection = db.getCollection("account");
 		DBObject doc = createDBObject(account);
-		
-		
-		
-		String query = "INSERT INTO account (email, account_type_id, customer_id, hash) VALUES(?, ?, ?, ?)";
-		try (Connection connection = DatabaseConnection.INSTANCE
-				.getConnectionSQL();
-				PreparedStatement preparedStatement = connection
-						.prepareStatement(query,
-								PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-			preparedStatement.setString(1, account.getEmail());
-//			preparedStatement.setString(2, account.getPassword());
-			preparedStatement.setInt(2, account.getAccountTypeId());
-			preparedStatement.setInt(3, account.getCustomer().getId());
-			preparedStatement.setString(4, account.getHash());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		}
 		return affectedRows;
 	}
 
-
-
-	// getNextSequence() return the generatedId as a Double object. Have to cast
-	// object to double
-	double generatedIdDouble = (Double) getNextSequence("account_id");
-	// Cast double to int. Then you generatedId as int
-	int generatedIdInteger = (int) generatedIdDouble;
-
-
-
-	try {
-		collection.insert(newAccount);
-		logger.log(Level.INFO, "Account successfully created.");
-
-	} catch (MongoException e) {
-		logger.log(Level.WARNING, "SQL exception occured", e);
-
-	}
-
-	return generatedIdInteger;
-}
-	
 	
 	@Override
 	public Account readAccountByCustomerId(int id) {

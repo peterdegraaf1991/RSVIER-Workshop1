@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.DaoFactory;
 import dao.OrderLineDao;
 import dao.OrderLineDaoImpl;
 import view.OrderLineView;
@@ -13,7 +14,6 @@ public class OrderLineController {
 
 	ProductController productController = new ProductController();
 	OrderLineView orderLineView = new OrderLineView();
-	OrderLineDao orderLineDaoImpl = new OrderLineDaoImpl();
 
 	// OrderLine Controller
 	public List<OrderLine> createOrderLines(int orderId) {
@@ -31,7 +31,7 @@ public class OrderLineController {
 				orderLine.setAmount(orderLineView.requestAmount(product
 						.getStock()));
 				orderLine.setOrderId(orderId);
-				orderLineDaoImpl.createOrderLine(orderLine);
+				DaoFactory.getOrderLineDao().createOrderLine(orderLine);
 				System.out.println("OrderLineList is before: " + orderLineList);
 				orderLineList.add(orderLine);
 				System.out.println("OrderLineList is after: " + orderLineList);

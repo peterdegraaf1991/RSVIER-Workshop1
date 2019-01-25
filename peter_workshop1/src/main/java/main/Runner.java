@@ -9,12 +9,9 @@ public class Runner extends DatabaseController {
 	
 	public static void main(String[] args) {
 		
-		//request selectdb
-		databaseOption = 0;
-		new DaoFactory(databaseOption);
-		
-		ClearDatabase();
-		InitDatabase();
+		//request select
+//		ClearDatabase();
+//		InitDatabase();
 
 		LoginController loginController = new LoginController();
 		loginController.runController();

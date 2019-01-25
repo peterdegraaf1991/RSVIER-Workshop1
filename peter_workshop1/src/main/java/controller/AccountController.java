@@ -4,9 +4,7 @@ import java.util.List;
 
 import model_class.Account;
 import model_class.Customer;
-import model_class.Product;
-import dao.AccountDao;
-import dao.AccountDaoImpl;
+import dao.DaoFactory;
 import utility.Hashing;
 import utility.Hashing.CannotPerformOperationException;
 import view.AccountView;
@@ -14,7 +12,6 @@ import view.LoginView;
 
 public class AccountController extends Controller {
 	AccountView accountView = new AccountView();
-	private AccountDao accountDaoImpl = new AccountDaoImpl();
 	CustomerController customerController = new CustomerController();
 	LoginView loginView = new LoginView();
 
@@ -70,7 +67,7 @@ public class AccountController extends Controller {
 	private void viewAllAccounts() {
 		if (workerOrAdminPermission() == false)
 			accountView.noPermission();
-		List<Account> list = accountDaoImpl.readAllAccounts();
+		List<Account> list = DaoFactory.getAccountDao().readAllAccounts();
 		if (list.size() <= 0) {
 			accountView.NoAccountFound();
 			return;
@@ -83,21 +80,21 @@ public class AccountController extends Controller {
 	private void DeleteAccount() {
 		if (workerOrAdminPermission() == false) {
 			if (accountView.confirmDeleteAccount() == true)
-				accountDaoImpl.deleteAccount(LoginController.loggedInAccount.getId());
+				DaoFactory.getAccountDao().deleteAccount(LoginController.loggedInAccount.getId());
 				System.exit(0);
 		}
 		if (workerOrAdminPermission() == true) {
 			Customer customer = customerController.ChoosePersonFromList();
-			Account account = accountDaoImpl.readAccountByCustomerId(customer
+			Account account = DaoFactory.getAccountDao().readAccountByCustomerId(customer
 					.getId());
 			if (account.equals(LoginController.loggedInAccount)) {
 				if (accountView.confirmDeleteAccount() == true) {
-					accountDaoImpl.deleteAccount(account.getId());
+					DaoFactory.getAccountDao().deleteAccount(account.getId());
 					System.exit(0);
 				}
 			} 
 			else {
-				accountDaoImpl.deleteAccount(account.getId());
+				DaoFactory.getAccountDao().deleteAccount(account.getId());
 				accountView.accountDeleted();
 			}
 			return;
@@ -112,7 +109,7 @@ public class AccountController extends Controller {
 		if (customer == null) {
 			return;
 		}
-		if (accountDaoImpl.readAccountByCustomerId(customer.getId()).getId() != 0) {
+		if (DaoFactory.getAccountDao().readAccountByCustomerId(customer.getId()).getId() != 0) {
 			accountView.PersonAlreadyHasAccount();
 			return;
 		}
@@ -129,7 +126,7 @@ public class AccountController extends Controller {
 		account.setHash(hash);
 		int accountTypeId = accountView.requestAccountType();
 		account.setAccountTypeId(accountTypeId);
-		accountDaoImpl.createAccount(account);
+		DaoFactory.getAccountDao().createAccount(account);
 		accountView.accountCreated();
 		Controller.newView = true;
 	}
@@ -139,7 +136,7 @@ public class AccountController extends Controller {
 		if (customer == null) {
 			return;
 		}
-		Account account = accountDaoImpl.readAccountByCustomerId(customer
+		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(customer
 				.getId());
 		if (account.getId() == 0) {
 			accountView.NoAccountFound();
@@ -152,7 +149,7 @@ public class AccountController extends Controller {
 			e.printStackTrace();
 		}
 		account.setHash(hash);
-		accountDaoImpl.updateAccount(account);
+		DaoFactory.getAccountDao().updateAccount(account);
 		accountView.PasswordChanged();
 	}
 
@@ -161,14 +158,14 @@ public class AccountController extends Controller {
 		if (customer == null) {
 			return;
 		}
-		Account account = accountDaoImpl.readAccountByCustomerId(customer
+		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(customer
 				.getId());
 		if (account.getId() == 0) {
 			accountView.NoAccountFound();
 			return;
 		}
 		account.setEmail(accountView.RequestInputUsername());
-		accountDaoImpl.updateAccount(account);
+		DaoFactory.getAccountDao().updateAccount(account);
 		accountView.emailChanged();
 	}
 

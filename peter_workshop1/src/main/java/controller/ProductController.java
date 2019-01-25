@@ -4,12 +4,12 @@ import java.util.List;
 
 import model_class.OrderLine;
 import model_class.Product;
+import dao.DaoFactory;
 import dao.ProductDao;
 import dao.ProductDaoImpl;
 import view.ProductView;
 
 public class ProductController extends Controller {
-	ProductDao productDaoImpl = new ProductDaoImpl();
 	ProductView productView = new ProductView();
 
 	@Override
@@ -73,7 +73,7 @@ public class ProductController extends Controller {
 		product.setName(productView.RequestName());
 		product.setPrice(productView.RequestPrice());
 		product.setStock(productView.RequestStock());
-		productDaoImpl.updateProduct(product);
+		DaoFactory.getProductDao().updateProduct(product);
 		// Print succes message
 	}
 
@@ -81,7 +81,7 @@ public class ProductController extends Controller {
 		Product product = SelectProductFromList();
 		if (product == null)
 			return;
-		productDaoImpl.deleteProduct(product.getId());
+		DaoFactory.getProductDao().deleteProduct(product.getId());
 		// Print succes message
 	}
 
@@ -99,12 +99,12 @@ public class ProductController extends Controller {
 		product.setName(productView.RequestName());
 		product.setPrice(productView.RequestPrice());
 		product.setStock(productView.RequestStock());
-		productDaoImpl.createProduct(product);
+		DaoFactory.getProductDao().createProduct(product);
 		// Print succes message
 	}
 
 	private List<Product> PrintProductlist() {
-		List<Product> list = productDaoImpl.readAllProducts();
+		List<Product> list = DaoFactory.getProductDao().readAllProducts();
 		if (list.size() <= 0) {
 			productView.NoProductFound();
 			return null;
@@ -118,9 +118,9 @@ public class ProductController extends Controller {
 	public void updateStock(List<OrderLine> list) {
 		for (int i = 0; i < list.size(); i++) {
 			int productId = list.get(i).getProduct().getId();
-			Product product = productDaoImpl.readProductById(productId);
+			Product product = DaoFactory.getProductDao().readProductById(productId);
 			product.setStock(product.getStock() - list.get(i).getAmount());
-			productDaoImpl.updateProduct(product);
+			DaoFactory.getProductDao().updateProduct(product);
 		}
 	}
 

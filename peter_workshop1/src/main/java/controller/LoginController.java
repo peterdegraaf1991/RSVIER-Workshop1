@@ -2,8 +2,7 @@ package controller;
 
 import model_class.Account;
 import model_class.Customer;
-import dao.AccountDao;
-import dao.AccountDaoImpl;
+import dao.DaoFactory;
 import view.LoginView;
 import utility.Hashing;
 import utility.Hashing.CannotPerformOperationException;
@@ -14,11 +13,11 @@ public class LoginController extends Controller {
 	public static Account loggedInAccount = new Account();
 	static Customer loggedInCustomer = new Customer();
 	private LoginView loginView = new LoginView();
-	AccountDao accountDao = new AccountDaoImpl();
+
 
 	public void runController() {
-
-		loginView.UseSQLOrMongo();
+	loginView.UseSQLOrMongo();
+		
 		
 		
 		int keuze = 1;
@@ -47,11 +46,11 @@ public class LoginController extends Controller {
 	}
 
 	public void CheckAccountByEmail() {
-		loggedInAccount = accountDao.readAccountByEmail(loginView
+		loggedInAccount = DaoFactory.getAccountDao().readAccountByEmail(loginView
 				.RequestInputUsername());
 		int accountId = loggedInAccount.getId();
 		if (loggedInAccount.getId() != 0) {
-			String hash = accountDao.readHash(accountId);
+			String hash = DaoFactory.getAccountDao().readHash(accountId);
 			try {
 				if (Hashing.verifyPassword(loginView.RequestInputPassword(), hash) == true) {
 					loginView.LoginSuccesfull();

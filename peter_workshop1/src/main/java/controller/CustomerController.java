@@ -9,14 +9,12 @@ import dao.AccountDao;
 import dao.AccountDaoImpl;
 import dao.CustomerDao;
 import dao.CustomerDaoImpl;
+import dao.DaoFactory;
 import dao.OrderDaoImpl;
 import view.CustomerView;
 
 public class CustomerController extends Controller {
 	CustomerView customerView = new CustomerView();
-	CustomerDao customerDaoImpl = new CustomerDaoImpl();
-	AccountDao accountDaoImpl = new AccountDaoImpl();
-	OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
 
 	@Override
 	public void runController() {
@@ -61,7 +59,7 @@ public class CustomerController extends Controller {
 	private void ViewAllCustomers() {
 		if (workerOrAdminPermission() == false)
 			customerView.noPermission();
-		List<Customer> list = customerDaoImpl.readAllCustomers();
+		List<Customer> list = DaoFactory.getCustomerDao().readAllCustomers();
 		if (list.size() <= 0) {
 			customerView.NoCustomerFound();
 			return;
@@ -112,8 +110,7 @@ public class CustomerController extends Controller {
 			Customer customer = LoginController.loggedInCustomer;
 			return customer;
 		}
-		CustomerDao customerDaoImpl = new CustomerDaoImpl();
-		ArrayList<Customer> list = customerDaoImpl
+		ArrayList<Customer> list = DaoFactory.getCustomerDao()
 				.readCustomersByLastname(customerView.RequestInputSurname());
 		if (list.size() <= 0) {
 			customerView.NoPersonFound();
@@ -128,7 +125,7 @@ public class CustomerController extends Controller {
 	}
 
 	private boolean customerIdHasAccount(int customerId) {
-		Account account = accountDaoImpl.readAccountByCustomerId(customerId);
+		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(customerId);
 		if (account.getId() == 0)
 			return false;
 		else
@@ -137,7 +134,7 @@ public class CustomerController extends Controller {
 	}
 
 	private void DeleteCustomer(int customerId) {
-		if (orderDaoImpl.readOrdersOfCustomerId(customerId).isEmpty() == false) {
+		if (DaoFactory.getOrderDao().readOrdersOfCustomerId(customerId).isEmpty() == false) {
 			customerView.firstDeleteOrders();
 			return;
 		}
@@ -145,7 +142,7 @@ public class CustomerController extends Controller {
 			customerView.firstDeleteAccount();
 
 		else
-			customerDaoImpl.deleteCustomer(customerId);
+			DaoFactory.getCustomerDao().deleteCustomer(customerId);
 		// Print succesfull message
 
 	}
@@ -154,7 +151,7 @@ public class CustomerController extends Controller {
 		customer.setFirstname(customerView.RequestInputFirstname());
 		customer.setMiddlename(customerView.RequestInputMiddlename());
 		customer.setSurname(customerView.RequestInputSurname());
-		customerDaoImpl.updateCustomer(customer);
+		DaoFactory.getCustomerDao().updateCustomer(customer);
 		// Print succesfull message
 	}
 
@@ -168,8 +165,8 @@ public class CustomerController extends Controller {
 		customer.setFirstname(customerView.RequestInputFirstname());
 		customer.setMiddlename(customerView.RequestInputMiddlename());
 		customer.setSurname(customerView.RequestInputSurname());
-		if (customerDaoImpl.CustomerNameExists(customer) == 0)
-			customerDaoImpl.createCustomer(customer);
+		if (DaoFactory.getCustomerDao().CustomerNameExists(customer) == 0)
+			DaoFactory.getCustomerDao().createCustomer(customer);
 		else {
 			customerView.AlreadyExists();
 		}

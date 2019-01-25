@@ -36,14 +36,16 @@ public class AccountDaoImplMongo implements AccountDao {
 		return docBuilder.get();
 	}
 	
-	
 	@Override
 	public int createAccount(Account account) {
 		DB db = DatabaseConnection.INSTANCE.getConnectionMongo();
 		DBCollection collection = db.getCollection("account");
-		DBObject doc = createDBObject(account);
+		createDBObject(account);
+		// probably have to close connection somewhere
+		mongo.close();
 
-		return affectedRows;
+		// returning 1 for affected rows
+		return 1;
 	}
 
 	

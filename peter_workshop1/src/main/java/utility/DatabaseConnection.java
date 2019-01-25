@@ -40,6 +40,7 @@ public enum DatabaseConnection {
 
 	// MongoDB Connection managed by MongoClient
 	public DB getConnectionMongo() {
+		
 		MongoCredential workshop1Auth = MongoCredential.createPlainCredential(
 				"username", "workshop1", "password".toCharArray());
 		List<MongoCredential> auths = new ArrayList<MongoCredential>();

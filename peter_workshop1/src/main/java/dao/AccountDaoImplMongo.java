@@ -1,10 +1,7 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 import java.util.List;
-import java.util.logging.Level;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +10,16 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoException;
+
+
+
+
 
 import utility.DatabaseConnection;
 import model_class.Account;
+import model_class.Customer;
 
 public class AccountDaoImplMongo implements AccountDao {
 	
@@ -40,14 +42,13 @@ public class AccountDaoImplMongo implements AccountDao {
 	public int createAccount(Account account) {
 		DB db = DatabaseConnection.INSTANCE.getConnectionMongo();
 		DBCollection collection = db.getCollection("account");
-		createDBObject(account);
+		DBObject doc = createDBObject(account);
+		collection.insert(doc);
 		// probably have to close connection somewhere
-
 		// returning 1 for affected rows
 		return 1;
 	}
 
-	
 	@Override
 	public Account readAccountByCustomerId(int id) {
 		// TODO Auto-generated method stub
@@ -62,8 +63,29 @@ public class AccountDaoImplMongo implements AccountDao {
 
 	@Override
 	public Account readAccountByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		DB db = DatabaseConnection.INSTANCE.getConnectionMongo();
+		DBCollection collection = db.getCollection("account");
+		DBObject query = BasicDBObjectBuilder.start().add("email", email).get();
+		DBCursor cursor = collection.find(query);
+		Account account = new Account();
+		if(cursor.hasNext()){
+		BasicDBObject object = (BasicDBObject)cursor.next();
+
+		int id = object.getInt("_id");
+		String hash = object.getString("hash");
+		int accountTypeId = object.getInt("account_type_id");
+		int customerId = object.getInt("customer_id)");
+
+		account = new Account();
+		account.setId(id);
+		account.setAccountTypeId(accountTypeId);
+		account.setHash(hash);
+		account.setEmail(email);
+		Customer customer = new Customer();
+		customer.setId(customerId);
+		account.setCustomer(customer);
+	}
+	return account;
 	}
 
 	@Override

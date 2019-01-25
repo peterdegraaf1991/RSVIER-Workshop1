@@ -2,6 +2,7 @@
 
 1) Auto increment functie in MongoDb.
 2) Is het nodig om mongo connections te sluiten zoals ik met try with resources deed?
+3) Exception in thread "main" com.mongodb.CommandFailureException: { "serverUsed" : "localhost:27017" , "ok" : 0.0 , "errmsg" : "Unsupported mechanism 'PLAIN' on authentication database 'workshop1'" , "code" : 2 , "codeName" : "BadValue"}
 
 23-01-2019
 

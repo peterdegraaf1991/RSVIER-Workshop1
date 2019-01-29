@@ -18,6 +18,7 @@ import dao.ProductDaoImpl;
 import view.CustomerView;
 import view.OrderLineView;
 import view.OrderView;
+import view.ProductView;
 
 public class OrderController extends Controller {
 
@@ -28,6 +29,7 @@ public class OrderController extends Controller {
 	OrderView orderView = new OrderView();
 	CustomerView customerView = new CustomerView();
 	OrderLineView orderLineView = new OrderLineView();
+	ProductView productView = new ProductView();
 
 	@Override
 	public void runController() {
@@ -81,11 +83,9 @@ public class OrderController extends Controller {
 			orderView.noOrdersFound();
 			return;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			String customerName = DaoFactory.getCustomerDao().readCustomerById(list.get(i).getId()).toString();
-			orderView.printString(i + ". " + "name:" + customerName + list.get(i).toString());
+		orderView.printOrderListWithoutOption(list);
 		}
-	}
+	
 		
 
 	public void editOrderMenu(Order order) {
@@ -102,11 +102,15 @@ public class OrderController extends Controller {
 			keuze = orderView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
+				viewProductsOfOrder(order);
+				requestNewMenu();
+				break;
+			case 2:
 				changeProducts(order);
 				keuze = 0;
 				requestNewMenu();
 				break;
-			case 2:
+			case 3:
 				if (workerOrAdminPermission() == true) {
 					changeTotalCost(order);
 					keuze = 0;
@@ -115,7 +119,7 @@ public class OrderController extends Controller {
 					orderView.noPermission();
 				requestNewMenu();
 				break;
-			case 3:
+			case 4:
 				deleteOrder(order);
 				keuze = 0;
 				requestNewMenu();
@@ -135,6 +139,12 @@ public class OrderController extends Controller {
 				break;
 			}
 		} while (keuze != 0);
+	}
+
+	private void viewProductsOfOrder(Order order) {
+		List<OrderLine> listOrderLines = DaoFactory.getOrderLineDao()
+				.readOrderLinesOfOrderId(order.getId());
+			orderLineView.printOrderLineListWithoutOption(listOrderLines);
 	}
 
 	private void deleteOrder(Order order) {
@@ -200,10 +210,11 @@ public class OrderController extends Controller {
 			customerList.add(customer);
 		}
 
-		for (int i = 0; i < customerList.size(); i++) {
-			orderView.printCustomerNamesWithOrder(i + ". "
-					+ customerList.get(i).toString());
-		}
+		customerView.PrintPersonList(customerList);
+//		for (int i = 0; i < customerList.size(); i++) {
+//			orderView.printCustomerNamesWithOrd(i + ". "
+//					+ customerList.get(i).toString());
+		
 		int option = customerView.ChoosePerson(customerIdList.size());
 		return customerList.get(option);
 	}
@@ -214,10 +225,7 @@ public class OrderController extends Controller {
 		}
 		List<Order> orderList = DaoFactory.getOrderDao().readOrdersOfCustomerId(customer
 				.getId());
-
-		for (int i = 0; i < orderList.size(); i++) {
-			orderView.printOrders(i + ". " + orderList.get(i));
-		}
+			orderView.printOrderList(orderList);
 		int option = orderView.chooseOrder(orderList.size());
 		return orderList.get(option);
 	}
@@ -272,16 +280,16 @@ public class OrderController extends Controller {
 	private OrderLine selectOrderLineFromOrder(Order order) {
 		List<OrderLine> listOrderLines = DaoFactory.getOrderLineDao()
 				.readOrderLinesOfOrderId(order.getId());
-		for (int i = 0; i < listOrderLines.size(); i++) {
-			int productId = listOrderLines.get(i).getProduct().getId();
-			String productName = DaoFactory.getProductDao().readProductById(productId)
-					.getName();
-			
-			orderView.printOrders(i + ". " + "[Productname: " + productName
-					+ ", Amount: " + listOrderLines.get(i).getAmount() + "]");
-		}
+		
+			orderLineView.printOrderLineList(listOrderLines);
+					
 		int option = orderView
 				.chooseProductFromOrderLine(listOrderLines.size());
 		return listOrderLines.get(option);
+	}
+
+	public String getCustomerNameOfOrder(int customerId) {
+		Customer customer = DaoFactory.getCustomerDao().readCustomerById(customerId);
+		return customer.toString();
 	}
 }

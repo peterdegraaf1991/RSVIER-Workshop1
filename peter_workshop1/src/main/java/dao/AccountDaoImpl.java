@@ -104,7 +104,7 @@ public class AccountDaoImpl implements AccountDao {
 			resultSet.first();
 			// ?password remains null?
 			account.setId(resultSet.getInt("id"));
-			account.setPassword(resultSet.getString("password"));
+			account.setHash(resultSet.getString("hash"));
 			account.setEmail(resultSet.getString("email"));
 			account.setAccountTypeId(resultSet.getInt("account_type_id"));
 			CustomerDao customerDaoImpl = new CustomerDaoImpl();
@@ -129,7 +129,7 @@ public class AccountDaoImpl implements AccountDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				account.setId(resultSet.getInt("id"));
-				account.setPassword(resultSet.getString("password"));
+				account.setHash(resultSet.getString("hash"));
 				account.setEmail(resultSet.getString("email"));
 				account.setAccountTypeId(resultSet.getInt("account_type_id"));
 				CustomerDao customerDaoImpl = new CustomerDaoImpl();
@@ -155,7 +155,7 @@ public class AccountDaoImpl implements AccountDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				account.setId(resultSet.getInt("id"));
-				account.setPassword(resultSet.getString("password"));
+				account.setHash(resultSet.getString("hash"));
 				account.setEmail(resultSet.getString("email"));
 				account.setAccountTypeId(resultSet.getInt("account_type_id"));
 				CustomerDao customerDaoImpl = new CustomerDaoImpl();

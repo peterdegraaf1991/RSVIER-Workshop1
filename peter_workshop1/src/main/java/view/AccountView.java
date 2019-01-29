@@ -1,5 +1,10 @@
 package view;
 
+import java.util.List;
+
+import model_class.Account;
+
+import org.apache.commons.lang3.StringUtils;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
@@ -101,9 +106,24 @@ public class AccountView extends View {
 		return option;
 	}
 
-	public void printAccount(String string) {
-		terminal.println(string);
+	public void printAccountList(List<Account> accountList) {
+		ClearTerminal();
+		terminal.println(StringUtils.center("Overview of all Accounts", 62));
+		terminal.println("-----------------------------------------------------------------------------");
+		terminal.print(StringUtils.center("Account ID", 11)
+				+ StringUtils.center("Email", 40)
+				+ StringUtils.center("AccountType", 11));
+		terminal.println();
+		terminal.println("-----------------------------------------------------------------------------");
+
+		for (Account account : accountList) {
+
+			terminal.print(StringUtils.center(Integer.toString(account.getId()), 11)
+					+ StringUtils.center(account.getEmail(), 40)
+					+ StringUtils.center(Integer.toString(account.getAccountTypeId()), 11));
+			terminal.println();
+		}
+		terminal.println("-----------------------------------------------------------------------------");
 
 	}
-
 }

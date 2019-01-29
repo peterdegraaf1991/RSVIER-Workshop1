@@ -67,15 +67,14 @@ public class AccountController extends Controller {
 	private void viewAllAccounts() {
 		if (workerOrAdminPermission() == false)
 			accountView.noPermission();
-		List<Account> list = DaoFactory.getAccountDao().readAllAccounts();
-		if (list.size() <= 0) {
+		List<Account> accountList = DaoFactory.getAccountDao().readAllAccounts();
+		if (accountList.size() <= 0) {
 			accountView.NoAccountFound();
 			return;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			accountView.printAccount(i + ". " + list.get(i).toString());
+			accountView.printAccountList(accountList);
 		}
-	}
+	
 
 	private void DeleteAccount() {
 		if (workerOrAdminPermission() == false) {

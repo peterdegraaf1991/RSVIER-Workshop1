@@ -59,13 +59,13 @@ public class CustomerController extends Controller {
 	private void ViewAllCustomers() {
 		if (workerOrAdminPermission() == false)
 			customerView.noPermission();
-		List<Customer> list = DaoFactory.getCustomerDao().readAllCustomers();
-		if (list.size() <= 0) {
+		List<Customer> customerList = DaoFactory.getCustomerDao().readAllCustomers();
+		if (customerList.size() <= 0) {
 			customerView.NoCustomerFound();
 			return;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			customerView.printCustomer(i + ". " + list.get(i).toString());
+		for (int i = 0; i < customerList.size(); i++) {
+			customerView.printPersonListWithoutOption(customerList);
 		}
 	}
 
@@ -110,17 +110,15 @@ public class CustomerController extends Controller {
 			Customer customer = LoginController.loggedInCustomer;
 			return customer;
 		}
-		ArrayList<Customer> list = DaoFactory.getCustomerDao()
+		ArrayList<Customer> customerList = DaoFactory.getCustomerDao()
 				.readCustomersByLastname(customerView.RequestInputSurname());
-		if (list.size() <= 0) {
+		if (customerList.size() <= 0) {
 			customerView.NoPersonFound();
 			return null;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			customerView.PrintPersons(i + ". " + list.get(i).toString());
-		}
-		int option = customerView.ChoosePerson(list.size());
-		Customer customer = list.get(option);
+		customerView.PrintPersonList(customerList);
+		int option = customerView.ChoosePerson(customerList.size());
+		Customer customer = customerList.get(option);
 		return customer;
 	}
 

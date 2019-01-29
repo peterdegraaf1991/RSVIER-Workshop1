@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	}
 
-	public void deleteProduct(int id) {
+	public String deleteProduct(int id) {
 		String query = "DELETE FROM product WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
@@ -135,9 +136,16 @@ public class ProductDaoImpl implements ProductDao {
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 			LOG.info("Product with id: " + id + " successfully removed");
-		} catch (SQLException e) {
+		} 
+		catch (SQLIntegrityConstraintViolationException e) {
+			String message = "First delete all orders containing this order prior to deletion";
+			return message;
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 }

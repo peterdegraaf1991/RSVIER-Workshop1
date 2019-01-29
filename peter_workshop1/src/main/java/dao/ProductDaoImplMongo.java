@@ -37,7 +37,8 @@ public class ProductDaoImplMongo implements ProductDao {
 	}
 
 	@Override
-	public void deleteProduct(int id) {
+	public String deleteProduct(int id) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}

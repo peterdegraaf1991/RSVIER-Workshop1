@@ -35,8 +35,9 @@ public class View {
 	}
 
 	public void requestContinue() {
-		char option = textIO.newCharInputReader().withInlinePossibleValues('y')
-				.read("\nDo you wish to go back to the menu?");
+		String option = textIO.newStringInputReader()
+				.withMinLength(0)
+				.read("\nPress any key to go back to the menu");
 	}
 
 	public void logoutTimer() {

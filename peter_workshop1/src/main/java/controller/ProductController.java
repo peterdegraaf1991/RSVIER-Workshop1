@@ -33,7 +33,6 @@ public class ProductController extends Controller {
 			case 2:
 				if (workerOrAdminPermission() == true)
 					AddProduct();
-				
 				else
 					productView.noPermission();
 				requestNewMenu();
@@ -81,9 +80,10 @@ public class ProductController extends Controller {
 		Product product = SelectProductFromList();
 		if (product == null)
 			return;
-		DaoFactory.getProductDao().deleteProduct(product.getId());
-		// Print succes message
-	}
+
+			String error = DaoFactory.getProductDao().deleteProduct(product.getId());
+			productView.printMessage(error);
+		}
 
 	public Product SelectProductFromList() {
 		List<Product> list = PrintProductlist();
@@ -104,21 +104,21 @@ public class ProductController extends Controller {
 	}
 
 	private List<Product> PrintProductlist() {
-		List<Product> list = DaoFactory.getProductDao().readAllProducts();
-		if (list.size() <= 0) {
+		List<Product> productList = DaoFactory.getProductDao()
+				.readAllProducts();
+		if (productList.size() <= 0) {
 			productView.NoProductFound();
 			return null;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			productView.printProduct(i + ". " + list.get(i).toString());
-		}
-		return list;
+		productView.printProductList(productList);
+		return productList;
 	}
 
 	public void updateStock(List<OrderLine> list) {
 		for (int i = 0; i < list.size(); i++) {
 			int productId = list.get(i).getProduct().getId();
-			Product product = DaoFactory.getProductDao().readProductById(productId);
+			Product product = DaoFactory.getProductDao().readProductById(
+					productId);
 			product.setStock(product.getStock() - list.get(i).getAmount());
 			DaoFactory.getProductDao().updateProduct(product);
 		}

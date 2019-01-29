@@ -9,6 +9,7 @@ public class Account {
 	private int accountTypeId;
 	private String hash;
 
+	
 	public Account() {
 	}
 

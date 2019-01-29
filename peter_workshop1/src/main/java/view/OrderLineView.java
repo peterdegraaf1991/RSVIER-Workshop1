@@ -1,5 +1,13 @@
 package view;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import controller.OrderLineController;
+import model_class.Account;
+import model_class.OrderLine;
+
 public class OrderLineView extends View {
 
 	public void ProductAlreadyAdded() {
@@ -19,12 +27,17 @@ public class OrderLineView extends View {
 	}
 
 	public int requestAmount(int inStock) {
+		int minAmount;
+		if (inStock == 0)
+			minAmount = 0;
+		else
+			minAmount = 1;
 		int amount = textIO
 				.newIntInputReader()
-				.withMinVal(0)
+				.withMinVal(minAmount)
 				.withMaxVal(inStock)
-				.read("How many do you wish to order? \n"
-						+ "Currently in Stock:" + inStock + "\n");
+				.read("\nCurrently in Stock: '" + inStock + "'\n"
+						+ "How many do you wish to order? \n");
 		return amount;
 	}
 
@@ -34,5 +47,56 @@ public class OrderLineView extends View {
 
 	@Override
 	public void PrintMenuOptions() {
+	}
+
+	public void printOrderLineList(List<OrderLine> orderLineList) {
+		ClearTerminal();
+		String header = "Overview of products from order with ID: "
+				+ orderLineList.get(0).getOrderId();
+		terminal.println(StringUtils.center(header, 51));
+		terminal.println("---------------------------------------------------");
+		terminal.print(StringUtils.center("Option", 11)
+				+ StringUtils.center("Name", 30)
+				+ StringUtils.center("Amount", 11));
+		terminal.println();
+		terminal.println("---------------------------------------------------");
+		OrderLineController orderLineController = new OrderLineController();
+		for (int i = 0; i < orderLineList.size(); i++) {
+
+			terminal.print(StringUtils.center(Integer.toString(i), 11)
+					+ StringUtils.center(orderLineController
+							.getProductNameOfOrderLine(orderLineList.get(i)),
+							30)
+					+ StringUtils.center(
+							Integer.toString(orderLineList.get(i).getAmount()),
+							11));
+			terminal.println();
+		}
+		terminal.println("---------------------------------------------------");
+	}
+	public void printOrderLineListWithoutOption(List<OrderLine> orderLineList) {
+		ClearTerminal();
+		String header = "Overview of products from order with ID: "
+				+ orderLineList.get(0).getOrderId();
+		terminal.println(StringUtils.center(header, 51));
+		terminal.println("---------------------------------------------------");
+		terminal.print(StringUtils.center("Option", 11)
+				+ StringUtils.center("Name", 30)
+				+ StringUtils.center("Amount", 11));
+		terminal.println();
+		terminal.println("---------------------------------------------------");
+		OrderLineController orderLineController = new OrderLineController();
+		for (int i = 0; i < orderLineList.size(); i++) {
+
+			terminal.print(StringUtils.center(Integer.toString(i), 11)
+					+ StringUtils.center(orderLineController
+							.getProductNameOfOrderLine(orderLineList.get(i)),
+							30)
+					+ StringUtils.center(
+							Integer.toString(orderLineList.get(i).getAmount()),
+							11));
+			terminal.println();
+		}
+		terminal.println("---------------------------------------------------");
 	}
 }

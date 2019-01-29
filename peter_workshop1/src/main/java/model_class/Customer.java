@@ -6,6 +6,15 @@ public class Customer {
 	private String firstname;
 	private String middlename;
 	private String surname;
+	private String accountDescription;
+
+	public String getAccountDescription() {
+		return accountDescription;
+	}
+
+	public void setAccountDescription(String accountDescription) {
+		this.accountDescription = accountDescription;
+	}
 
 	public Customer() {
 	}
@@ -93,8 +102,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "[" + firstname + " "
-				+ (middlename != null ? middlename + " " : "") + surname + "]";
+		return firstname + " "
+				+ (middlename != null ? middlename + " " : "") + surname;
 	}
 
 }

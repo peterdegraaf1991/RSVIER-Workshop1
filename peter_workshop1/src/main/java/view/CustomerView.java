@@ -1,5 +1,13 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import model_class.Account;
+import model_class.Customer;
+
 public class CustomerView extends View {
 
 	@Override
@@ -33,8 +41,32 @@ public class CustomerView extends View {
 		return lastname;
 	}
 
-	public void PrintPersons(String personToString) {
-		terminal.println(personToString);
+	public void PrintPersonList(List<Customer> customerList) {
+		ClearTerminal();
+		terminal.println(StringUtils.center(
+				"Overview of Customers & Employees v1", 46));
+		terminal.println("-------------------------------------------------------------");
+		terminal.print(StringUtils.center("Option", 11)
+				+ StringUtils.center("Name", 25)
+				+ StringUtils.center("Account", 10));
+		terminal.println();
+		terminal.println("-------------------------------------------------------------");
+
+		for (int i = 0; i < customerList.size(); i++) {
+			String accountDescription;
+			if (customerList.get(i).getAccountDescription() == null){
+				accountDescription = "None";
+			}
+			else
+				accountDescription = customerList.get(i)
+						.getAccountDescription();
+			terminal.print(StringUtils.center(Integer.toString(i), 11)
+					+ StringUtils.center(customerList.get(i).toString(), 25)
+					+ StringUtils.center(accountDescription, 10));
+			terminal.println();
+		}
+		terminal.println("-------------------------------------------------------------");
+
 	}
 
 	public int ChoosePerson(int i) {
@@ -78,8 +110,31 @@ public class CustomerView extends View {
 
 	}
 
-	public void printCustomer(String string) {
-		terminal.println(string);
+	public void printPersonListWithoutOption(List<Customer> customerList) {
+		ClearTerminal();
+		terminal.println(StringUtils.center(
+				"Overview of Customers & Employees v2", 46));
+		terminal.println("-------------------------------------------------------------");
+		terminal.print(StringUtils.center("ID", 11)
+				+ StringUtils.center("Name", 25)
+				+ StringUtils.center("Account", 10));
+		terminal.println();
+		terminal.println("-------------------------------------------------------------");
+
+		for (int i = 0; i < customerList.size(); i++) {
+			String accountDescription;
+			if (customerList.get(i).getAccountDescription() == null)
+				accountDescription = "None";
+			else
+				accountDescription = customerList.get(i)
+						.getAccountDescription();
+			terminal.print(StringUtils.center(
+					Integer.toString(customerList.get(i).getId()), 11)
+					+ StringUtils.center(customerList.get(i).toString(), 25)
+					+ StringUtils.center(accountDescription, 10));
+			terminal.println();
+		}
+		terminal.println("-------------------------------------------------------------");
 
 	}
 

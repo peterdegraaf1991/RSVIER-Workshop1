@@ -80,7 +80,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public Customer readCustomerById(int id) {
 		Customer customer = new Customer();
-		String query = "SELECT * FROM customer WHERE id = ?";
+		String query = "SELECT * FROM customer LEFT JOIN account ON customer.id = account.customer_id LEFT JOIN account_type ON account.account_type_id = account_type.id WHERE customer.id = ? ";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
@@ -92,6 +92,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			customer.setFirstname(resultSet.getString("firstname"));
 			customer.setMiddlename(resultSet.getString("middlename"));
 			customer.setSurname(resultSet.getString("surname"));
+			customer.setAccountDescription(resultSet.getString("description"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -101,7 +102,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public ArrayList<Customer> readCustomersByLastname(String lastname) {
 		ArrayList<Customer> listOfCustomers = new ArrayList<>();
-		String query = "SELECT * FROM customer WHERE surname = ?";
+		String query = "SELECT * FROM customer LEFT JOIN account ON customer.id = account.customer_id LEFT JOIN account_type ON account.account_type_id = account_type.id WHERE customer.surname = ? ";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
@@ -115,6 +116,7 @@ public class CustomerDaoImpl implements CustomerDao {
 				customer.setFirstname(resultSet.getString("firstname"));
 				customer.setMiddlename(resultSet.getString("middlename"));
 				customer.setSurname(resultSet.getString("surname"));
+				customer.setAccountDescription(resultSet.getString("description"));
 				listOfCustomers.add(customer);
 			}
 		} catch (SQLException e) {
@@ -162,7 +164,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public List<Customer> readAllCustomers() {
 		List<Customer> customerList = new ArrayList<>();
-		String query = "SELECT * FROM customer";
+		String query = "SELECT * FROM customer LEFT JOIN account ON customer.id = account.customer_id LEFT JOIN account_type ON account.account_type_id = account_type.id";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
@@ -174,6 +176,7 @@ public class CustomerDaoImpl implements CustomerDao {
 				customer.setFirstname(resultSet.getString("firstname"));
 				customer.setMiddlename(resultSet.getString("middlename"));
 				customer.setSurname(resultSet.getString("surname"));
+				customer.setAccountDescription(resultSet.getString("description"));
 				customerList.add(customer);
 			}
 		} catch (SQLException e) {

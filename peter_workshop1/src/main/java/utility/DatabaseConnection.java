@@ -33,7 +33,7 @@ public enum DatabaseConnection {
 
 	private String username;
 	private String password;
-	private String url;
+	private String url ;
 	private Connection connection;
 	private HikariDataSource dataSource = new HikariDataSource();
 	static ServerAddress serverAddress = null;
@@ -49,9 +49,11 @@ public enum DatabaseConnection {
 			serverAddress = new ServerAddress("localhost", 27017);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+			System.out.println("localhost not found");
 		}
-		MongoClient mongoClient = new MongoClient(serverAddress, auths);
+		MongoClient mongoClient = new MongoClient(serverAddress);
 		DB db = mongoClient.getDB("workshop1");
+		System.out.println("returning db");
 		return db;
 	}
 
@@ -74,8 +76,9 @@ public enum DatabaseConnection {
 	}
 
 	private void getLoginDetails() {
-		File xmlFile = new File("src/main/java/utility/LoginDetails.xml");
-		try {
+		
+		ClassLoader cl = this.getClass().getClassLoader();
+		try (java.io.InputStream xmlFile = cl.getResourceAsStream("utility/LoginDetails.xml")){
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory

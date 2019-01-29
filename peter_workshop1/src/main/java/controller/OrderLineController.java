@@ -44,4 +44,11 @@ public class OrderLineController {
 		return orderLineList;
 	}
 
+	public String getProductNameOfOrderLine(OrderLine orderLine) {
+		int productId = orderLine.getProduct().getId();
+		String productName = DaoFactory.getProductDao().readProductById(productId)
+				.getName();
+		return productName;
+	}
+
 }

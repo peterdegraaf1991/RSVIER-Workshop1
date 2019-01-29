@@ -100,7 +100,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 				LOG.info("i =" + i);
 			}
 			LOG.info("AfterError1 (3/3)");
-			LOG.info("OrderLineList with ' + i + ' orderlines read");
+			LOG.info("OrderLineList with " + i + " orderlines read");
 		}
 
 		catch (SQLException e) {
@@ -140,7 +140,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 
 	@Override
 	public void updateOrderLine(OrderLine orderLine) {
-		String query = "UPDATE order_line SET product_id = ?, amount = ?, order_id = ?";
+		String query = "UPDATE order_line SET product_id = ?, amount = ?, order_id = ? WHERE id = ?";
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
 				PreparedStatement preparedStatement = connection
@@ -149,6 +149,7 @@ public class OrderLineDaoImpl implements OrderLineDao {
 			preparedStatement.setInt(1, orderLine.getProduct().getId());
 			preparedStatement.setInt(2, orderLine.getAmount());
 			preparedStatement.setInt(3, orderLine.getOrderId());
+			preparedStatement.setInt(4, orderLine.getId());
 			preparedStatement.executeUpdate();
 			LOG.info("OrderLineId " + orderLine.getId()
 					+ " successfully updated");

@@ -2,6 +2,11 @@ package view;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import model_class.Product;
 
 public class ProductView extends View {
 
@@ -20,8 +25,27 @@ public class ProductView extends View {
 		terminal.println("0. Logout & Exit");
 	}
 
-	public void printProduct(String ProductToString) {
-		terminal.println(ProductToString);
+	public void printProductList(List<Product> productList) {
+		ClearTerminal();
+		terminal.println(StringUtils.center("Overview of Products", 61));
+		terminal.println("-------------------------------------------------------------");
+		terminal.print(StringUtils.center("Option", 11)
+				+ StringUtils.center("Name", 30)
+				+ StringUtils.center("Price", 10)
+				+ StringUtils.center("Stock", 10));
+		terminal.println();
+		terminal.println("-------------------------------------------------------------");
+
+		for (int i = 0; i < productList.size(); i++) {
+
+			terminal.print(StringUtils.center(Integer.toString(i), 11)
+					+ StringUtils.center(productList.get(i).getName(), 30)
+					+ StringUtils.center(productList.get(i).getPrice().toString(), 10)
+					+ StringUtils.center(Integer.toString(productList.get(i).getStock()), 10));
+			terminal.println();
+		}
+		terminal.println("-------------------------------------------------------------");
+
 	}
 
 	public int RequestProductNumber(int size) {
@@ -50,5 +74,10 @@ public class ProductView extends View {
 
 	public void NoProductFound() {
 		terminal.println("No product(s) found in the store");
+	}
+
+	public void printMessage(String error) {
+		terminal.println(error);
+		
 	}
 }

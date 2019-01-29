@@ -117,10 +117,16 @@ public class AccountView extends View {
 		terminal.println("-----------------------------------------------------------------------------");
 
 		for (Account account : accountList) {
-
+			String accountType = null;
+			if (account.getAccountTypeId() == 1)
+				accountType = "Customer";
+			if (account.getAccountTypeId() == 2)
+				accountType = "Worker";
+			if (account.getAccountTypeId() == 3)
+				accountType = "Admin";
 			terminal.print(StringUtils.center(Integer.toString(account.getId()), 11)
 					+ StringUtils.center(account.getEmail(), 40)
-					+ StringUtils.center(Integer.toString(account.getAccountTypeId()), 11));
+					+ StringUtils.center(accountType, 11));
 			terminal.println();
 		}
 		terminal.println("-----------------------------------------------------------------------------");

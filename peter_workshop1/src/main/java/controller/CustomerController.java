@@ -110,8 +110,9 @@ public class CustomerController extends Controller {
 			Customer customer = LoginController.loggedInCustomer;
 			return customer;
 		}
-		ArrayList<Customer> customerList = DaoFactory.getCustomerDao()
-				.readCustomersByLastname(customerView.RequestInputSurname());
+		List<Customer> customerList = DaoFactory.getCustomerDao()
+	//			.readCustomersByLastname(customerView.RequestSurnameForList());
+				.readAllCustomers();
 		if (customerList.size() <= 0) {
 			customerView.NoPersonFound();
 			return null;
@@ -156,7 +157,6 @@ public class CustomerController extends Controller {
 	private void CreateCustomer() {
 		// Check if Account has permission
 		if (workerOrAdminPermission() != true) {
-			customerView.noPermission();
 			return;
 		}
 		Customer customer = new Customer();

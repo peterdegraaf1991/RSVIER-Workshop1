@@ -5,7 +5,13 @@ import dao.DaoFactory;
 public class LoginView extends View {
 
 	public void PrintMenuHeader() {
-		terminal.println(">>>>> Welkom <<<<<\n");
+
+		terminal.println(" _       _         _                                   ");
+		terminal.println("( )  _  ( )       (_ )                                 ");
+		terminal.println("| | ( ) | |   __   | |    ___    _     ___ ___     __  ");
+		terminal.println("| | | | | | / __ \\ | |  / ___) / _ \\ /  _   _  \\ / __ \\");
+		terminal.println("| (_/ \\_) |(  ___/ | | ( (___ ( (_) )| ( ) ( ) |(  ___/");
+		terminal.println(" \\_______/  \\____)(___) \\____) \\___/ (_) (_) (_) \\____)\n\n\n");
 	}
 
 	public void PrintMenuOptions() {

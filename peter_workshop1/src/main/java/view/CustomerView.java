@@ -41,16 +41,21 @@ public class CustomerView extends View {
 		return lastname;
 	}
 
+	public String RequestSurnameForList() {
+		String lastname = textIO.newStringInputReader()
+				.withDefaultValue("Graaf").read("Enter the lastname of the person you wish to select");
+		return lastname;
+	}
 	public void PrintPersonList(List<Customer> customerList) {
 		ClearTerminal();
 		terminal.println(StringUtils.center(
-				"Overview of Customers & Employees v1", 46));
-		terminal.println("-------------------------------------------------------------");
+				"Overview of Customers & Employees", 46));
+		terminal.println("----------------------------------------------");
 		terminal.print(StringUtils.center("Option", 11)
 				+ StringUtils.center("Name", 25)
 				+ StringUtils.center("Account", 10));
 		terminal.println();
-		terminal.println("-------------------------------------------------------------");
+		terminal.println("----------------------------------------------");
 
 		for (int i = 0; i < customerList.size(); i++) {
 			String accountDescription;
@@ -65,7 +70,7 @@ public class CustomerView extends View {
 					+ StringUtils.center(accountDescription, 10));
 			terminal.println();
 		}
-		terminal.println("-------------------------------------------------------------");
+		terminal.println("----------------------------------------------");
 
 	}
 
@@ -113,13 +118,13 @@ public class CustomerView extends View {
 	public void printPersonListWithoutOption(List<Customer> customerList) {
 		ClearTerminal();
 		terminal.println(StringUtils.center(
-				"Overview of Customers & Employees v2", 46));
-		terminal.println("-------------------------------------------------------------");
+				"Overview of Customers & Employees ", 46));
+		terminal.println("----------------------------------------------");
 		terminal.print(StringUtils.center("ID", 11)
 				+ StringUtils.center("Name", 25)
 				+ StringUtils.center("Account", 10));
 		terminal.println();
-		terminal.println("-------------------------------------------------------------");
+		terminal.println("----------------------------------------------");
 
 		for (int i = 0; i < customerList.size(); i++) {
 			String accountDescription;
@@ -134,7 +139,7 @@ public class CustomerView extends View {
 					+ StringUtils.center(accountDescription, 10));
 			terminal.println();
 		}
-		terminal.println("-------------------------------------------------------------");
+		terminal.println("----------------------------------------------");
 
 	}
 

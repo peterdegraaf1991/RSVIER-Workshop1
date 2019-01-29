@@ -47,11 +47,6 @@ public class OrderView extends View {
 
 	}
 
-	public void Continue() {
-		char option = textIO.newCharInputReader().withInlinePossibleValues('y')
-				.read("Go back to menu?");
-	}
-
 	public void printOrderList(List<Order> orderList) {
 		ClearTerminal();
 		terminal.println(StringUtils.center(

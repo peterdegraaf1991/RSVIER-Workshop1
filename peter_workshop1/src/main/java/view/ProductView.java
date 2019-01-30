@@ -37,7 +37,6 @@ public class ProductView extends View {
 		terminal.println("-------------------------------------------------------------");
 
 		for (int i = 0; i < productList.size(); i++) {
-
 			terminal.print(StringUtils.center(Integer.toString(i), 11)
 					+ StringUtils.center(productList.get(i).getName(), 30)
 					+ StringUtils.center(productList.get(i).getPrice().toString(), 10)
@@ -79,5 +78,24 @@ public class ProductView extends View {
 	public void printMessage(String error) {
 		terminal.println(error);
 		
+	}
+	public void printProductListWithoutOption(List<Product> productList) {
+		ClearTerminal();
+		terminal.println(StringUtils.center("Overview of Products", 50));
+		terminal.println("--------------------------------------------------");
+		terminal.print(StringUtils.center("Name", 30)
+				+ StringUtils.center("Price", 10)
+				+ StringUtils.center("Stock", 10));
+		terminal.println();
+		terminal.println("--------------------------------------------------");
+
+		for (int i = 0; i < productList.size(); i++) {
+			terminal.print(StringUtils.center(productList.get(i).getName(), 30)
+					+ StringUtils.center(productList.get(i).getPrice().toString(), 10)
+					+ StringUtils.center(Integer.toString(productList.get(i).getStock()), 10));
+			terminal.println();
+		}
+		terminal.println("--------------------------------------------------");
+
 	}
 }

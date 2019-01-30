@@ -5,8 +5,6 @@ import java.util.List;
 import model_class.OrderLine;
 import model_class.Product;
 import dao.DaoFactory;
-import dao.ProductDao;
-import dao.ProductDaoImpl;
 import view.ProductView;
 
 public class ProductController extends Controller {
@@ -27,7 +25,7 @@ public class ProductController extends Controller {
 			keuze = productView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
-				PrintProductlist();
+				printProductListWithoutOption();
 				requestNewMenu();
 				break;
 			case 2:
@@ -114,6 +112,16 @@ public class ProductController extends Controller {
 		return productList;
 	}
 
+	private List<Product> printProductListWithoutOption() {
+		List<Product> productList = DaoFactory.getProductDao()
+				.readAllProducts();
+		if (productList.size() <= 0) {
+			productView.NoProductFound();
+			return null;
+		}
+		productView.printProductListWithoutOption(productList);
+		return productList;
+	}
 	public void updateStock(List<OrderLine> list) {
 		for (int i = 0; i < list.size(); i++) {
 			int productId = list.get(i).getProduct().getId();

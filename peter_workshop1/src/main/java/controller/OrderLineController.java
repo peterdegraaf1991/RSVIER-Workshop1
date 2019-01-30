@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.DaoFactory;
-import dao.OrderLineDao;
-import dao.OrderLineDaoImpl;
 import view.OrderLineView;
 import model_class.OrderLine;
 import model_class.Product;

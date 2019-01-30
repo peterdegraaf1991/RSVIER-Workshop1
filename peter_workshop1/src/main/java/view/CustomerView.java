@@ -1,11 +1,7 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-
-import model_class.Account;
 import model_class.Customer;
 
 public class CustomerView extends View {

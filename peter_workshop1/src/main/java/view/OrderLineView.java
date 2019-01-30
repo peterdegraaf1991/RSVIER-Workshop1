@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import controller.OrderLineController;
-import model_class.Account;
 import model_class.OrderLine;
 
 public class OrderLineView extends View {
@@ -72,24 +71,22 @@ public class OrderLineView extends View {
 							11));
 			terminal.println();
 		}
-		terminal.println("---------------------------------------------------");
+		terminal.println("-----------------------------------------");
 	}
 	public void printOrderLineListWithoutOption(List<OrderLine> orderLineList) {
 		ClearTerminal();
 		String header = "Overview of products from order with ID: "
 				+ orderLineList.get(0).getOrderId();
-		terminal.println(StringUtils.center(header, 51));
-		terminal.println("---------------------------------------------------");
-		terminal.print(StringUtils.center("Option", 11)
-				+ StringUtils.center("Name", 30)
+		terminal.println(StringUtils.center(header, 41));
+		terminal.println("-----------------------------------------");
+		terminal.print(StringUtils.center("Name", 30)
 				+ StringUtils.center("Amount", 11));
 		terminal.println();
-		terminal.println("---------------------------------------------------");
+		terminal.println("-----------------------------------------");
 		OrderLineController orderLineController = new OrderLineController();
 		for (int i = 0; i < orderLineList.size(); i++) {
 
-			terminal.print(StringUtils.center(Integer.toString(i), 11)
-					+ StringUtils.center(orderLineController
+			terminal.print(StringUtils.center(orderLineController
 							.getProductNameOfOrderLine(orderLineList.get(i)),
 							30)
 					+ StringUtils.center(

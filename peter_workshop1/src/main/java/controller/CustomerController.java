@@ -1,16 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import model_class.Account;
 import model_class.Customer;
-import dao.AccountDao;
-import dao.AccountDaoImpl;
-import dao.CustomerDao;
-import dao.CustomerDaoImpl;
 import dao.DaoFactory;
-import dao.OrderDaoImpl;
 import view.CustomerView;
 
 public class CustomerController extends Controller {

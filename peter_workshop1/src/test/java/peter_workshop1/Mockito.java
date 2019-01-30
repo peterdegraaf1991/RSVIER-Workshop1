@@ -29,7 +29,7 @@ public class Mockito {
 	        
 	        Customer customer = new Customer();
 	        customer.setId(111);
-	        when(mockCustomerController.ChoosePersonFromList()).thenReturn(customer);
+	        when(mockCustomerController.choosePersonFromList()).thenReturn(customer);
 	        
 	        Account account = new Account();
 	        account.setEmail("test@hotmail.com");

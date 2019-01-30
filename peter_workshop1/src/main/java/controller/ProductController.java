@@ -16,13 +16,13 @@ public class ProductController extends Controller {
 		Controller.newView = true;
 		do {
 			if (Controller.newView == true) {
-				productView.ClearTerminal();
-				productView.PrintMenuHeader();
-				productView.PrintMenuOptions();
+				productView.clearTerminal();
+				productView.printMenuHeader();
+				productView.printMenuOptions();
 				Controller.newView = false;
 			}
 
-			keuze = productView.RequestMenuOption();
+			keuze = productView.requestMenuOption();
 			switch (keuze) {
 			case 1:
 				printProductListWithoutOption();
@@ -30,21 +30,21 @@ public class ProductController extends Controller {
 				break;
 			case 2:
 				if (workerOrAdminPermission() == true)
-					AddProduct();
+					addProduct();
 				else
 					productView.noPermission();
 				requestNewMenu();
 				break;
 			case 3:
 				if (workerOrAdminPermission() == true)
-					UpdateProduct(SelectProductFromList());
+					updateProduct(selectProductFromList());
 				else
 					productView.noPermission();
 				requestNewMenu();
 				break;
 			case 4:
 				if (workerOrAdminPermission() == true)
-					DeleteProduct();
+					deleteProduct();
 				else
 					productView.noPermission();
 				requestNewMenu();
@@ -58,24 +58,24 @@ public class ProductController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				productView.InvalidInput();
+				productView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
-	private void UpdateProduct(Product product) {
+	private void updateProduct(Product product) {
 		if (product == null)
 			return;
-		product.setName(productView.RequestName());
-		product.setPrice(productView.RequestPrice());
-		product.setStock(productView.RequestStock());
+		product.setName(productView.requestName());
+		product.setPrice(productView.requestPrice());
+		product.setStock(productView.requestStock());
 		DaoFactory.getProductDao().updateProduct(product);
 		// Print succes message
 	}
 
-	private void DeleteProduct() {
-		Product product = SelectProductFromList();
+	private void deleteProduct() {
+		Product product = selectProductFromList();
 		if (product == null)
 			return;
 
@@ -83,29 +83,29 @@ public class ProductController extends Controller {
 			productView.printMessage(error);
 		}
 
-	public Product SelectProductFromList() {
-		List<Product> list = PrintProductlist();
+	public Product selectProductFromList() {
+		List<Product> list = printProductlist();
 		if (list == null) {
 			return null;
 		}
-		int index = productView.RequestProductNumber(list.size());
+		int index = productView.requestProductNumber(list.size());
 		return list.get(index);
 	}
 
-	private void AddProduct() {
+	private void addProduct() {
 		Product product = new Product();
-		product.setName(productView.RequestName());
-		product.setPrice(productView.RequestPrice());
-		product.setStock(productView.RequestStock());
+		product.setName(productView.requestName());
+		product.setPrice(productView.requestPrice());
+		product.setStock(productView.requestStock());
 		DaoFactory.getProductDao().createProduct(product);
 		// Print succes message
 	}
 
-	private List<Product> PrintProductlist() {
+	private List<Product> printProductlist() {
 		List<Product> productList = DaoFactory.getProductDao()
 				.readAllProducts();
 		if (productList.size() <= 0) {
-			productView.NoProductFound();
+			productView.noProductFound();
 			return null;
 		}
 		productView.printProductList(productList);
@@ -116,7 +116,7 @@ public class ProductController extends Controller {
 		List<Product> productList = DaoFactory.getProductDao()
 				.readAllProducts();
 		if (productList.size() <= 0) {
-			productView.NoProductFound();
+			productView.noProductFound();
 			return null;
 		}
 		productView.printProductListWithoutOption(productList);

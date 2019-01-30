@@ -15,25 +15,25 @@ public class CustomerController extends Controller {
 		int keuze = 1;
 		Controller.newView = true;
 		do {
-			if (Controller.newView == true) {
-				customerView.ClearTerminal();
-				customerView.PrintMenuHeader();
-				customerView.PrintMenuOptions();
+			if (Controller.newView) {
+				customerView.clearTerminal();
+				customerView.printMenuHeader();
+				customerView.printMenuOptions();
 				Controller.newView = false;
 			}
 
-			keuze = customerView.RequestMenuOption();
+			keuze = customerView.requestMenuOption();
 			switch (keuze) {
 			case 1:
-				CreateCustomer();
+				createCustomer();
 				requestNewMenu();
 				break;
 			case 2:
-				ViewAllCustomers();
+				viewAllCustomers();
 				requestNewMenu();
 				break;
 			case 3:
-				runEditPersonMenu(ChoosePersonFromList());
+				runEditPersonMenu(choosePersonFromList());
 				break;
 			case 9:
 				keuze = 0;
@@ -44,19 +44,19 @@ public class CustomerController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				customerView.InvalidInput();
+				customerView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
-	private void ViewAllCustomers() {
+	private void viewAllCustomers() {
 		if (workerOrAdminPermission() == false)
 			customerView.noPermission();
 		List<Customer> customerList = DaoFactory.getCustomerDao()
 				.readAllCustomers();
 		if (customerList.size() <= 0) {
-			customerView.NoCustomerFound();
+			customerView.noCustomerFound();
 			return;
 		}
 		for (int i = 0; i < customerList.size(); i++) {
@@ -68,16 +68,16 @@ public class CustomerController extends Controller {
 		int keuze = 1;
 		Controller.newView = true;
 		do {
-			if (Controller.newView == true) {
-				customerView.ClearTerminal();
-				customerView.PrintEditMenuHeader();
-				customerView.PrintEditMenuOptions();
+			if (Controller.newView) {
+				customerView.clearTerminal();
+				customerView.printEditMenuHeader();
+				customerView.printEditMenuOptions();
 				Controller.newView = false;
 			}
-			keuze = customerView.RequestMenuOption();
+			keuze = customerView.requestMenuOption();
 			switch (keuze) {
 			case 1:
-				UpdateCustomer(customer);
+				updateCustomer(customer);
 				requestNewMenu();
 				break;
 			case 2:
@@ -93,13 +93,13 @@ public class CustomerController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				customerView.InvalidInput();
+				customerView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
-	public Customer ChoosePersonFromList() {
+	public Customer choosePersonFromList() {
 		if (workerOrAdminPermission() == false) {
 			Customer customer = LoginController.loggedInCustomer;
 			return customer;
@@ -108,11 +108,11 @@ public class CustomerController extends Controller {
 		// .readCustomersByLastname(customerView.RequestSurnameForList());
 				.readAllCustomers();
 		if (customerList.size() <= 0) {
-			customerView.NoPersonFound();
+			customerView.noPersonFound();
 			return null;
 		}
-		customerView.PrintPersonList(customerList);
-		int option = customerView.ChoosePerson(customerList.size());
+		customerView.printPersonList(customerList);
+		int option = customerView.choosePerson(customerList.size());
 		Customer customer = customerList.get(option);
 		return customer;
 	}
@@ -127,12 +127,12 @@ public class CustomerController extends Controller {
 	}
 
 	private void DeleteCustomer(int customerId) {
-		if (DaoFactory.getOrderDao().readOrdersOfCustomerId(customerId)
-				.isEmpty() == false) {
+		if (!DaoFactory.getOrderDao().readOrdersOfCustomerId(customerId)
+				.isEmpty()) {
 			customerView.firstDeleteOrders();
 			return;
 		}
-		if (customerIdHasAccount(customerId) == true)
+		if (customerIdHasAccount(customerId))
 			customerView.firstDeleteAccount();
 
 		else
@@ -140,33 +140,33 @@ public class CustomerController extends Controller {
 		// Print succesfull message
 	}
 
-	private void UpdateCustomer(Customer customer) {
-		customer.setFirstname(customerView.RequestInputFirstname());
-		customer.setMiddlename(customerView.RequestInputMiddlename());
+	private void updateCustomer(Customer customer) {
+		customer.setFirstname(customerView.requestInputFirstname());
+		customer.setMiddlename(customerView.requestInputMiddlename());
 		customer.setSurname(customerView.RequestInputSurname());
 		DaoFactory.getCustomerDao().updateCustomer(customer);
 		// Print succesfull message
 	}
 
-	private void CreateCustomer() {
+	private void createCustomer() {
 		// Check if Account has permission
-		if (workerOrAdminPermission() != true) {
+		if (!workerOrAdminPermission()) {
 			return;
 		}
 		Customer customer = new Customer();
-		customer.setFirstname(customerView.RequestInputFirstname());
-		customer.setMiddlename(customerView.RequestInputMiddlename());
+		customer.setFirstname(customerView.requestInputFirstname());
+		customer.setMiddlename(customerView.requestInputMiddlename());
 		customer.setSurname(customerView.RequestInputSurname());
 		if (DaoFactory.getCustomerDao().CustomerNameExists(customer) == 0)
 			DaoFactory.getCustomerDao().createCustomer(customer);
 		else {
-			customerView.AlreadyExists();
+			customerView.alreadyExists();
 		}
 	}
 
 	// replaced with choosepersonfromlist
 	public Customer selectCustomer() {
-		Customer customer = ChoosePersonFromList();
+		Customer customer = choosePersonFromList();
 		if (customer == null) {
 			System.out.println("MELDING HIER");
 			return null;

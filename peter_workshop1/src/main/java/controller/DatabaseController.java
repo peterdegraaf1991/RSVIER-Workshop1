@@ -13,7 +13,7 @@ public class DatabaseController {
 	private TextIO textIO = TextIoFactory.getTextIO();
 	TextTerminal<?> terminal = textIO.getTextTerminal();
 
-	public static void InitDatabase() {
+	public static void initDatabase() {
 
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
@@ -38,7 +38,7 @@ public class DatabaseController {
 		}
 	}
 
-	public static void ClearDatabase() {
+	public static void clearDatabase() {
 		try (Connection connection = DatabaseConnection.INSTANCE
 				.getConnectionSQL();
 				Statement statement = connection.createStatement()) {

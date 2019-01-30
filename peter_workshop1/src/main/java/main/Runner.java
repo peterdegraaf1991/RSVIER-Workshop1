@@ -8,8 +8,8 @@ public class Runner extends DatabaseController {
 	
 	public static void main(String[] args) {
 		
-		ClearDatabase();
-		InitDatabase();
+		clearDatabase();
+		initDatabase();
 
 		LoginController loginController = new LoginController();
 		loginController.runController();

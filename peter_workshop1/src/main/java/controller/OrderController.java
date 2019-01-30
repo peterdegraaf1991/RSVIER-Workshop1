@@ -32,19 +32,19 @@ public class OrderController extends Controller {
 		Controller.newView = true;
 		do {
 			if (Controller.newView == true) {
-				orderView.ClearTerminal();
-				orderView.PrintMenuHeader();
-				orderView.PrintMenuOptions();
+				orderView.clearTerminal();
+				orderView.printMenuHeader();
+				orderView.printMenuOptions();
 				Controller.newView = false;
 			}
 
-			keuze = orderView.RequestMenuOption();
+			keuze = orderView.requestMenuOption();
 			switch (keuze) {
 			case 1:
 				createOrder();
 				requestNewMenu();
 				break;
-			case 2: ViewAllOrders();
+			case 2: viewAllOrders();
 					requestNewMenu();
 					break;
 			case 3:
@@ -64,13 +64,13 @@ public class OrderController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				orderView.InvalidInput();
+				orderView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
-	private void ViewAllOrders() {
+	private void viewAllOrders() {
 		if (workerOrAdminPermission() == false)
 			orderView.noPermission();
 		List<Order> list = DaoFactory.getOrderDao().readAllOrders();
@@ -86,12 +86,12 @@ public class OrderController extends Controller {
 		Controller.newView = true;
 		do {
 			if (Controller.newView == true) {
-				orderView.ClearTerminal();
-				orderView.PrintEditMenuHeader();
-				orderView.PrintEditMenuOptions();
+				orderView.clearTerminal();
+				orderView.printEditMenuHeader();
+				orderView.printEditMenuOptions();
 				Controller.newView = false;
 			}
-			keuze = orderView.RequestMenuOption();
+			keuze = orderView.requestMenuOption();
 			switch (keuze) {
 			case 1:
 				viewProductsOfOrder(order);
@@ -125,7 +125,7 @@ public class OrderController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				orderView.InvalidInput();
+				orderView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
@@ -200,12 +200,12 @@ public class OrderController extends Controller {
 			customerList.add(customer);
 		}
 
-		customerView.PrintPersonList(customerList);
+		customerView.printPersonList(customerList);
 //		for (int i = 0; i < customerList.size(); i++) {
 //			orderView.printCustomerNamesWithOrd(i + ". "
 //					+ customerList.get(i).toString());
 		
-		int option = customerView.ChoosePerson(customerIdList.size());
+		int option = customerView.choosePerson(customerIdList.size());
 		return customerList.get(option);
 	}
 
@@ -224,7 +224,7 @@ public class OrderController extends Controller {
 		BigDecimal newTotalCost = orderView.requestTotalCost();
 		order.setTotalCost(newTotalCost);
 		DaoFactory.getOrderDao().updateOrder(order);
-		orderView.TotalCostUpdated();
+		orderView.totalCostUpdated();
 	}
 
 	private void updateTotalCostOfOrder(Order order) {
@@ -240,7 +240,7 @@ public class OrderController extends Controller {
 		int oldProductId = orderLine.getProduct().getId();
 		int oldAmount = orderLine.getAmount();
 		Product oldProduct = DaoFactory.getProductDao().readProductById(oldProductId);
-		Product newProduct = productController.SelectProductFromList();
+		Product newProduct = productController.selectProductFromList();
 		int newProductCurrentStock = newProduct.getStock();
 
 		// Update Stocks:

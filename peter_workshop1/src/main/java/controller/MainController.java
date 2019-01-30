@@ -12,13 +12,13 @@ public class MainController extends Controller {
 
 		do {
 			if (Controller.newView == true) {
-				mainView.ClearTerminal();
-				mainView.PrintMenuHeader();
-				mainView.PrintMenuOptions();
+				mainView.clearTerminal();
+				mainView.printMenuHeader();
+				mainView.printMenuOptions();
 				Controller.newView = false;
 			}
 
-			keuze = mainView.RequestMenuOption();
+			keuze = mainView.requestMenuOption();
 			switch (keuze) {
 			case 1: // Account Management
 				AccountController accountController = new AccountController();
@@ -47,7 +47,7 @@ public class MainController extends Controller {
 				break;
 
 			default:
-				mainView.InvalidInput();
+				mainView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);

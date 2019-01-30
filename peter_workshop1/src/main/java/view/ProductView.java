@@ -11,12 +11,12 @@ import model_class.Product;
 public class ProductView extends View {
 
 	@Override
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 		terminal.println("Product Menu\n");
 	}
 
 	@Override
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 		terminal.println("1. Show productlist");
 		terminal.println("2. Add product");
 		terminal.println("3. Update product");
@@ -26,7 +26,7 @@ public class ProductView extends View {
 	}
 
 	public void printProductList(List<Product> productList) {
-		ClearTerminal();
+		clearTerminal();
 		terminal.println(StringUtils.center("Overview of Products", 61));
 		terminal.println("-------------------------------------------------------------");
 		terminal.print(StringUtils.center("Option", 11)
@@ -47,31 +47,31 @@ public class ProductView extends View {
 
 	}
 
-	public int RequestProductNumber(int size) {
+	public int requestProductNumber(int size) {
 		int index = textIO.newIntInputReader().withMinVal(0)
 				.withMaxVal(size - 1).read("Select Product:");
 		return index;
 	}
 
-	public String RequestName() {
+	public String requestName() {
 		String productName = textIO.newStringInputReader().read(
 				"Enter Productname:");
 		return productName;
 	}
 
-	public BigDecimal RequestPrice() {
+	public BigDecimal requestPrice() {
 		Double productPrice = textIO.newDoubleInputReader().read(
 				"Enter ProductPrice:");
 		return new BigDecimal(productPrice).setScale(2, RoundingMode.HALF_UP);
 	}
 
-	public int RequestStock() {
+	public int requestStock() {
 		int stock = textIO.newIntInputReader().withMinVal(0)
 				.read("Enter amount of products currently in stock");
 		return stock;
 	}
 
-	public void NoProductFound() {
+	public void noProductFound() {
 		terminal.println("No product(s) found in the store");
 	}
 
@@ -80,7 +80,7 @@ public class ProductView extends View {
 		
 	}
 	public void printProductListWithoutOption(List<Product> productList) {
-		ClearTerminal();
+		clearTerminal();
 		terminal.println(StringUtils.center("Overview of Products", 50));
 		terminal.println("--------------------------------------------------");
 		terminal.print(StringUtils.center("Name", 30)

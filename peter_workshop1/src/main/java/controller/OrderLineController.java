@@ -20,9 +20,9 @@ public class OrderLineController {
 
 		boolean addProduct = true;
 		while (addProduct) {
-			Product product = productController.SelectProductFromList();
+			Product product = productController.selectProductFromList();
 			if (productList.contains(product)) {
-				orderLineView.ProductAlreadyAdded();
+				orderLineView.productAlreadyAdded();
 			} else {
 				OrderLine orderLine = new OrderLine();
 				orderLine.setProduct(product);
@@ -35,7 +35,7 @@ public class OrderLineController {
 				System.out.println("OrderLineList is after: " + orderLineList);
 				productList.add(product);
 			}
-			if (orderLineView.AddMoreProducts() == false)
+			if (orderLineView.addMoreProducts() == false)
 				addProduct = false;
 		}
 		System.out.println("Returning the following orderLine: " + orderLineList);

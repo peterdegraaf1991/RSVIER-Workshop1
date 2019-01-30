@@ -2,6 +2,10 @@ package controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jline.internal.Log;
 import model_class.Account;
 import model_class.Customer;
 import dao.DaoFactory;
@@ -15,22 +19,26 @@ public class AccountController extends Controller {
 	CustomerController customerController = new CustomerController();
 	LoginView loginView = new LoginView();
 
+	
+	private static final Logger LOG = LoggerFactory
+			.getLogger(AccountController.class);
+	
 	@Override
 	public void runController() {
 		int keuze = 1;
 		Controller.newView = true;
 		do {
-			if (Controller.newView == true) {
-				accountView.ClearTerminal();
-				accountView.PrintMenuHeader();
-				accountView.PrintMenuOptions();
+			if (Controller.newView) {
+				accountView.clearTerminal();
+				accountView.printMenuHeader();
+				accountView.printMenuOptions();
 				Controller.newView = false;
 			}
-			keuze = accountView.RequestMenuOption();
+			keuze = accountView.requestMenuOption();
 
 			switch (keuze) {
 			case 1:
-				CreateAccount();
+				createAccount();
 				requestNewMenu();
 				break;
 			case 2:
@@ -38,15 +46,15 @@ public class AccountController extends Controller {
 				requestNewMenu();
 				break;
 			case 3:
-				ChangeEmail();
+				changeEmail();
 				requestNewMenu();
 				break;
 			case 4:
-				ChangePassword();
+				changePassword();
 				requestNewMenu();
 				break;
 			case 5:
-				DeleteAccount();
+				deleteAccount();
 				requestNewMenu();
 				break;
 			case 9:
@@ -58,37 +66,37 @@ public class AccountController extends Controller {
 				System.exit(0);
 				break;
 			default:
-				accountView.InvalidInput();
+				accountView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
 	private void viewAllAccounts() {
-		if (workerOrAdminPermission() == false)
+		if (!workerOrAdminPermission())
 			accountView.noPermission();
 		List<Account> accountList = DaoFactory.getAccountDao()
 				.readAllAccounts();
 		if (accountList.size() <= 0) {
-			accountView.NoAccountFound();
+			accountView.noAccountFound();
 			return;
 		}
 		accountView.printAccountList(accountList);
 	}
 
-	private void DeleteAccount() {
-		if (workerOrAdminPermission() == false) {
-			if (accountView.confirmDeleteAccount() == true)
+	private void deleteAccount() {
+		if (!workerOrAdminPermission()) {
+			if (accountView.confirmDeleteAccount())
 				DaoFactory.getAccountDao().deleteAccount(
 						LoginController.loggedInAccount.getId());
 			System.exit(0);
 		}
-		if (workerOrAdminPermission() == true) {
-			Customer customer = customerController.ChoosePersonFromList();
+		if (workerOrAdminPermission()) {
+			Customer customer = customerController.choosePersonFromList();
 			Account account = DaoFactory.getAccountDao()
 					.readAccountByCustomerId(customer.getId());
 			if (account.equals(LoginController.loggedInAccount)) {
-				if (accountView.confirmDeleteAccount() == true) {
+				if (accountView.confirmDeleteAccount()) {
 					DaoFactory.getAccountDao().deleteAccount(account.getId());
 					System.exit(0);
 				}
@@ -96,33 +104,31 @@ public class AccountController extends Controller {
 				DaoFactory.getAccountDao().deleteAccount(account.getId());
 				accountView.accountDeleted();
 			}
-			return;
 		}
 	}
 
-	public void CreateAccount() {
-		if (adminPermission() == false) {
+	public void createAccount() {
+		if (!adminPermission()) {
 			return;
 		}
-		Customer customer = customerController.ChoosePersonFromList();
+		Customer customer = customerController.choosePersonFromList();
 		if (customer == null) {
 			return;
 		}
 		if (DaoFactory.getAccountDao()
 				.readAccountByCustomerId(customer.getId()).getId() != 0) {
-			accountView.PersonAlreadyHasAccount();
+			accountView.personAlreadyHasAccount();
 			return;
 		}
 		Account account = new Account();
 		account.setCustomer(customer);
-		account.setEmail(accountView.RequestInputUsername());
-		String password = loginView.RequestInputPassword();
+		account.setEmail(accountView.requestInputUsername());
+		String password = loginView.requestInputPassword();
 		String hash = null;
 		try {
 			hash = utility.Hashing.createHash(password);
-		} 
-		catch (CannotPerformOperationException e) {
-			e.printStackTrace();
+		} catch (CannotPerformOperationException e) {
+			Log.info(e);
 		}
 		account.setHash(hash);
 		int accountTypeId = accountView.requestAccountType();
@@ -132,40 +138,40 @@ public class AccountController extends Controller {
 		Controller.newView = true;
 	}
 
-	public void ChangePassword() {
-		Customer customer = customerController.ChoosePersonFromList();
+	public void changePassword() {
+		Customer customer = customerController.choosePersonFromList();
 		if (customer == null) {
 			return;
 		}
 		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(
 				customer.getId());
 		if (account.getId() == 0) {
-			accountView.NoAccountFound();
+			accountView.noAccountFound();
 			return;
 		}
 		String hash = null;
 		try {
-			hash = Hashing.createHash(loginView.RequestInputPassword());
+			hash = Hashing.createHash(loginView.requestInputPassword());
 		} catch (CannotPerformOperationException e) {
-			e.printStackTrace();
+			LOG.info("Error",e);
 		}
 		account.setHash(hash);
 		DaoFactory.getAccountDao().updateAccount(account);
-		accountView.PasswordChanged();
+		accountView.passwordChanged();
 	}
 
-	public void ChangeEmail() {
-		Customer customer = customerController.ChoosePersonFromList();
+	public void changeEmail() {
+		Customer customer = customerController.choosePersonFromList();
 		if (customer == null) {
 			return;
 		}
 		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(
 				customer.getId());
 		if (account.getId() == 0) {
-			accountView.NoAccountFound();
+			accountView.noAccountFound();
 			return;
 		}
-		account.setEmail(accountView.RequestInputUsername());
+		account.setEmail(accountView.requestInputUsername());
 		DaoFactory.getAccountDao().updateAccount(account);
 		accountView.emailChanged();
 	}

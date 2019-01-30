@@ -4,7 +4,7 @@ import dao.DaoFactory;
 
 public class LoginView extends View {
 
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 
 		terminal.println(" _       _         _                                   ");
 		terminal.println("( )  _  ( )       (_ )                                 ");
@@ -14,19 +14,19 @@ public class LoginView extends View {
 		terminal.println(" \\_______/  \\____)(___) \\____) \\___/ (_) (_) (_) \\____)\n\n\n");
 	}
 
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 		terminal.println("1. Login");
 		terminal.println("9. Exit Application" + "\n");
 	}
 
-	public String RequestInputUsername() {
+	public String requestInputUsername() {
 		String username = textIO.newStringInputReader()
 				.withDefaultValue("AdminAccount@email.com")
 				.read("Enter Username");
 		return username;
 	}
 
-	public String RequestInputPassword() {
+	public String requestInputPassword() {
 		String password = null;
 		do {
 			password = textIO.newStringInputReader().withMinLength(6)
@@ -42,15 +42,15 @@ public class LoginView extends View {
 		terminal.println("The entered password doesnt match the password pattern. Atleast one capital is required.\nPlease try again.\n");
 	}
 
-	public void IncorrectEmailOrPassword() {
+	public void incorrectEmailOrPassword() {
 		terminal.println("The combination of email and password is incorrect");
 	}
 
-	public void LoginSuccesfull() {
+	public void loginSuccesfull() {
 		terminal.println("Login Succesfull");
 	}
 
-	public void UnknownUsername() {
+	public void unknownUsername() {
 		terminal.println("This username doesn't exist");
 	}
 
@@ -60,7 +60,7 @@ public class LoginView extends View {
 		return result;
 	}
 
-	public void UseSQLOrMongo() {
+	public void useSQLOrMongo() {
 		int input = textIO.newIntInputReader().withDefaultValue(1)
 				.withInlinePossibleValues(1, 2)
 				.read("Do you wish to use SQL(1) or Mongo(2) as database?");

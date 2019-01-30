@@ -10,17 +10,17 @@ public class View {
 	public TextIO textIO = TextIoFactory.getTextIO();
 	TextTerminal<?> terminal = textIO.getTextTerminal();
 
-	public int RequestMenuOption() {
+	public int requestMenuOption() {
 		int option = textIO.newIntInputReader().read(
 				"Choose an option from the menu");
 		return option;
 	}
 
-	public void InvalidInput() {
+	public void invalidInput() {
 		terminal.println("Your input is invalid");
 	}
 
-	public void ClearTerminal() {
+	public void clearTerminal() {
 		terminal.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}
 
@@ -28,10 +28,10 @@ public class View {
 		terminal.println("You have no permission for this action");
 	}
 
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 	}
 
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 	}
 
 	public void requestContinue() {

@@ -12,18 +12,18 @@ import model_class.Order;
 public class OrderView extends View {
 
 	@Override
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 		terminal.println("Order Menu\n");
 
 	}
 
-	public void PrintEditMenuHeader() {
+	public void printEditMenuHeader() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 		terminal.println("1. Add Order");
 		terminal.println("2. View all Orders");
 		terminal.println("3. Edit Order");
@@ -32,7 +32,7 @@ public class OrderView extends View {
 
 	}
 
-	public void PrintEditMenuOptions() {
+	public void printEditMenuOptions() {
 		terminal.println("1. View Products of Order");
 		terminal.println("2. Change Products of Order");
 		terminal.println("3. Change Totalcost of Order");
@@ -48,7 +48,7 @@ public class OrderView extends View {
 	}
 
 	public void printOrderList(List<Order> orderList) {
-		ClearTerminal();
+		clearTerminal();
 		terminal.println(StringUtils.center(
 				"Overview of Orders", 86));
 		terminal.println("--------------------------------------------------------------------------------------");
@@ -95,7 +95,7 @@ public class OrderView extends View {
 		return new BigDecimal(newTotalPrice).setScale(2, RoundingMode.HALF_UP);
 	}
 
-	public void TotalCostUpdated() {
+	public void totalCostUpdated() {
 		terminal.println("Total Price for the order has succesfully been changed");
 
 	}
@@ -114,7 +114,7 @@ public class OrderView extends View {
 		}
 	
 	public void printOrderListWithoutOption(List<Order> orderList) {
-		ClearTerminal();
+		clearTerminal();
 		terminal.println(StringUtils.center(
 				"Overview of Orders", 75));
 		terminal.println("---------------------------------------------------------------------------");

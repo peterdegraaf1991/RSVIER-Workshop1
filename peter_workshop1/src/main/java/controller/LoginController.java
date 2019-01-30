@@ -16,47 +16,47 @@ public class LoginController extends Controller {
 
 
 	public void runController() {
-	loginView.UseSQLOrMongo();
+	loginView.useSQLOrMongo();
 		
 		int keuze = 1;
 		Controller.newView = true;
 		do {
-			if (Controller.newView == true) {
-				loginView.ClearTerminal();
-				loginView.PrintMenuHeader();
-				loginView.PrintMenuOptions();
+			if (Controller.newView) {
+				loginView.clearTerminal();
+				loginView.printMenuHeader();
+				loginView.printMenuOptions();
 				Controller.newView = false;
 			}
-			keuze = loginView.RequestMenuOption();
+			keuze = loginView.requestMenuOption();
 			switch (keuze) {
 			case 1:
-				CheckAccountByEmail();
+				checkAccountByEmail();
 				;
 				break;
 			case 9:
 				System.exit(0);
 				break;
 			default:
-				loginView.InvalidInput();
+				loginView.invalidInput();
 				break;
 			}
 		} while (keuze != 0);
 	}
 
-	public void CheckAccountByEmail() {
+	public void checkAccountByEmail() {
 		loggedInAccount = DaoFactory.getAccountDao().readAccountByEmail(loginView
-				.RequestInputUsername());
+				.requestInputUsername());
 		int accountId = loggedInAccount.getId();
 		if (loggedInAccount.getId() != 0) {
 			String hash = DaoFactory.getAccountDao().readHash(accountId);
 			try {
-				if (Hashing.verifyPassword(loginView.RequestInputPassword(), hash) == true) {
-					loginView.LoginSuccesfull();
+				if (Hashing.verifyPassword(loginView.requestInputPassword(), hash) == true) {
+					loginView.loginSuccesfull();
 					loggedInCustomer = loggedInAccount.getCustomer();
 					MainController mainController = new MainController();
 					mainController.runController();
 				} else {
-					loginView.IncorrectEmailOrPassword();
+					loginView.incorrectEmailOrPassword();
 					requestNewMenu();
 				}
 			} catch (CannotPerformOperationException | InvalidHashException e) {
@@ -64,7 +64,7 @@ public class LoginController extends Controller {
 			}
 		}
 		else {
-			loginView.IncorrectEmailOrPassword();
+			loginView.incorrectEmailOrPassword();
 			requestNewMenu();
 		}
 					

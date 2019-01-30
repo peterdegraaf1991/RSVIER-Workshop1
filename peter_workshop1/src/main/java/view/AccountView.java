@@ -13,11 +13,11 @@ public class AccountView extends View {
 	private TextIO textIO = TextIoFactory.getTextIO();
 	TextTerminal<?> terminal = textIO.getTextTerminal();
 
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 		terminal.println("Account Menu\n");
 	}
 
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 		terminal.println("1. Create Account");
 		terminal.println("2. View all Accounts");
 		terminal.println("3. Change Email of Account");
@@ -27,43 +27,43 @@ public class AccountView extends View {
 		terminal.println("0. Logout & Exit");
 	}
 
-	public String RequestInputUsername() {
+	public String requestInputUsername() {
 		String username = textIO.newStringInputReader().read(
 				"Enter the email for this account");
 		return username;
 	}
 
-	public String RequestInputSurname() {
+	public String requestInputSurname() {
 		String lastname = textIO.newStringInputReader()
 				.withDefaultValue("Graaf").read("Enter surname");
 		return lastname;
 	}
 
-	public void PrintPersons(String personToString) {
+	public void printPersons(String personToString) {
 		terminal.println(personToString);
 	}
 
-	public int ChoosePerson(int i) {
+	public int choosePerson(int i) {
 		int option = textIO.newIntInputReader().withMinVal(0).withMaxVal(i - 1)
 				.read("Choose the person you want to select");
 		return option;
 	}
 
-	public void NoPersonFound() {
+	public void noPersonFound() {
 		terminal.println("No person with that lastname found\nPlease create a person first");
 
 	}
 
-	public void NoAccountFound() {
+	public void noAccountFound() {
 		terminal.println("This person doesn't have an account yet");
 
 	}
 
-	public void PersonAlreadyHasAccount() {
+	public void personAlreadyHasAccount() {
 		terminal.println("This person already has an account");
 	}
 
-	public void OnlyAdminHasPermission() {
+	public void onlyAdminHasPermission() {
 		terminal.println("Only an admin has permission for this action");
 
 	}
@@ -83,7 +83,7 @@ public class AccountView extends View {
 		terminal.println("The account has been created");
 	}
 
-	public void PasswordChanged() {
+	public void passwordChanged() {
 		terminal.println("The password has been changed");
 
 	}
@@ -107,7 +107,7 @@ public class AccountView extends View {
 	}
 
 	public void printAccountList(List<Account> accountList) {
-		ClearTerminal();
+		clearTerminal();
 		terminal.println(StringUtils.center("Overview of all Accounts", 62));
 		terminal.println("-----------------------------------------------------------------------------");
 		terminal.print(StringUtils.center("Account ID", 11)

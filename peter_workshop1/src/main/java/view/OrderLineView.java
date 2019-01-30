@@ -9,11 +9,11 @@ import model_class.OrderLine;
 
 public class OrderLineView extends View {
 
-	public void ProductAlreadyAdded() {
+	public void productAlreadyAdded() {
 		terminal.println("This Product already has been added to this order");
 	}
 
-	public Boolean AddMoreProducts() {
+	public Boolean addMoreProducts() {
 		char option = textIO.newCharInputReader()
 				.withInlinePossibleValues('y', 'n')
 				.read("Do you wish to add another product to the order?");
@@ -41,15 +41,15 @@ public class OrderLineView extends View {
 	}
 
 	@Override
-	public void PrintMenuHeader() {
+	public void printMenuHeader() {
 	}
 
 	@Override
-	public void PrintMenuOptions() {
+	public void printMenuOptions() {
 	}
 
 	public void printOrderLineList(List<OrderLine> orderLineList) {
-		ClearTerminal();
+		clearTerminal();
 		String header = "Overview of products from order with ID: "
 				+ orderLineList.get(0).getOrderId();
 		terminal.println(StringUtils.center(header, 51));
@@ -74,7 +74,7 @@ public class OrderLineView extends View {
 		terminal.println("-----------------------------------------");
 	}
 	public void printOrderLineListWithoutOption(List<OrderLine> orderLineList) {
-		ClearTerminal();
+		clearTerminal();
 		String header = "Overview of products from order with ID: "
 				+ orderLineList.get(0).getOrderId();
 		terminal.println(StringUtils.center(header, 41));

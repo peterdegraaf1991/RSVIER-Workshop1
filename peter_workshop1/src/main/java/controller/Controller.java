@@ -28,7 +28,8 @@ public abstract class Controller {
 	public boolean adminPermission() {
 		if (LoginController.loggedInAccount.getAccountTypeId() == (3)) {
 			return true;
-		} else {
+		} 
+		else {
 			view.noPermission();
 			return false;
 		}

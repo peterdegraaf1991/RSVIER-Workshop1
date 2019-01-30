@@ -81,8 +81,6 @@ public class OrderController extends Controller {
 		orderView.printOrderListWithoutOption(list);
 		}
 	
-		
-
 	public void editOrderMenu(Order order) {
 		int keuze = 1;
 		Controller.newView = true;
@@ -93,7 +91,6 @@ public class OrderController extends Controller {
 				orderView.PrintEditMenuOptions();
 				Controller.newView = false;
 			}
-
 			keuze = orderView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
@@ -119,12 +116,10 @@ public class OrderController extends Controller {
 				keuze = 0;
 				requestNewMenu();
 				break;
-
 			case 9:
 				keuze = 0;
 				Controller.newView = true;
 				break;
-				
 			case 0:
 				orderView.logoutTimer();
 				System.exit(0);

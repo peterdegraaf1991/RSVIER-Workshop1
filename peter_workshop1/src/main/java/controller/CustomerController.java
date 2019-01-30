@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.List;
 
 import model_class.Account;
@@ -54,7 +53,8 @@ public class CustomerController extends Controller {
 	private void ViewAllCustomers() {
 		if (workerOrAdminPermission() == false)
 			customerView.noPermission();
-		List<Customer> customerList = DaoFactory.getCustomerDao().readAllCustomers();
+		List<Customer> customerList = DaoFactory.getCustomerDao()
+				.readAllCustomers();
 		if (customerList.size() <= 0) {
 			customerView.NoCustomerFound();
 			return;
@@ -74,7 +74,6 @@ public class CustomerController extends Controller {
 				customerView.PrintEditMenuOptions();
 				Controller.newView = false;
 			}
-
 			keuze = customerView.RequestMenuOption();
 			switch (keuze) {
 			case 1:
@@ -106,7 +105,7 @@ public class CustomerController extends Controller {
 			return customer;
 		}
 		List<Customer> customerList = DaoFactory.getCustomerDao()
-	//			.readCustomersByLastname(customerView.RequestSurnameForList());
+		// .readCustomersByLastname(customerView.RequestSurnameForList());
 				.readAllCustomers();
 		if (customerList.size() <= 0) {
 			customerView.NoPersonFound();
@@ -119,16 +118,17 @@ public class CustomerController extends Controller {
 	}
 
 	private boolean customerIdHasAccount(int customerId) {
-		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(customerId);
+		Account account = DaoFactory.getAccountDao().readAccountByCustomerId(
+				customerId);
 		if (account.getId() == 0)
 			return false;
 		else
 			return true;
-
 	}
 
 	private void DeleteCustomer(int customerId) {
-		if (DaoFactory.getOrderDao().readOrdersOfCustomerId(customerId).isEmpty() == false) {
+		if (DaoFactory.getOrderDao().readOrdersOfCustomerId(customerId)
+				.isEmpty() == false) {
 			customerView.firstDeleteOrders();
 			return;
 		}
@@ -138,7 +138,6 @@ public class CustomerController extends Controller {
 		else
 			DaoFactory.getCustomerDao().deleteCustomer(customerId);
 		// Print succesfull message
-
 	}
 
 	private void UpdateCustomer(Customer customer) {
@@ -174,5 +173,4 @@ public class CustomerController extends Controller {
 		}
 		return customer;
 	}
-
 }

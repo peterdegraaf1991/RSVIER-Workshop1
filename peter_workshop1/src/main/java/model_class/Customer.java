@@ -6,6 +6,8 @@ public class Customer {
 	private String firstname;
 	private String middlename;
 	private String surname;
+	
+	// placed accountDescription here to practice SQL JOIN queries.
 	private String accountDescription;
 
 	public String getAccountDescription() {

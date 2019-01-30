@@ -136,7 +136,6 @@ public class OrderView extends View {
 			terminal.println();
 		}
 		terminal.println("---------------------------------------------------------------------------");
-
 	}
-	}
+}
 

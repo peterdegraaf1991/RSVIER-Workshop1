@@ -76,7 +76,8 @@ public class CustomerDaoImpl implements CustomerDao {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//Fiddling around with SQL JOIN Queries
 	@Override
 	public Customer readCustomerById(int id) {
 		Customer customer = new Customer();
@@ -99,6 +100,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		return customer;
 	}
 
+	//Fiddling around with SQL JOIN Queries
 	@Override
 	public ArrayList<Customer> readCustomersByLastname(String lastname) {
 		ArrayList<Customer> listOfCustomers = new ArrayList<>();
@@ -161,6 +163,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		return rowCount;
 	}
 
+	//Fiddling around with SQL JOIN Queries
 	@Override
 	public List<Customer> readAllCustomers() {
 		List<Customer> customerList = new ArrayList<>();

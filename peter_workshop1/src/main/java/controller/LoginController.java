@@ -18,8 +18,6 @@ public class LoginController extends Controller {
 	public void runController() {
 	loginView.UseSQLOrMongo();
 		
-		
-		
 		int keuze = 1;
 		Controller.newView = true;
 		do {
@@ -55,7 +53,6 @@ public class LoginController extends Controller {
 				if (Hashing.verifyPassword(loginView.RequestInputPassword(), hash) == true) {
 					loginView.LoginSuccesfull();
 					loggedInCustomer = loggedInAccount.getCustomer();
-
 					MainController mainController = new MainController();
 					mainController.runController();
 				} else {

@@ -76,7 +76,6 @@ public enum DatabaseConnection {
 	}
 
 	private void getLoginDetails() {
-		
 		ClassLoader cl = this.getClass().getClassLoader();
 		try (java.io.InputStream xmlFile = cl.getResourceAsStream("utility/LoginDetails.xml")){
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
